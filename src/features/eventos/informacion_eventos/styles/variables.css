@@ -1,0 +1,21 @@
+:root {
+  /* Colores principales */
+  --gold: #C2AD78;
+  --card-bg: #F3F1EB;
+  --text-dark: #1a1a1a;
+  --text-gray: #666666;
+  --white: #FFFFFF;
+  --success: #28a745;
+  --warning: #3907ff;
+  --danger: #dc3545;
+  
+  /* Espaciado */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  
+  /* Sombras */
+  --shadow: 0 2px 8px rgba(0,0,0,0.05);
+}

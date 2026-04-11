@@ -1,0 +1,226 @@
+/* ── Page layout ─────────────────────────────────────────────── */
+.ie-content {
+  max-width: 1760px;
+  margin: 0 auto;
+  padding: 24px 5px 60px;
+  box-sizing: border-box;
+}
+
+/* ── Breadcrumb + title ───────────────────────────────────────── */
+.ie-breadcrumb {
+  font-size: 15px;
+  color: #A09990;
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+}
+
+.ie-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.ie-back {
+  font-size: 24px;
+  color: #7A746E;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ie-title {
+  font-size: clamp(25px, 2.8vw, 40px);
+  font-weight: 400;
+  margin: 0;
+  color: #2B2520;
+  font-family: Georgia, serif;
+  letter-spacing: -0.01em;
+}
+
+/* ── Generic card ─────────────────────────────────────────────── */
+.ie-card {
+  background: #F3F1EB;
+  border: 1px solid #E4DFD6;
+  border-radius: 12px;
+  margin-top: 1%;
+  margin-left: 1; 
+}
+
+/* ── Date card ────────────────────────────────────────────────── */
+.ie-date-card {
+  padding: 14px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 2%;
+}
+
+.ie-date-text {
+  font-size: clamp(13px, 1.4vw, 15px);
+  color: #2B2520;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ie-edit-btn {
+  background: #B8915A;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.ie-coincidentes {
+  font-size: 12px;
+  color: #7A746E;
+  margin-top: 3px;
+}
+
+/* ── Stats grid ───────────────────────────────────────────────── */
+.ie-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5%;
+  margin-bottom: 2%;
+}
+
+/* Contacto + Recinto cards span a bit more on wide screens */
+.ie-stats-grid > :nth-child(4),
+.ie-stats-grid > :nth-child(5) {
+  grid-column: span 1;
+}
+
+.ie-stat-num {
+  font-size: clamp(26px, 3vw, 34px);
+  font-weight: 300;
+  color: #2B2520;
+  line-height: 1.1;
+}
+
+.ie-stat-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #2B2520;
+}
+
+.ie-stat-sub {
+  font-size: 12px;
+  color: #7A746E;
+}
+
+.ie-stat-link {
+  font-size: 12px;
+  color: #B8915A;
+  cursor: pointer;
+}
+
+.ie-location-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  margin-top: 3px;
+}
+
+.ie-capacity-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+/* ── Sections ─────────────────────────────────────────────────── */
+.ie-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.ie-menu-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ie-menu-name {
+  font-size: 20px;
+  font-weight: 500;
+  color: #2B2520;
+}
+
+.ie-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.ie-peticions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px 20px;
+}
+
+.ie-peticio {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  color: #2B2520;
+  flex-wrap: wrap;
+}
+
+.ie-sep {
+  color: #A09990;
+}
+
+/* ── Responsive breakpoints ───────────────────────────────────── */
+
+/* Tablet – collapse stats to 2+3 rows */
+@media (max-width: 760px) {
+  .ie-stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .ie-stats-grid > :nth-child(1),
+  .ie-stats-grid > :nth-child(2),
+  .ie-stats-grid > :nth-child(3) {
+    grid-column: span 1;
+  }
+
+  .ie-stats-grid > :nth-child(4),
+  .ie-stats-grid > :nth-child(5) {
+    grid-column: span 1;
+  }
+}
+
+/* Mobile – single column stats */
+@media (max-width: 500px) {
+  .ie-content {
+    padding: 16px 14px 48px;
+  }
+
+  .ie-stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ie-stats-grid > :nth-child(3) {
+    grid-column: span 2;
+  }
+
+  .ie-stats-grid > :nth-child(4),
+  .ie-stats-grid > :nth-child(5) {
+    grid-column: span 2;
+  }
+
+  .ie-peticions-grid {
+    grid-template-columns: 1fr;
+  }
+}
