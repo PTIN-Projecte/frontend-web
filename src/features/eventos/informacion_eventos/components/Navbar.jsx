@@ -49,8 +49,8 @@ function IconTancar() {
 
 const menuItems = [
   { id: "perfil",        label: "Perfil",        Icon: IconPerfil },
-  { id: "configuracio",  label: "Configuració",  Icon: IconConfiguracio },
-  { id: "peticions",     label: "Peticions",     Icon: IconPeticions },
+  { id: "configuracio",  label: "Configuración",  Icon: IconConfiguracio },
+  { id: "peticions",     label: "Peticiones",     Icon: IconPeticions },
 ];
 
 // ─── Navbar ───────────────────────────────────────────────────────────────────
@@ -239,7 +239,7 @@ export default function Navbar({ onChangeRole }) {
               onMouseLeave={(e) => (e.currentTarget.style.background = "none")}
             >
               <IconTancar />
-              Tancar sessió
+              Cerrar sesión
             </button>
           </div>
         )}

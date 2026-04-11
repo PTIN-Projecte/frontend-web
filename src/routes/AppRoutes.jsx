@@ -1,55 +1,55 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { useState } from 'react'
-import InformacionEventoPage from '/media/Datos/Proyectos/PTIN/frontend-web/src/features/eventos/informacion_eventos/pages/InformacionEventoPage'
-import EventInfoCommercial from '/media/Datos/Proyectos/PTIN/frontend-web/src/features/eventos/informacion_eventos/components/EventInfoCommercial'
-import EventInfoProduction from '/media/Datos/Proyectos/PTIN/frontend-web/src/features/eventos/informacion_eventos/components/EventInfoProduction'
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { RoleProvider } from "../features/eventos/informacion_eventos/context/RoleContext";
+import { NavigationProvider } from "../features/eventos/informacion_eventos/context/NavigationContext";
+import InformacionEvento from "../features/eventos/informacion_eventos/pages/InformacionEvento";
+import DietasEspeciales from "../features/eventos/informacion_eventos/pages/DietasEspeciales";
 
-// Componente selector temporal para debug
-function RoleSelector({ onSelectRole }) {
+/**
+ * AppRouter — central routing config for the whole app.
+ *
+ * URL structure:
+ *   /eventos/:eventoId                  → InformacionEvento
+ *   /eventos/:eventoId/dietas           → DietasEspeciales
+ *
+ * :eventoId will be the real event slug/id from the API once available.
+ * For now we redirect / → /eventos/boda-rivero-martinez so the app
+ * always lands on a valid route during development.
+ *
+ * Providers are placed here (inside BrowserRouter) so that
+ * NavigationProvider can access useNavigate from React Router.
+ */
+export default function AppRouter() {
   return (
-    <div style={{ padding: '20px', textAlign: 'center' }}>
-      <h2>Selecciona el tipo de usuario para debug</h2>
-      <div style={{ marginTop: '20px', display: 'flex', gap: '20px', justifyContent: 'center' }}>
-        <button 
-          onClick={() => onSelectRole('commercial')}
-          style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }}
-        >
-          Usuario Comercial (con edición)
-        </button>
-        <button 
-          onClick={() => onSelectRole('production')}
-          style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }}
-        >
-          Usuario Producción (sin edición)
-        </button>
-      </div>
-    </div>
-  )
+    <BrowserRouter>
+      <RoleProvider>
+        <NavigationProvider>
+          <Routes>
+            {/* Dev redirect: bare root → default event */}
+            <Route
+              path="/"
+              element={<Navigate to="/eventos/boda-rivero-martinez" replace />}
+            />
+
+            {/* Event detail page */}
+            <Route
+              path="/eventos/:eventoId"
+              element={<InformacionEvento />}
+            />
+
+            {/* Dietas y Alergias sub-page */}
+            <Route
+              path="/eventos/:eventoId/dietas"
+              element={<DietasEspeciales />}
+            />
+
+            {/* Catch-all: unknown routes → redirect to default event */}
+            <Route
+              path="*"
+              element={<Navigate to="/eventos/boda-rivero-martinez" replace />}
+            />
+          </Routes>
+        </NavigationProvider>
+      </RoleProvider>
+    </BrowserRouter>
+  );
 }
-
-// Componente que decide qué vista mostrar según el rol seleccionado
-function EventInfoRouter({ userRole }) {
-  return userRole === 'commercial' 
-    ? <EventInfoCommercial /> 
-    : <EventInfoProduction />
-}
-
-function AppRoutes() {
-  const [userRole, setUserRole] = useState(null)
-
-  // Si no hay rol seleccionado, mostrar el selector
-  if (!userRole) {
-    return <RoleSelector onSelectRole={setUserRole} />
-  }
-
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<InformacionEventoPage />} />
-        <Route path="/eventos/:eventId/info" element={<EventInfoRouter userRole={userRole} />} />
-      </Routes>
-    </Router>
-  )
-}
-
-export default AppRoutes

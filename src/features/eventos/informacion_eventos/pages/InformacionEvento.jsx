@@ -1,4 +1,6 @@
+import { useParams } from "react-router-dom";
 import { useRole } from "../context/RoleContext";
+import { useNavigation } from "../context/NavigationContext";
 import { useEvento } from "../hooks/useEvento";
 import Navbar from "../components/Navbar";
 import RoleSelector from "../components/RoleSelector";
@@ -8,8 +10,6 @@ import Badge from "../components/Badge";
 import Tag from "../components/Tag";
 import t from "../styles/tokens";
 import "../styles/InformacionEvento.css";
-
-// ─── Small inline SVG icons ───────────────────────────────────────────────────
 
 function CalendarIcon() {
   return (
@@ -41,11 +41,11 @@ function PeopleIcon() {
   );
 }
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
-
 export default function InformacionEvento() {
+  const { eventoId } = useParams();
   const { role, setRole } = useRole();
-  const { evento, loading } = useEvento();
+  const { navigate } = useNavigation();
+  const { evento, loading } = useEvento(eventoId);
   const isComercial = role === "comercial";
 
   if (loading) {
@@ -60,16 +60,11 @@ export default function InformacionEvento() {
 
   return (
     <div style={{ minHeight: "100vh", background: t.pageBg, fontFamily: "'Helvetica Neue', Arial, sans-serif", color: t.textPrimary }}>
-      {/* Role selector modal (debug) */}
       {!role && <RoleSelector onSelect={setRole} />}
 
-      {/* Navbar */}
       <Navbar onChangeRole={() => setRole(null)} />
 
-      {/* Page content */}
       <main className="ie-content">
-
-        {/* Title */}
         <div className="ie-title-row">
           <span className="ie-back">‹</span>
           <h1 className="ie-title">{ev.title}</h1>
@@ -99,17 +94,22 @@ export default function InformacionEvento() {
             <span className="ie-stat-num">{ev.confirmados}</span>
           </StatCard>
 
-          <StatCard label="Dietas especiales">
+          {/* Dietas card – clickable */}
+          <StatCard
+            label="Dietas especiales"
+            style={{ cursor: "pointer" }}
+            onClick={() => navigate(`/eventos/${eventoId}/dietas`)}
+          >
             <span className="ie-stat-num">{ev.dietasEspeciales}</span>
             <span className="ie-stat-link">Consultar →</span>
           </StatCard>
 
-          <StatCard label="Contacto" style={{ gridColumn: "span 1" }}>
+          <StatCard label="Contacto">
             <span className="ie-stat-name">{ev.contacto.nombre}</span>
             <span className="ie-stat-sub">{ev.contacto.telefono}</span>
           </StatCard>
 
-          <StatCard label="Recinto" style={{ gridColumn: "span 1" }}>
+          <StatCard label="Recinto">
             <div className="ie-location-row">
               <LocationIcon />
               <div>
@@ -126,7 +126,6 @@ export default function InformacionEvento() {
 
         {/* Sections */}
         <div className="ie-sections">
-          {/* Menú */}
           <SectionRow label="Menú" showChevron>
             <div className="ie-menu-row">
               <span className="ie-menu-name">{ev.menu.nombre}</span>
@@ -137,15 +136,13 @@ export default function InformacionEvento() {
             </div>
           </SectionRow>
 
-          {/* Útiles necesarios */}
           <SectionRow label={<>Útiles<br />necesarios</>}>
             <div className="ie-tags">
               {ev.utiles.map((u) => <Tag key={u} label={u} />)}
             </div>
           </SectionRow>
 
-          {/* Peticiones a Producción */}
-          <SectionRow label={<>Peticiones<br /> {isComercial ? "a Producción" : "de Comercial"}</>} showChevron>
+          <SectionRow label={<>Peticiones<br />{isComercial ? "a Producción" : "de Comercial"}</>} showChevron>
             <div className="ie-peticions-grid">
               {ev.peticiones.map((p) => (
                 <div key={p.nombre} className="ie-peticio">

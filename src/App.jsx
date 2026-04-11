@@ -1,10 +1,9 @@
-import { RoleProvider } from "./features/eventos/informacion_eventos/context/RoleContext";
-import InformacionEvento from "./features/eventos/informacion_eventos/pages/InformacionEvento";
- 
+import AppRouter from "./routes/AppRoutes";
+
+/**
+ * App.jsx — entry point.
+ * All routing and global providers live in AppRouter.
+ */
 export default function App() {
-  return (
-    <RoleProvider>
-      <InformacionEvento />
-    </RoleProvider>
-  );
+  return <AppRouter />;
 }

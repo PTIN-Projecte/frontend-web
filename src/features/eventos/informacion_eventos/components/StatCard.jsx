@@ -1,8 +1,9 @@
 import t from "../styles/tokens";
 
-export default function StatCard({ label, children, style }) {
+export default function StatCard({ label, children, style, onClick }) {
   return (
     <div
+      onClick={onClick}
       style={{
         background: t.cardBg,
         border: `1px solid ${t.cardBorder}`,
@@ -13,12 +14,15 @@ export default function StatCard({ label, children, style }) {
         gap: 5,
         flex: 1,
         minWidth: 0,
+        transition: onClick ? "border-color 0.15s" : undefined,
         ...style,
       }}
+      onMouseEnter={onClick ? (e) => (e.currentTarget.style.borderColor = t.gold) : undefined}
+      onMouseLeave={onClick ? (e) => (e.currentTarget.style.borderColor = t.cardBorder) : undefined}
     >
       <span
         style={{
-          fontSize: 10,
+          fontSize: 15,
           fontWeight: 500,
           letterSpacing: "0.08em",
           textTransform: "uppercase",

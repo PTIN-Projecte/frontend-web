@@ -38,7 +38,14 @@ const mockEvento = {
   ],
 };
 
-export async function getEvento() {
-  // Simulate async API call
+/**
+ * Fetches event data from the API.
+ * @param {string} eventoId - the event slug/id from the URL.
+ *   Ignored by the mock; will be used in the real fetch call.
+ */
+export async function getEvento(eventoId) {
+  // TODO: replace with real API call:
+  // const res = await fetch(`/api/eventos/${eventoId}`);
+  // return res.json();
   return mockEvento;
 }

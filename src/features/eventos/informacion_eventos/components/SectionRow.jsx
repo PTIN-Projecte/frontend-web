@@ -9,8 +9,8 @@ export default function SectionRow({ label, children, showChevron }) {
         borderRadius: 12,
         padding: "16px 25px",
         display: "flex",
-        alignItems: "center",
-        gap: 16,
+        alignItems: "stretch",
+        gap: 0,
       }}
     >
       <span
@@ -18,16 +18,20 @@ export default function SectionRow({ label, children, showChevron }) {
           fontSize: 20,
           fontWeight: 500,
           color: t.textSecondary,
-          minWidth: 88,
+          minWidth: 120,
           flexShrink: 0,
           lineHeight: 1.5,
+          paddingRight: 22,
+          borderRight: "1px solid #D8D3CB",
+          display: "flex",
+          alignItems: "center",
         }}
       >
         {label}
       </span>
-      <div style={{ flex: 1, minWidth: 0 }}>{children}</div>
+      <div style={{ flex: 1, minWidth: 0, paddingLeft: 22, display: "flex", alignItems: "center" }}>{children}</div>
       {showChevron && (
-        <span style={{ color: t.textMuted, fontSize: 20, flexShrink: 0, lineHeight: 1 }}>
+        <span style={{ color: "#A09990", fontSize: 20, flexShrink: 0, lineHeight: 1, display: "flex", alignItems: "center", paddingLeft: 12 }}>
           ›
         </span>
       )}
