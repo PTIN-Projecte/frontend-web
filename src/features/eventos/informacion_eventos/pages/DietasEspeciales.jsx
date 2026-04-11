@@ -23,7 +23,7 @@ function DietRow({ group }) {
       <div className="da-diet-etiqueta">{group.etiqueta}</div>
       <div className="da-diet-icons">
         {group.alergenos.map((id) => (
-          <AllergenIcon key={id} id={id} size={30} showBan={false} />
+          <AllergenIcon key={id} id={id} size={75} showBan={false} />
         ))}
       </div>
     </div>
@@ -61,7 +61,7 @@ function AllergenSectionsView({ data }) {
           <div key={section.allergenId} className="da-allergen-section">
             {/* Section header */}
             <div className="da-section-header">
-              <AllergenIcon id={section.allergenId} size={36} showBan={false} />
+              <AllergenIcon id={section.allergenId} size={80} showBan={false} />
               <div>
                 <span className="da-section-title">{allergen?.label}</span>
                 <span className="da-section-sub">{section.totalPersonas} personas afectadas</span>
@@ -116,16 +116,26 @@ export default function DietasEspeciales() {
             Dietas y Alergias — {evento?.title ?? "Boda Rivero - Martínez"}
           </h1>
           {isComercial && (
-            <button className="da-edit-btn">Editar evento</button>
+            <button className="da-edit-btn">Editar dietas</button>
           )}
         </div>
 
         {/* Stat cards */}
         <div className="da-stats-row">
           <StatCard label="Dietas especiales" style={{ maxWidth: 280 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 50 }}>
               <span className="da-stat-num">25</span>
-              <svg width="32" height="28" viewBox="0 0 32 28" fill="none">
+              <svg
+                viewBox="0 0 32 28"
+                fill="none"
+                style={{
+                  width: "clamp(40px, 5vw, 100px)",  // Tamaño base más grande, escala fluida
+                  height: "auto",                     // Deja que aspect-ratio controle la altura
+                  aspectRatio: "32 / 28",             // Proporción exacta del viewBox original
+                  flexShrink: 0,                      // Evita que se aplaste si falta espacio
+                  display: "block"                    // Elimina espacios fantasma debajo del SVG
+                }}
+              >
                 <circle cx="10" cy="9" r="5" fill="#C0B8B0"/>
                 <circle cx="22" cy="9" r="5" fill="#8A8480"/>
                 <path d="M2 26c0-6 4-10 8-10s8 4 8 10" fill="#C0B8B0"/>
@@ -142,7 +152,7 @@ export default function DietasEspeciales() {
         {/* Allergen catalogue (with ban overlay) */}
         <div className="da-allergen-grid">
           {ALLERGEN_ORDER.map((id) => (
-            <AllergenIcon key={id} id={id} size={52} showLabel showBan />
+            <AllergenIcon key={id} id={id} size={150} showLabel showBan />
           ))}
         </div>
 
@@ -152,7 +162,7 @@ export default function DietasEspeciales() {
           <div style={{ position: "relative" }}>
             <button className="da-sort-btn" onClick={() => setSortOpen((o) => !o)}>
               {currentSortLabel}
-              <svg width="12" height="8" viewBox="0 0 12 8" fill="none" style={{ marginLeft: 6 }}>
+              <svg width="12" height="10" viewBox="0 0 12 8" fill="none" style={{ marginLeft: 6 }}>
                 <path d="M1 1.5L6 6.5L11 1.5" stroke="#2B2520" strokeWidth="1.5" strokeLinecap="round"/>
               </svg>
             </button>

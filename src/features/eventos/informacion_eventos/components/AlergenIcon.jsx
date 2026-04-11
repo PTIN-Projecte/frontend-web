@@ -42,42 +42,12 @@ export default function AllergenIcon({ id, size = 150, showLabel = false, showBa
             zIndex: 1,
           }}
         />
-
-        {/* Ban overlay on top of the .ico */}
-        {showBan && (
-          <svg
-            viewBox={`0 0 ${size} ${size}`}
-            width={size}
-            height={size}
-            style={{ position: "absolute", inset: 0, zIndex: 2 }}
-          >
-            {/* Outer circle */}
-            <circle
-              cx={size / 2}
-              cy={size / 2}
-              r={size / 2 - banStroke / 2}
-              fill="none"
-              stroke="rgba(255,255,255,0.35)"
-              strokeWidth={banStroke * 0.7}
-            />
-            {/* Diagonal ban line — bottom-left to top-right */}
-            <line
-              x1={size * 0.22}
-              y1={size * 0.78}
-              x2={size * 0.78}
-              y2={size * 0.22}
-              stroke="rgba(255,255,255,0.75)"
-              strokeWidth={banStroke}
-              strokeLinecap="round"
-            />
-          </svg>
-        )}
       </div>
 
       {showLabel && (
         <span
           style={{
-            fontSize: 9,
+            fontSize: 20,
             color: "#5C5652",
             textAlign: "center",
             maxWidth: size + 10,
