@@ -36,6 +36,8 @@ export default function AppRouter() {
               element={<InformacionEvento />}
             />
 
+      
+
             {/* Dietas y Alergias sub-page */}
             <Route
               path="/eventos/:eventoId/dietas"

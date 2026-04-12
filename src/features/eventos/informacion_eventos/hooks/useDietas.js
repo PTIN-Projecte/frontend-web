@@ -3,46 +3,27 @@ import { getRawDietas, ALLERGEN_ORDER } from "../services/dietasService";
 import { applyTransform } from "../utils/dietasTransforms";
 
 /**
- * Fetches raw dietas once, then re-applies the transform client-side
- * when sortId changes — no extra network calls.
- *
- * Returns:
- *   viewType: 'groups' | 'allergens'  → which layout to render
- *   data:     transformed array
- *   loading:  boolean
- *   error:    Error | null
+ * Fetches raw dietas ONCE, then transforms client-side on sort change.
+ * No extra network calls when the user changes the sort order.
  */
 export function useDietas(sortId = "comun") {
   const [rawDietas, setRawDietas] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [loading,   setLoading]   = useState(true);
+  const [error,     setError]     = useState(null);
 
-  // Fetch only once
   useEffect(() => {
     let cancelled = false;
-    const fetch = async () => {
-      try {
-        const data = await getRawDietas();
-        if (!cancelled) {
-          setRawDietas(data);
-          setLoading(false);
-        }
-      } catch (err) {
-        if (!cancelled) {
-          setError(err);
-          setLoading(false);
-        }
-      }
-    };
-    fetch();
+    setLoading(true);
+    getRawDietas()
+      .then((data) => { if (!cancelled) { setRawDietas(data); setLoading(false); } })
+      .catch((err) => { if (!cancelled) { setError(err);      setLoading(false); } });
     return () => { cancelled = true; };
-  }, []);
+  }, []); // ← only on mount; sort is client-side
 
-  // Re-transform whenever sortId changes (instant, no loading)
   const { viewType, data } = useMemo(
     () => applyTransform(sortId, rawDietas, ALLERGEN_ORDER),
     [sortId, rawDietas]
   );
 
-  return { viewType, data, loading, error };
+  return { viewType, data, rawDietas, loading, error };
 }

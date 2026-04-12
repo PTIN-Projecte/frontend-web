@@ -1,51 +1,58 @@
-// Hardcoded mock data – will be replaced by a real service call
-const mockEvento = {
-  title: "Boda Rivero - Martínez",
-  date: "Miércoles 1 de Abril de 2026",
-  time: "13:00-18:00h",
-  coincidentes: 4,
-  comensales: 134,
-  confirmados: 97,
-  dietasEspeciales: 25,
-  contacto: {
-    nombre: "JOAN GARCÍA",
-    telefono: "93 412 00 33",
-  },
-  recinto: {
-    sala: "Sala Blava",
-    planta: "Planta Baja",
-    capacidad: 300,
-  },
-  menu: {
-    nombre: "Menú Nupcial Premium",
-    estado: "Pendiente",
-    tags: ["Boda", "Menú degustación"],
-  },
-  utiles: [
-    "Proyector x1",
-    "Pantalla x1",
-    "Soporte jamonero x3",
-    "Cuchillo jamonero x3",
-    "Sartén (35cm) x10",
-    "Nevera para vino x2",
-    "Vajilla x150",
-  ],
-  peticiones: [
-    { nombre: "Proyector", estado: "Confirmada" },
-    { nombre: "Pantalla", estado: "Confirmada" },
-    { nombre: "Menú vegano", estado: "Pendiente" },
-    { nombre: "Menú sin frutos secos", estado: "Pendiente" },
-  ],
-};
+/**
+ * eventoService.js
+ *
+ * Business logic layer for events.
+ * Calls apiClient — never calls fetch() directly.
+ * When the real API is ready, ONLY apiClient.js changes.
+ */
+import { get, put } from "./apiClient";
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+const DAYS_ES   = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
+const MONTHS_ES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+
+export function formatDateDisplay(dateISO) {
+  if (!dateISO) return "";
+  const d = new Date(dateISO + "T12:00:00");
+  return `${DAYS_ES[d.getDay()]} ${d.getDate()} de ${MONTHS_ES[d.getMonth()]} de ${d.getFullYear()}`;
+}
+
+// ── Service calls ─────────────────────────────────────────────────────────────
+
+/** Fetch a single event by ID */
+export async function getEvento(eventoId) {
+  const eventos = await get("/eventos");
+  const evento  = eventos.find((e) => e.id === eventoId);
+  if (!evento) throw new Error(`Evento '${eventoId}' not found`);
+  return evento;
+}
+
+/** Fetch all events (used for duplicate check) */
+export async function getAllEventos() {
+  return get("/eventos");
+}
+
+/** Fetch all recintos */
+export async function getRecintos() {
+  return get("/recintos");
+}
 
 /**
- * Fetches event data from the API.
- * @param {string} eventoId - the event slug/id from the URL.
- *   Ignored by the mock; will be used in the real fetch call.
+ * Save (update) an event.
+ * Rebuilds the derived fields (date display text, recinto object)
+ * so the UI can update immediately without a second fetch.
  */
-export async function getEvento(eventoId) {
-  // TODO: replace with real API call:
-  // const res = await fetch(`/api/eventos/${eventoId}`);
-  // return res.json();
-  return mockEvento;
+export async function saveEvento(draft) {
+  const recintos = await getRecintos();
+  const recinto  = recintos.find((r) => r.id === draft.recintoId);
+
+  const updated = {
+    ...draft,
+    date: formatDateDisplay(draft.dateISO),
+    recinto: recinto ?? null,
+  };
+
+  // PUT updates the event inside the /eventos list
+  await put("/eventos", updated);
+  return updated;
 }

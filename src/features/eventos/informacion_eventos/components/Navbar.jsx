@@ -217,7 +217,7 @@ export default function Navbar({ onChangeRole }) {
               </button>
             ))}
 
-            {/* Divider + Tancar sessió */}
+            {/* Divider + Cerrar sesión */}
             <div style={{ borderTop: `1px solid ${t.divider}`, margin: "4px 0" }} />
             <button
               style={{

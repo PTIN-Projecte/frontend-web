@@ -1,13 +1,13 @@
 /**
  * dietasService.js
- * Returns RAW data from the API (mocked).
- * No sorting or transformation logic here — that lives in utils/dietasTransforms.js.
  *
- * Each group = a set of people sharing the same dietary restrictions.
- * alergenos[] = list of allergen IDs they cannot have.
+ * Business logic layer for diets/allergens.
+ * Calls apiClient — never calls fetch() directly.
  */
+import { get, putList } from "./apiClient";
 
-// ── Allergen catalogue (13 EU allergens) ─────────────────────────────────────
+// ── Allergen catalogue ─────────────────────────────────────────────────────────
+// Static data — comes from the frontend config, not the API.
 export const ALLERGENS = {
   gluten:    { id: "gluten",    label: "Contiene gluten",               color: "#D97B3A" },
   apio:      { id: "apio",      label: "Apio",                           color: "#5DA05D" },
@@ -24,9 +24,10 @@ export const ALLERGENS = {
   huevos:    { id: "huevos",    label: "Huevos",                         color: "#D4A020" },
 };
 
-// Canonical allergen order (catalogue display order)
+// Canonical display order for the allergen catalogue
 export const ALLERGEN_ORDER = Object.keys(ALLERGENS);
 
+// Sort options for the view
 export const SORT_OPTIONS = [
   { id: "comun",       label: "Por alergias/dietas comunes" },
   { id: "afectados",   label: "Por número de afectados"     },
@@ -34,26 +35,25 @@ export const SORT_OPTIONS = [
   { id: "alergeno",    label: "Por alérgeno"                 },
 ];
 
-// ── Mock raw data (replace with real fetch when API is ready) ─────────────────
-// Total: 3+2+5+3+5+1+2+1+3 = 25 personas
-const RAW_DIETAS = [
-  { id: 1, personas: 3, etiqueta: "Veganas",                          alergenos: ["gluten", "lacteos", "pescado", "crustaceo", "huevos"] },
-  { id: 2, personas: 2, etiqueta: "Sin frutos secos",                 alergenos: ["cacahuete", "frutosCas"] },
-  { id: 3, personas: 5, etiqueta: "Celiacas",                         alergenos: ["gluten"] },
-  { id: 4, personas: 3, etiqueta: "Celiacas y sin lactosa",           alergenos: ["gluten", "lacteos"] },
-  { id: 5, personas: 5, etiqueta: "Vegana y celiaca",                 alergenos: ["gluten", "lacteos", "pescado", "crustaceo", "huevos", "cacahuete"] },
-  { id: 6, personas: 1, etiqueta: "Sin apio",                         alergenos: ["apio"] },
-  { id: 7, personas: 2, etiqueta: "Sin marisco",                      alergenos: ["crustaceo"] },
-  { id: 8, personas: 1, etiqueta: "Celiacas, sin lactosa y sin apio", alergenos: ["gluten", "lacteos", "apio"] },
-  { id: 9, personas: 3, etiqueta: "Celiaca y sin pescado",            alergenos: ["gluten", "pescado"] },
-];
+// ── ID generator (client-side only, real IDs come from backend) ───────────────
+let _nextId = 100; // Start high to avoid collisions with seeded IDs
+export function getNextDietaId() { return _nextId++; }
+
+// ── Service calls ─────────────────────────────────────────────────────────────
+
+/** Fetch all diet groups for an event (eventoId for real API routing) */
+export async function getRawDietas(/* eventoId */) {
+  // TODO real API: get(`/eventos/${eventoId}/dietas`)
+  const list = await get("/dietas");
+  return list.map((g) => ({ ...g, alergenos: [...g.alergenos] }));
+}
 
 /**
- * Fetches raw diet groups from the API.
- * Simulates network latency.
+ * Replace the entire dietas list for an event.
+ * Returns the saved list.
  */
-export async function getRawDietas() {
-  await new Promise((r) => setTimeout(r, 1400));
-  // Deep clone so transforms don't mutate the source
-  return RAW_DIETAS.map((g) => ({ ...g, alergenos: [...g.alergenos] }));
+export async function saveDietas(updatedDietas /*, eventoId */) {
+  // TODO real API: put(`/eventos/${eventoId}/dietas`, updatedDietas)
+  const saved = await putList("/dietas", updatedDietas);
+  return saved.map((g) => ({ ...g, alergenos: [...g.alergenos] }));
 }

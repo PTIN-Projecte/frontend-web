@@ -6,7 +6,6 @@
   box-sizing: border-box;
 }
 
-/* ── Breadcrumb + title ───────────────────────────────────────── */
 .ie-breadcrumb {
   font-size: 15px;
   color: #A09990;
@@ -22,10 +21,11 @@
 }
 
 .ie-back {
-  font-size: 50px;
+  font-size: 24px;
   color: #7A746E;
   line-height: 1;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .ie-title {
@@ -43,7 +43,6 @@
   border: 1px solid #E4DFD6;
   border-radius: 12px;
   margin-top: 1%;
-  margin-left: 1; 
 }
 
 /* ── Date card ────────────────────────────────────────────────── */
@@ -64,18 +63,59 @@
   gap: 8px;
 }
 
+/* Button styles */
 .ie-edit-btn {
   background: #B8915A;
   color: #fff;
   border: none;
   border-radius: 20px;
   padding: 5px 16px;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
   font-family: inherit;
   white-space: nowrap;
 }
+
+.ie-cancel-btn {
+  background: #DA0000;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.ie-save-btn {
+  background: #15B200;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+/* Clickable date button in edit mode */
+.ie-date-edit-btn {
+  background: #fff;
+  border: 2px solid #B8915A;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: clamp(13px, 1.4vw, 15px);
+  color: #2B2520;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+}
+.ie-date-edit-btn:hover { background: #FEF0E2; }
 
 .ie-coincidentes {
   font-size: 12px;
@@ -91,34 +131,70 @@
   margin-bottom: 2%;
 }
 
-/* Contacto + Recinto cards span a bit more on wide screens */
-.ie-stats-grid > :nth-child(4),
-.ie-stats-grid > :nth-child(5) {
-  grid-column: span 1;
+/* Edit input inside stat card */
+.ie-edit-input {
+  width: 100%;
+  background: #fff;
+  border: 2px solid #B8915A;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: inherit;
+  font-family: inherit;
+  color: #2B2520;
+  outline: none;
+  box-sizing: border-box;
+}
+.ie-edit-input:focus {
+  box-shadow: 0 0 0 3px rgba(184,145,90,0.2);
+}
+.ie-field-error {
+  font-size: 11px;
+  color: #DA0000;
+  margin-top: 3px;
 }
 
+/* Numbers in stat cards */
 .ie-stat-num {
   font-size: clamp(26px, 3vw, 34px);
   font-weight: 300;
   color: #2B2520;
   line-height: 1.1;
 }
+.ie-stat-name { font-size: 14px; font-weight: 500; color: #2B2520; }
+.ie-stat-sub  { font-size: 12px; color: #7A746E; }
+.ie-stat-link { font-size: 12px; color: #B8915A; cursor: pointer; }
 
-.ie-stat-name {
-  font-size: 14px;
+/* ── Recinto hover tooltip ─────────────────────────────────────── */
+.ie-recinto-card { position: relative; overflow: visible !important; }
+
+.ie-recinto-wrap { position: relative; width: 100%; }
+
+.ie-recinto-tooltip {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  background: #2B2520;
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px 14px;
+  min-width: 220px;
+  z-index: 100;
+  box-shadow: 0 4px 16px rgba(43,37,32,0.25);
+  pointer-events: none;
+}
+.ie-recinto-wrap:hover .ie-recinto-tooltip { display: block; }
+
+.ie-tooltip-name {
+  font-size: 13px;
   font-weight: 500;
-  color: #2B2520;
+  margin-bottom: 6px;
+  color: #fff;
 }
-
-.ie-stat-sub {
+.ie-tooltip-line {
   font-size: 12px;
-  color: #7A746E;
-}
-
-.ie-stat-link {
-  font-size: 12px;
-  color: #B8915A;
-  cursor: pointer;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.6;
 }
 
 .ie-location-row {
@@ -127,7 +203,6 @@
   gap: 5px;
   margin-top: 3px;
 }
-
 .ie-capacity-row {
   display: flex;
   align-items: center;
@@ -148,79 +223,20 @@
   gap: 10px;
   flex-wrap: wrap;
 }
+.ie-menu-name { font-size: 20px; font-weight: 500; color: #2B2520; }
+.ie-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.ie-peticions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 20px; }
+.ie-peticio { display: flex; align-items: center; gap: 7px; font-size: 15px; color: #2B2520; flex-wrap: wrap; }
+.ie-sep { color: #A09990; }
 
-.ie-menu-name {
-  font-size: 20px;
-  font-weight: 500;
-  color: #2B2520;
-}
-
-.ie-tags {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin-top: 8px;
-}
-
-.ie-peticions-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 7px 20px;
-}
-
-.ie-peticio {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 15px;
-  color: #2B2520;
-  flex-wrap: wrap;
-}
-
-.ie-sep {
-  color: #A09990;
-}
-
-/* ── Responsive breakpoints ───────────────────────────────────── */
-
-/* Tablet – collapse stats to 2+3 rows */
+/* ── Responsive ───────────────────────────────────────────────── */
 @media (max-width: 760px) {
-  .ie-stats-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .ie-stats-grid > :nth-child(1),
-  .ie-stats-grid > :nth-child(2),
-  .ie-stats-grid > :nth-child(3) {
-    grid-column: span 1;
-  }
-
-  .ie-stats-grid > :nth-child(4),
-  .ie-stats-grid > :nth-child(5) {
-    grid-column: span 1;
-  }
+  .ie-stats-grid { grid-template-columns: repeat(3, 1fr); }
 }
-
-/* Mobile – single column stats */
 @media (max-width: 500px) {
-  .ie-content {
-    padding: 16px 14px 48px;
-  }
-
-  .ie-stats-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .ie-stats-grid > :nth-child(3) {
-    grid-column: span 2;
-  }
-
-  .ie-stats-grid > :nth-child(4),
-  .ie-stats-grid > :nth-child(5) {
-    grid-column: span 2;
-  }
-
-  .ie-peticions-grid {
-    grid-template-columns: 1fr;
-  }
+  .ie-content { padding: 16px 14px 48px; }
+  .ie-stats-grid { grid-template-columns: 1fr 1fr; }
+  .ie-stats-grid > :nth-child(3) { grid-column: span 2; }
+  .ie-stats-grid > :nth-child(4), .ie-stats-grid > :nth-child(5) { grid-column: span 2; }
+  .ie-peticions-grid { grid-template-columns: 1fr; }
 }
