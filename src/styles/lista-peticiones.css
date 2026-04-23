@@ -1,0 +1,78 @@
+.general{
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+.panel-abierto{
+    background-color: #F3F1EB;
+    color: #898989;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 40vh;
+    height: 100vh;
+}
+.linea-filtro{
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    margin-top: 150px;
+    margin-left: 30px;
+}
+
+.img-filtro{
+    width: 15px;
+    height: 15px;
+    margin-top: 4px;
+    margin-right: 4px;
+}
+.panel-cerrado{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 15vh;
+    height: 100vh;
+}
+
+.img1{
+    cursor: pointer;
+    position: absolute;
+    width: 38px;
+    height: 35px;
+    top: 8px;
+    right: 10px;
+}
+.img2{
+    cursor: pointer;
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    top: 8px;
+    left: 20px;
+}
+.contenido{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 100%;
+}
+
+h1{
+    color: black;
+    margin-left: 50px;
+    margin-top: 60px;
+}
+.busqueda{
+    position: relative;
+    background-color: #F3F1EB;
+    height: 30px;
+    width: 300px;
+    border: 0px;
+    border-radius: 15px;
+    box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.1);
+    margin-left: 50px;
+}
+
