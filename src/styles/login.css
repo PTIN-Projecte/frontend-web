@@ -41,6 +41,7 @@ form .linea-input{
     display:flex;
     flex-direction: row;
     align-items: center;
+    position: relative;
 }
 form .linea-input input{
     background-color: white;
@@ -92,6 +93,6 @@ form img{
 
 form .ojo{
     position: absolute;
-    right: 88px;
+    right: 6px;
     cursor: pointer;
 }
