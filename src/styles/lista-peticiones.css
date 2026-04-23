@@ -11,15 +11,124 @@
     display: flex;
     flex-direction: column;
     text-align: left;
+    transition: all 0.3s ease;
     width: 40vh;
     height: 100vh;
+}
+.filtros{
+    margin-top: 150px;
 }
 .linea-filtro{
     display: flex;
     flex-direction: row;
     text-align: left;
-    margin-top: 150px;
     margin-left: 30px;
+}
+.linea-filtro label{
+    font-size: 14px;
+}
+.linea-filtro .titulo{
+    font-size: 16px;
+    color:#D2C1B5;
+}
+
+.linea-filtro input[type="checkbox"]{
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #898989;
+    border-radius: 4px;
+    background-color: #F3F1EB; 
+    cursor: pointer;
+    margin-top: 5px;
+    margin-left: 0px;
+    position: relative;
+}
+.linea-filtro input[type="checkbox"]:checked {
+  accent-color: #898989;
+}
+/* cuando está marcado */
+.linea-filtro input[type="checkbox"]:checked {
+    background-color: #898989;
+    border-color: #898989;
+}
+
+/* dibujar el tick */
+.linea-filtro input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    width: 3px;
+    height: 7px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+.porFecha{
+    margin-top: 20px;
+}
+.porFecha span{
+    font-size: 15px;
+    color: #D2C1B5;
+    
+}
+.porFecha input[type="radio"]{
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #898989;
+    border-radius: 50%;
+    background-color: #F3F1EB; 
+    cursor: pointer;
+    margin-top: 6px;
+    position: relative;
+}
+
+/* cuando está marcado */
+.porFecha input[type="radio"]:checked {
+    border-color: #898989;
+    background-color: #F3F1EB; /* mantenemos el fondo claro */
+}
+
+/* circulito interno centrado */
+.porFecha input[type="radio"]:checked::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: #898989;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.limpiar-filtros{
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px;
+    margin-left: 30px;
+    margin-right: 26px;
+    border: 1px solid #898989;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.limpiar-filtros img{
+    padding: 2px;
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.limpiar-filtros label{
+    background-color: transparent;
+    border: none;
+    color: #898989;
+    font-size: 14px;
+    cursor: pointer;
 }
 
 .img-filtro{
@@ -32,9 +141,11 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    transition: all 0.4s ease-in-out;
     text-align: left;
     width: 15vh;
     height: 100vh;
+    
 }
 
 .img1{
