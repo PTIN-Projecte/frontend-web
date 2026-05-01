@@ -1,0 +1,80 @@
+
+/* Esto cambia el fondo de toda la pantalla y lo centra un poco */
+.pagina-menu {
+    background-color: rgb(245, 245, 245); /* color fondo de la caja principal */
+    padding: 40px;
+    font-family: Arial, sans-serif;         /* Cambia el tipo de letra */
+    cursor: default;                        /* Obliga a mantener la flecha normal del ratón */
+    /* Bloquea la selección de texto */
+    user-select: none; 
+    -webkit-user-select: none; /* Esta línea extra asegura que funcione perfecto en Safari y Chrome */
+}
+
+/* Esto le da estilo a la caja blanca de cada plato */
+.menu-item-caja {
+    background-color: rgba(231, 223, 199, 0.432);
+    border-radius: 40px;
+    padding: 30px;
+    
+    /* margenes */
+    margin-left: +40px; 
+    margin-right: +40px; 
+    padding-left: 30px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display:flex; 
+    justify-content: space-between; 
+    align-items: center;
+    /* Agrega esta línea para que el cambio de color sea suave y elegante */
+    transition: all 0.3s ease; /* 'all' anima tamaño, color y sombra a la vez */
+}
+
+/* Efecto Hover */
+.menu-item-caja:hover {
+  transform: scale(1.02); /* Hace que crezca un 2% */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Hace la sombra más grande y difuminada */
+  filter: brightness(97%); /* Lo oscurece muy, muy sutilmente */
+  cursor: pointer; 
+}
+
+.menu-item-texto {
+    display: flex; 
+    align-items: baseline; /* Alinea la base de las letras de ambas columnas */
+    gap: 8px;              /* El espacio de separación entre el título y la descripción */
+}
+.menu-item-texto h3 {
+    margin: 0;
+    white-space: nowrap; /* Obliga al título a quedarse siempre en una sola línea */
+    flex-shrink: 0;      /* Evita que el título se aplaste cuando la descripción crece */
+}
+.menu-item-texto p {
+    margin: 0;
+    /* La descripción ocupará el resto del espacio y, si necesita bajar de línea, 
+        lo hará dentro de su propia "caja invisible", alineándose a la perfección. */
+}
+
+.menu-item-alergenos {
+    display: flex;       /* Obliga a los iconos a ponerse en fila (uno al lado del otro) */
+    gap: 6px;            /* Un pequeño espacio para que el pescado y el huevo no se toquen */
+    flex-shrink: 0;      /* ¡El escudo mágico! Le dice al texto: "no me aplastes, yo mantengo mi tamaño" */
+    margin-left: 15px;   /* Un poco de espacio de seguridad para que el texto nunca llegue a tocarlos */
+}
+
+/* ------------------------------------------------------------------------------------------- */ 
+
+/* Definición de un estilo */
+.resaltado {
+    color: #000000;       /* color */
+    font-style: italic;     /* Lo ponemos en cursiva */
+    font-weight: 400;       /* Le quitamos un poco de "negrita" para que contraste */
+}
+
+/* Cuadrado de los tipos de platos */
+.titulo-categoria {
+    padding: 10px 20px;           /* Espacio por dentro: 10px arriba/abajo y 20px a los lados para que el texto respire */
+    border-radius: 12px;          /* Redondea las esquinas */
+    width: fit-content;
+    background-color: rgba(210, 193, 181, 0.42); /* color fondo */
+    text-decoration: underline;   /* subrayado */
+}
+
