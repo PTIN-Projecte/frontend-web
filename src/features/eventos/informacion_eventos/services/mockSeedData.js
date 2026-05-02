@@ -8,102 +8,108 @@
  * When the real API is connected, this file becomes irrelevant.
  */
 
-export const SEED_RECINTOS = [
-  {
-    id: 1,
-    sala: "Sala Blava",
-    planta: "Planta Baja",
-    capacidad: 300,
-    direccion: "Carretera de Martorell 2",
-    cp: "08760",
-    localidad: "Martorell",
-  },
-  {
-    id: 2,
-    sala: "Carpa este",
-    planta: "Privé",
-    capacidad: 300,
-    direccion: "Avinguda del Penedès 45",
-    cp: "08760",
-    localidad: "Martorell",
-  },
-  {
-    id: 3,
-    sala: "Ca la cinta",
-    planta: "Sant Agustí",
-    capacidad: 100,
-    direccion: "Plaça de Sant Agustí 3",
-    cp: "08770",
-    localidad: "Sant Sadurní d'Anoia",
-  },
-  {
-    id: 4,
-    sala: "Masia Font de la Canya",
-    planta: "Planta Principal",
-    capacidad: 250,
-    direccion: "Camí de la Font 12",
-    cp: "08779",
-    localidad: "Pacs del Penedès",
-  },
-];
+export const db = {
+  eventos: [
+    {
+      id: "evt-1",
+      title: "Boda Rivero - Martínez",
+      dateISO: "2025-06-14",
+      date: "Sábado 14 de Junio de 2025",
+      startTime: "13:00",
+      endTime: "18:00",
+      comensales: 120,
+      confirmados: 98,
+      dietasEspeciales: 25,
+      coincidentes: 3,
+      contacto: { nombre: "JOAN GARCÍA", telefono: "93 412 00 33" },
+      recintoId: "rec-1",
+      recinto: {
+        sala: "Sala Principal",
+        planta: "Planta 1",
+        capacidad: 200,
+        direccion: "Carrer de Provença, 123",
+        cp: "08036",
+        localidad: "Barcelona",
+      },
+      menu: {
+        nombre: "Menú Mediterráneo",
+        estado: "Confirmado",
+        tags: ["Temporada", "Sin gluten"],
+      },
+      utiles: ["Sillas chiavari", "Manteles blancos", "Atril"],
+      peticiones: [
+        { nombre: "Cambio entrante", estado: "Pendiente" },
+        { nombre: "Postre sin lactosa", estado: "Aceptada" },
+      ],
+    },
+    {
+      id: "evt-2",
+      title: "Cumpleaños Empresa Tech",
+      dateISO: "2025-06-14",
+      date: "Sábado 14 de Junio de 2025",
+      startTime: "20:00",
+      endTime: "23:00",
+      comensales: 60,
+      confirmados: 55,
+      dietasEspeciales: 8,
+      coincidentes: 3,
+      contacto: { nombre: "MARTA PUIG", telefono: "93 555 11 22" },
+      recintoId: "rec-2",
+      recinto: {
+        sala: "Sala Terraza",
+        planta: "Planta 3",
+        capacidad: 80,
+        direccion: "Av. Diagonal, 456",
+        cp: "08037",
+        localidad: "Barcelona",
+      },
+      menu: {
+        nombre: "Menú Fusión",
+        estado: "Pendiente",
+        tags: ["Internacional"],
+      },
+      utiles: ["Mesas altas", "Iluminación LED"],
+      peticiones: [],
+    },
+  ],
 
-export const SEED_EVENTOS = [
-  {
-    id: "boda-rivero-martinez",
-    title: "Boda Rivero - Martínez",
-    date: "Miércoles 1 de Abril de 2026",
-    dateISO: "2026-04-01",
-    startTime: "13:00",
-    endTime: "18:00",
-    coincidentes: 4,
-    comensales: 134,
-    confirmados: 97,
-    dietasEspeciales: 25,
-    contacto: {
-      nombre: "JOAN GARCÍA",
-      telefono: "93 412 00 33",
+  recintos: [
+    {
+      id: "rec-1",
+      sala: "Sala Principal",
+      planta: "Planta 1",
+      capacidad: 200,
+      direccion: "Carrer de Provença, 123",
+      cp: "08036",
+      localidad: "Barcelona",
     },
-    recintoId: 1,
-    recinto: {
-      id: 1,
-      sala: "Sala Blava",
-      planta: "Planta Baja",
-      capacidad: 300,
-      direccion: "Carretera de Martorell 2",
-      cp: "08760",
-      localidad: "Martorell",
+    {
+      id: "rec-2",
+      sala: "Sala Terraza",
+      planta: "Planta 3",
+      capacidad: 80,
+      direccion: "Av. Diagonal, 456",
+      cp: "08037",
+      localidad: "Barcelona",
     },
-    menu: {
-      nombre: "Menú Nupcial Premium",
-      estado: "Pendiente",
-      tags: ["Boda", "Menú degustación"],
-    },
-    utiles: [
-      "Proyector x1",
-      "Pantalla x1",
-      "Soporte jamonero x3",
-      "Cuchillo jamonero x3",
-      "Sartén (35cm) x10",
-      "Nevera para vino x2",
-      "Vajilla x150",
+  ],
+
+  // Keyed by eventoId for easy lookup
+  dietas: {
+    "evt-1": [
+      { id: 1, etiqueta: "Veganas",              personas: 3, alergenos: ["gluten","lacteos","huevos","pescado","crustaceo"] },
+      { id: 2, etiqueta: "Sin frutos secos",     personas: 2, alergenos: ["frutosCas","cacahuete"] },
+      { id: 3, etiqueta: "Celiacas",             personas: 5, alergenos: ["gluten"] },
+      { id: 4, etiqueta: "Celiacas y sin lactosa", personas: 3, alergenos: ["gluten","lacteos"] },
+      { id: 5, etiqueta: "Vegana y celiaca",     personas: 5, alergenos: ["gluten","lacteos","huevos","pescado","crustaceo","frutosCas"] },
+      { id: 6, etiqueta: "Sin apio",             personas: 1, alergenos: ["apio"] },
+      { id: 7, etiqueta: "Sin marisco",          personas: 2, alergenos: ["crustaceo","moluscos"] },
+      { id: 8, etiqueta: "Celiaca, sin lactosa y sin apio", personas: 1, alergenos: ["gluten","lacteos","apio"] },
+      { id: 9, etiqueta: "Celiaca y sin pescado", personas: 3, alergenos: ["gluten","pescado"] },
     ],
-    peticiones: [
-      { nombre: "Proyector", estado: "Confirmada" },
-      { nombre: "Pantalla", estado: "Confirmada" },
-      { nombre: "Menú vegano", estado: "Pendiente" },
-      { nombre: "Menú sin frutos secos", estado: "Pendiente" },
+    "evt-2": [
+      { id: 10, etiqueta: "Sin gluten",  personas: 4, alergenos: ["gluten"] },
+      { id: 11, etiqueta: "Sin lactosa", personas: 4, alergenos: ["lacteos"] },
     ],
   },
-];
-
-export const SEED_DIETAS = [
-  { id: 1, personas: 3, etiqueta: "Veganas",                          alergenos: ["gluten", "lacteos", "pescado", "crustaceo", "huevos"] },
-  { id: 2, personas: 2, etiqueta: "Sin frutos secos",                 alergenos: ["cacahuete", "frutosCas"] },
-  { id: 3, personas: 5, etiqueta: "Celiacas",                         alergenos: ["gluten"] },
-  { id: 4, personas: 3, etiqueta: "Celiacas y sin lactosa",           alergenos: ["gluten", "lacteos"] },
-  { id: 5, personas: 5, etiqueta: "Vegana y celiaca",                 alergenos: ["gluten", "lacteos", "pescado", "crustaceo", "huevos", "cacahuete"] },
-  { id: 6, personas: 1, etiqueta: "Sin apio",                         alergenos: ["apio"] },
-  { id: 7, personas: 2, etiqueta: "Sin marisco",                      alergenos: ["crustaceo"] },
-  { id: 8, personas: 1, etiqueta: "Celiacas, sin lactosa y sin apio", alergenos: ["gluten", "lacteos", "apio"] },
-  { id: 9, personas: 3, etiqueta: "Celiaca y sin pescado",            alergenos: ["gluten", "pescado"] },
-];
+};

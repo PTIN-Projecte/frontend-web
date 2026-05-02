@@ -20,23 +20,25 @@ function DietRow({ group }) {
   return (
     <div className="da-diet-row">
       <div className="da-diet-personas">
-        <span className="da-diet-count">{group.personas}</span>
-        <span className="da-diet-label-sm">Personas</span>
+        <span className="da-diet-count">{group.personas} Personas</span>
       </div>
       <div className="da-diet-etiqueta">{group.etiqueta}</div>
       <div className="da-diet-icons">
-        {group.alergenos.map((id) => <AllergenIcon key={id} id={id} size={30} showBan={false} />)}
+        {group.alergenos.map((id) => (
+          <AllergenIcon key={id} id={id} size={70} showBan={true} /> 
+        ))}
       </div>
     </div>
   );
 }
 
 function GroupsView({ data }) {
-  const mid = Math.ceil(data.length / 2);
+  const mid = Math.ceil((data ?? []).length / 2);
+  const list = data ?? [];
   return (
     <div className="da-table-grid">
-      <div className="da-table-col">{data.slice(0, mid).map((g) => <DietRow key={g.id} group={g} />)}</div>
-      <div className="da-table-col">{data.slice(mid).map((g) => <DietRow key={g.id} group={g} />)}</div>
+      <div className="da-table-col">{list.slice(0, mid).map((g) => <DietRow key={g.id} group={g} />)}</div>
+      <div className="da-table-col">{list.slice(mid).map((g) => <DietRow key={g.id} group={g} />)}</div>
     </div>
   );
 }
@@ -53,7 +55,7 @@ function AllergenSectionsView({ data }) {
               <AllergenIcon id={section.allergenId} size={36} showBan={false} />
               <div>
                 <span className="da-section-title">{allergen?.label}</span>
-                <span className="da-section-sub">{section.totalPersonas} personas afectadas</span>
+                <span className="da-section-sub"> {section.totalPersonas} personas afectadas</span>
               </div>
             </div>
             <div className="da-table-grid">
@@ -74,10 +76,10 @@ export default function DietasAlergias() {
   const { goBack }        = useNavigation();
   const [sortId, setSortId]   = useState("comun");
   const [sortOpen, setSortOpen] = useState(false);
-  const { viewType, data, loading, rawDietas } = useDietas(sortId);
+  const { viewType, data, loading, rawDietas, eventoInfo } = useDietas(eventoId, sortId);
   const isComercial = role === "comercial";
 
-  const editDietas = useEditDietas(rawDietas || []);
+  const editDietas = useEditDietas(rawDietas || [], eventoId);
   const isEditing  = editDietas.isEditing;
 
   const currentSortLabel = SORT_OPTIONS.find((o) => o.id === sortId)?.label ?? "";
@@ -112,7 +114,7 @@ export default function DietasAlergias() {
         <div className="da-title-row">
           <span className="da-back" onClick={goBack}>‹</span>
           <h1 className="da-title">
-            Dietas y Alergias — Boda Rivero - Martínez
+            Dietas y Alergias — {eventoInfo?.nombre ?? "…"}
           </h1>
           {isComercial && !isEditing && (
             <button className="da-edit-btn" onClick={editDietas.startEdit}>
@@ -128,36 +130,37 @@ export default function DietasAlergias() {
         </div>
 
         {/* Stats */}
-        <div className="da-stats-row">
-          <StatCard label="Dietas especiales" style={{ maxWidth: 280 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <span className="da-stat-num">25</span>
-              <svg width="32" height="28" viewBox="0 0 32 28" fill="none">
-                <circle cx="10" cy="9" r="5" fill="#C0B8B0"/>
-                <circle cx="22" cy="9" r="5" fill="#8A8480"/>
-                <path d="M2 26c0-6 4-10 8-10s8 4 8 10" fill="#C0B8B0"/>
-                <path d="M14 26c0-6 4-10 8-10s8 4 8 10" fill="#8A8480"/>
-              </svg>
-            </div>
-          </StatCard>
-          <StatCard label="Contacto" style={{ maxWidth: 340 }}>
-            <span className="da-stat-name">JOAN GARCÍA</span>
-            <span className="da-stat-sub">93 412 00 33</span>
-          </StatCard>
-        </div>
+        <div className="da-top-section">
+          <div className="da-stats-row">
+            <StatCard label="Dietas especiales" style={{ maxWidth: 280 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <span className="da-stat-num">{eventoInfo?.totalDietas ?? "–"}</span>
 
-        {/* Allergen catalogue */}
-        <div className="da-allergen-grid">
-          {ALLERGEN_ORDER.map((id) => (
-            <AllergenIcon key={id} id={id} size={52} showLabel showBan />
-          ))}
+                <svg width="40" height="50" viewBox="0 0 50 28" fill="none">
+                  <circle cx="10" cy="9" r="5" fill="#C0B8B0"/>
+                  <circle cx="22" cy="9" r="5" fill="#8A8480"/>
+                  <path d="M2 26c0-6 4-10 8-10s8 4 8 10" fill="#C0B8B0"/>
+                  <path d="M14 26c0-6 4-10 8-10s8 4 8 10" fill="#8A8480"/>
+                </svg>
+              </div>
+            </StatCard>
+            <StatCard label="Contacto" style={{ maxWidth: 340 }}>
+              <span className="da-stat-name">{eventoInfo?.contacto?.nombre ?? "–"}</span>
+              <span className="da-stat-sub">{eventoInfo?.contacto?.telefono ?? "–"}</span>
+            </StatCard>
+          </div>
+          {/* Allergen catalogue */}
+          <div className="da-allergen-grid">
+            {ALLERGEN_ORDER.map((id) => (
+              <AllergenIcon key={id} id={id} size={150} showLabel showBan />
+            ))}
+          </div>
         </div>
-
+        
         {/* Sort — hidden in edit mode */}
         {!isEditing && (
-          <div className="da-sort-row">
-            <span className="da-sort-label">Ordenar</span>
-            <div style={{ position: "relative" }}>
+          
+            <div style={{ position: "relative", paddingBottom: 14}}>
               <button className="da-sort-btn" onClick={() => setSortOpen((o) => !o)}>
                 {currentSortLabel}
                 <svg width="12" height="8" viewBox="0 0 12 8" fill="none" style={{ marginLeft: 6 }}>
@@ -178,7 +181,6 @@ export default function DietasAlergias() {
                 </div>
               )}
             </div>
-          </div>
         )}
 
         {/* Main content */}

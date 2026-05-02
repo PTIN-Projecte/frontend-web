@@ -11,6 +11,7 @@
 // Each person appears exactly once. Total personas = sum across groups.
 
 export function transformByComun(rawGroups) {
+  if (!Array.isArray(rawGroups) || rawGroups.length === 0) return { viewType: "groups", data: [] };
   return {
     viewType: "groups",
     data: [...rawGroups], // original API order
@@ -18,6 +19,7 @@ export function transformByComun(rawGroups) {
 }
 
 export function transformByAfectados(rawGroups) {
+  if (!Array.isArray(rawGroups) || rawGroups.length === 0) return { viewType: "groups", data: [] };
   return {
     viewType: "groups",
     data: [...rawGroups].sort((a, b) => b.personas - a.personas),
@@ -25,6 +27,7 @@ export function transformByAfectados(rawGroups) {
 }
 
 export function transformByComplejidad(rawGroups) {
+  if (!Array.isArray(rawGroups) || rawGroups.length === 0) return { viewType: "groups", data: [] };
   return {
     viewType: "groups",
     data: [...rawGroups].sort((a, b) => b.alergenos.length - a.alergenos.length),
@@ -39,6 +42,7 @@ export function transformByComplejidad(rawGroups) {
 // Ordered by totalPersonas descending so the most critical allergen leads.
 
 export function transformByAlergeno(rawGroups, allergenOrder) {
+  if (!Array.isArray(rawGroups) || rawGroups.length === 0) return { viewType: "groups", data: [] };
   // Build a map: allergenId → { totalPersonas, groups[] }
   const map = {};
 

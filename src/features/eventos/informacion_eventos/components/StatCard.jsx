@@ -7,8 +7,8 @@ export default function StatCard({ label, children, style, onClick }) {
       style={{
         background: t.cardBg,
         border: `1px solid ${t.cardBorder}`,
-        borderRadius: 12,
-        padding: "16px 18px",
+        borderRadius: 25,
+        padding: "16px 20px",
         display: "flex",
         flexDirection: "column",
         gap: 5,
@@ -22,7 +22,7 @@ export default function StatCard({ label, children, style, onClick }) {
     >
       <span
         style={{
-          fontSize: 15,
+          fontSize: 20,
           fontWeight: 500,
           letterSpacing: "0.08em",
           textTransform: "uppercase",

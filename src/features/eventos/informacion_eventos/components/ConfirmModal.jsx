@@ -26,14 +26,14 @@ export default function ConfirmModal({
           background: "#fff",
           borderRadius: 14,
           padding: "32px 36px",
-          maxWidth: 400,
+          maxWidth: 700,
           width: "90%",
           boxShadow: "0 8px 40px rgba(43,37,32,0.18)",
         }}
       >
         <h3
           style={{
-            fontSize: 18,
+            fontSize: 30,
             fontWeight: 500,
             color: t.textPrimary,
             marginBottom: 12,
@@ -42,7 +42,7 @@ export default function ConfirmModal({
         >
           {title}
         </h3>
-        <p style={{ fontSize: 14, color: t.textSecondary, lineHeight: 1.6, marginBottom: 28 }}>
+        <p style={{ fontSize: 20, color: t.textSecondary, lineHeight: 1.6, marginBottom: 28 }}>
           {message}
         </p>
         <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
@@ -53,7 +53,7 @@ export default function ConfirmModal({
               border: `1px solid ${t.cardBorder}`,
               borderRadius: 20,
               padding: "8px 20px",
-              fontSize: 13,
+              fontSize: 20,
               color: t.textPrimary,
               cursor: "pointer",
               fontFamily: "inherit",
@@ -68,7 +68,7 @@ export default function ConfirmModal({
               border: "none",
               borderRadius: 20,
               padding: "8px 20px",
-              fontSize: 13,
+              fontSize: 20,
               fontWeight: 500,
               color: "#fff",
               cursor: "pointer",

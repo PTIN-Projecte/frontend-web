@@ -27,7 +27,7 @@ export default function AppRouter() {
             {/* Dev redirect: bare root → default event */}
             <Route
               path="/"
-              element={<Navigate to="/eventos/boda-rivero-martinez" replace />}
+              element={<Navigate to="/eventos/evt-1" replace />}
             />
 
             {/* Event detail page */}
@@ -47,7 +47,7 @@ export default function AppRouter() {
             {/* Catch-all: unknown routes → redirect to default event */}
             <Route
               path="*"
-              element={<Navigate to="/eventos/boda-rivero-martinez" replace />}
+              element={<Navigate to="/eventos/evt-1" replace />}
             />
           </Routes>
         </NavigationProvider>

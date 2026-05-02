@@ -21,10 +21,7 @@ export function formatDateDisplay(dateISO) {
 
 /** Fetch a single event by ID */
 export async function getEvento(eventoId) {
-  const eventos = await get("/eventos");
-  const evento  = eventos.find((e) => e.id === eventoId);
-  if (!evento) throw new Error(`Evento '${eventoId}' not found`);
-  return evento;
+  return get(`/eventos/${eventoId}`);
 }
 
 /** Fetch all events (used for duplicate check) */

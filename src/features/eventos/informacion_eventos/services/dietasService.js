@@ -42,9 +42,8 @@ export function getNextDietaId() { return _nextId++; }
 // ── Service calls ─────────────────────────────────────────────────────────────
 
 /** Fetch all diet groups for an event (eventoId for real API routing) */
-export async function getRawDietas(/* eventoId */) {
-  // TODO real API: get(`/eventos/${eventoId}/dietas`)
-  const list = await get("/dietas");
+export async function getRawDietas(eventoId) {
+  const list = await get(`/eventos/${eventoId}/dietas`);
   return list.map((g) => ({ ...g, alergenos: [...g.alergenos] }));
 }
 
@@ -52,8 +51,7 @@ export async function getRawDietas(/* eventoId */) {
  * Replace the entire dietas list for an event.
  * Returns the saved list.
  */
-export async function saveDietas(updatedDietas /*, eventoId */) {
-  // TODO real API: put(`/eventos/${eventoId}/dietas`, updatedDietas)
-  const saved = await putList("/dietas", updatedDietas);
+export async function saveDietas(updatedDietas, eventoId) {
+  const saved = await putList(`/eventos/${eventoId}/dietas`, updatedDietas);
   return saved.map((g) => ({ ...g, alergenos: [...g.alergenos] }));
 }

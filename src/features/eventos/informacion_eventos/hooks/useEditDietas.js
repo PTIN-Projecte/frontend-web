@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { saveDietas, getNextDietaId } from "../services/dietasService";
 
-export function useEditDietas(rawDietas) {
+export function useEditDietas(rawDietas, eventoId) {
   const [isEditing,    setIsEditing] = useState(false);
   const [draftRows,    setDraftRows] = useState([]);
   const [saving,       setSaving]    = useState(false);
@@ -75,7 +75,7 @@ export function useEditDietas(rawDietas) {
   const doSave = async () => {
     setSaving(true);
     try {
-      await saveDietas(draftRows);
+      await saveDietas(draftRows, eventoId);
       window.location.reload();
     } catch (e) {
       console.error("Error saving dietas:", e);
