@@ -18,4 +18,7 @@ export const ICONS = {
 
   // Icono del botón de expandir/flecha
   ARROW_RIGHT: 'weui:arrow-outlined',
+
+  // Icono de reloj para la duración
+  CLOCK: 'mdi:clock-outline',
 };
