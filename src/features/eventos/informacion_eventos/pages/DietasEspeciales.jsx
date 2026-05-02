@@ -52,7 +52,7 @@ function AllergenSectionsView({ data }) {
         return (
           <div key={section.allergenId} className="da-allergen-section">
             <div className="da-section-header">
-              <AllergenIcon id={section.allergenId} size={36} showBan={false} />
+              <AllergenIcon id={section.allergenId} size={50} showBan={false} />
               <div>
                 <span className="da-section-title">{allergen?.label}</span>
                 <span className="da-section-sub"> {section.totalPersonas} personas afectadas</span>
@@ -112,7 +112,7 @@ export default function DietasAlergias() {
 
         {/* Title row */}
         <div className="da-title-row">
-          <span className="da-back" onClick={goBack}>‹</span>
+          {/*<span className="da-back" onClick={goBack}>‹</span>*/}
           <h1 className="da-title">
             Dietas y Alergias — {eventoInfo?.nombre ?? "…"}
           </h1>
@@ -160,7 +160,7 @@ export default function DietasAlergias() {
         {/* Sort — hidden in edit mode */}
         {!isEditing && (
           
-            <div style={{ position: "relative", paddingBottom: 14}}>
+            <div style={{ position: "relative", paddingBottom: 5, paddingLeft: 30 }}>
               <button className="da-sort-btn" onClick={() => setSortOpen((o) => !o)}>
                 {currentSortLabel}
                 <svg width="12" height="8" viewBox="0 0 12 8" fill="none" style={{ marginLeft: 6 }}>
