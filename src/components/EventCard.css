@@ -1,10 +1,7 @@
-/* src/components/EventCard.css */
-
-.event-card {
+.tarjeta-evento {
   background-color: #f4f1ea;
   border-radius: 10px;
   padding: 10px 20px;
-  /* More compact */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -12,58 +9,51 @@
   border: 1px solid #eee;
   transition: all 0.2s ease;
   margin-bottom: 5px;
-  /* Extra breathing room */
 }
 
-.event-card:hover {
+.tarjeta-evento:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transform: translateY(-2px);
 }
 
-/* --- Sección Hora --- */
-.event-card-tiempo {
+.bloque-tiempo-evento {
   display: flex;
   flex-direction: column;
   align-items: center;
   min-width: 80px;
   border-right: 1px solid #898989;
-  /* Increased visibility */
   padding-right: 20px;
 }
 
-.tiempo-hora {
+.hora-evento {
   display: flex;
   align-items: flex-end;
 }
 
-.hora-grande {
+.digito-hora {
   font-size: 1.2rem;
   font-weight: bold;
   color: #333;
 }
 
-.hora-minutos {
+.digito-minutos {
   font-size: 0.9rem;
   color: #666;
   margin-bottom: 2px;
   margin-left: 2px;
 }
 
-.tiempo-duracion {
+.duracion-evento {
   background-color: #E2E2E2;
-  /* Neutral gray */
   padding: 2px 18px;
-  /* More stretched */
   border-radius: 20px;
   font-size: 0.7rem;
-  /* Smaller */
   color: #555;
   margin-top: 5px;
   border: none;
 }
 
-/* --- Sección Información --- */
-.event-card-info {
+.bloque-informacion-evento {
   flex: 1;
   padding: 0 15px;
   display: flex;
@@ -71,23 +61,21 @@
   gap: 4px;
 }
 
-.info-cabecera {
+.cabecera-informacion {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.info-titulo {
+.titulo-evento {
   margin: 0;
   font-size: 0.9rem;
-  /* Smaller */
   font-weight: 600;
   color: #333;
 }
 
-.estado-pill {
+.indicador-estado {
   font-size: 0.65rem;
-  /* Smaller */
   padding: 2px 8px;
   border-radius: 20px;
   font-weight: 500;
@@ -104,37 +92,34 @@
   color: #8a6d3b;
 }
 
-.info-ubicacion {
+.ubicacion-evento {
   font-size: 0.8rem;
-  /* Smaller */
-  color: #333; /* Same as title */
+  color: #333;
   display: flex;
   align-items: center;
   gap: 5px;
 }
 
-.icono-pin {
+.icono-decorativo {
   font-size: 0.75rem;
 }
 
-.info-etiquetas {
+.listado-etiquetas {
   display: flex;
   gap: 6px;
   margin-top: 2px;
 }
 
-.etiqueta-item {
+.etiqueta-individual {
   background-color: #E2E2E2;
   border: none;
   font-size: 0.65rem;
-  /* Smaller */
   padding: 2px 10px;
   border-radius: 20px;
   color: #555;
 }
 
-/* --- Sección Comensales --- */
-.event-card-comensales {
+.bloque-comensales-evento {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -142,30 +127,30 @@
   justify-content: flex-end;
 }
 
-.comensales-icono {
+.contenedor-icono-comensales {
   font-size: 1.2rem;
   opacity: 1;
   color: #898989;
 }
 
-.comensales-info {
+.datos-comensales {
   display: flex;
   flex-direction: column;
   line-height: 1.1;
 }
 
-.comensales-numero {
+.cantidad-comensales {
   font-weight: bold;
   font-size: 1rem;
   color: #333;
 }
 
-.comensales-label {
+.texto-comensales {
   font-size: 0.7rem;
   color: #888;
 }
 
-.btn-expandir {
+.boton-detalles {
   background: none;
   border: none;
   cursor: pointer;
@@ -174,13 +159,13 @@
 }
 
 @media (max-width: 768px) {
-  .event-card {
+  .tarjeta-evento {
     flex-direction: column;
     align-items: flex-start;
     gap: 15px;
   }
 
-  .event-card-tiempo {
+  .bloque-tiempo-evento {
     border-right: none;
     border-bottom: 1px solid #898989;
     padding-right: 0;
@@ -190,12 +175,12 @@
     justify-content: space-between;
   }
 
-  .event-card-info {
+  .bloque-informacion-evento {
     padding: 0;
     width: 100%;
   }
 
-  .event-card-comensales {
+  .bloque-comensales-evento {
     width: 100%;
     justify-content: space-between;
     padding-top: 10px;
