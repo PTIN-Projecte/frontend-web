@@ -1,0 +1,249 @@
+/* ── Page layout ─────────────────────────────────────────────── */
+.ie-content {
+  max-width: 1760px;
+  margin: 0 auto;
+  padding: 24px 5px 60px;
+  box-sizing: border-box;
+}
+
+.ie-breadcrumb {
+  font-size: 15px;
+  color: #A09990;
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+}
+
+.ie-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.ie-back {
+  font-size: 24px;
+  color: #7A746E;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.ie-title {
+  font-size: clamp(25px, 2.8vw, 40px);
+  font-weight: 400;
+  margin: 0;
+  color: #2B2520;
+  font-family: Georgia, serif;
+  letter-spacing: -0.01em;
+}
+
+/* ── Generic card ─────────────────────────────────────────────── */
+.ie-card {
+  background: #F3F1EB;
+  border: 1px solid #E4DFD6;
+  border-radius: 12px;
+  margin-top: 1%;
+  min-width: 50px;
+  
+}
+
+
+/* ── Date card ────────────────────────────────────────────────── */
+.ie-date-card {
+  padding: 14px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 2%;
+  min-width: 1700px;
+}
+
+.ie-date-text {
+  font-size: clamp(13px, 1.4vw, 15px);
+  color: #2B2520;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Button styles */
+.ie-edit-btn {
+  background: #B8915A;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.ie-cancel-btn {
+  background: #DA0000;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.ie-save-btn {
+  background: #15B200;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+/* Clickable date button in edit mode */
+.ie-date-edit-btn {
+  background: #fff;
+  border: 2px solid #B8915A;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: clamp(13px, 1.4vw, 15px);
+  color: #2B2520;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+}
+.ie-date-edit-btn:hover { background: #FEF0E2; }
+
+.ie-coincidentes {
+  font-size: 12px;
+  color: #7A746E;
+  margin-top: 3px;
+}
+
+/* ── Stats grid ───────────────────────────────────────────────── */
+.ie-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5%;
+  margin-bottom: 2%;
+  min-width: 1700px;
+}
+
+/* Edit input inside stat card */
+.ie-edit-input {
+  width: 100%;
+  background: #fff;
+  border: 2px solid #B8915A;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: inherit;
+  font-family: inherit;
+  color: #2B2520;
+  outline: none;
+  box-sizing: border-box;
+}
+.ie-edit-input:focus {
+  box-shadow: 0 0 0 3px rgba(184,145,90,0.2);
+}
+.ie-field-error {
+  font-size: 11px;
+  color: #DA0000;
+  margin-top: 3px;
+}
+
+/* Numbers in stat cards */
+.ie-stat-num {
+  font-size: clamp(26px, 3vw, 34px);
+  font-weight: 300;
+  color: #2B2520;
+  line-height: 1.1;
+  min-width: 1500px;
+}
+.ie-stat-name { font-size: 14px; font-weight: 500; color: #2B2520; }
+.ie-stat-sub  { font-size: 12px; color: #7A746E; }
+.ie-stat-link { font-size: 12px; color: #B8915A; cursor: pointer; }
+
+/* ── Recinto hover tooltip ─────────────────────────────────────── */
+.ie-recinto-card { position: relative; overflow: visible !important; }
+
+.ie-recinto-wrap { position: relative; width: 100%; }
+
+.ie-recinto-tooltip {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  background: #2B2520;
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px 14px;
+  min-width: 220px;
+  z-index: 100;
+  box-shadow: 0 4px 16px rgba(43,37,32,0.25);
+  pointer-events: none;
+}
+.ie-recinto-wrap:hover .ie-recinto-tooltip { display: block; }
+
+.ie-tooltip-name {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #fff;
+}
+.ie-tooltip-line {
+  font-size: 12px;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.6;
+}
+
+.ie-location-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  margin-top: 3px;
+}
+.ie-capacity-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+/* ── Sections ─────────────────────────────────────────────────── */
+.ie-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  min-width: 1700px;
+}
+
+.ie-menu-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.ie-menu-name { font-size: 20px; font-weight: 500; color: #2B2520; }
+.ie-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.ie-peticions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 20px; }
+.ie-peticio { display: flex; align-items: center; gap: 7px; font-size: 15px; color: #2B2520; flex-wrap: wrap; }
+.ie-sep { color: #A09990; }
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 760px) {
+  .ie-stats-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 500px) {
+  .ie-content { padding: 16px 14px 48px; }
+  .ie-stats-grid { grid-template-columns: 1fr 1fr; }
+  .ie-stats-grid > :nth-child(3) { grid-column: span 2; }
+  .ie-stats-grid > :nth-child(4), .ie-stats-grid > :nth-child(5) { grid-column: span 2; }
+  .ie-peticions-grid { grid-template-columns: 1fr; }
+}
