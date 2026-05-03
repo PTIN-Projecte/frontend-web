@@ -23,7 +23,7 @@ function IconConfiguracio() {
   );
 }
 
-function IconPeticions() {
+/*function IconPeticions() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <rect x="8" y="2" width="8" height="4" rx="1" stroke={t.textSecondary} />
@@ -33,7 +33,7 @@ function IconPeticions() {
       <path d="M15 13l1.5 1.5L19 11" stroke="#F59E0B" strokeWidth="1.5" />
     </svg>
   );
-}
+}*/
 
 function IconTancar() {
   return (
@@ -45,12 +45,40 @@ function IconTancar() {
   );
 }
 
+
+function NavLink({ label, onClick }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <button
+      onClick={onClick}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        background: "none",
+        border: "none",
+        cursor: "pointer",
+        fontFamily: "inherit",
+        fontSize: 13,
+        fontWeight: 500,
+        letterSpacing: "0.08em",
+        color: hovered ? t.gold : t.textSecondary,
+        padding: "4px 8px",
+        transition: "color 0.15s",
+        textTransform: "uppercase",
+      }}
+    >
+      {label}
+    </button>
+  );
+}
+
+
 // ─── Menu items ───────────────────────────────────────────────────────────────
 
 const menuItems = [
   { id: "perfil",        label: "Perfil",        Icon: IconPerfil },
   { id: "configuracio",  label: "Configuración",  Icon: IconConfiguracio },
-  { id: "peticions",     label: "Peticiones",     Icon: IconPeticions },
+  /*{ id: "peticions",     label: "Peticiones",     Icon: IconPeticions },*/
 ];
 
 // ─── Navbar ───────────────────────────────────────────────────────────────────
@@ -59,6 +87,8 @@ export default function Navbar({ onChangeRole }) {
   const { role } = useRole();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
+
+   const isProduccion = role === "produccion";
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -86,27 +116,8 @@ export default function Navbar({ onChangeRole }) {
         padding: "0 20px",
       }}
     >
-      {/* Left – Language switcher + debug role */}
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        {["CA", "EN", "ES"].map((lang) => (
-          <button
-            key={lang}
-            style={{
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              fontSize: 12,
-              fontWeight: 500,
-              color: t.gold,
-              letterSpacing: "0.1em",
-              padding: 0,
-              fontFamily: "inherit",
-              opacity: 0.85,
-            }}
-          >
-            {lang}
-          </button>
-        ))}
+      {/* Left – debug role */}
+      <div style={{ display: "flex", alignItems: "center", gap: 10, paddingLeft: 20 }}>
         {/* Debug: role indicator + change */}
         {role && (
           <span
@@ -141,6 +152,21 @@ export default function Navbar({ onChangeRole }) {
         ref={menuRef}
         style={{ display: "flex", justifyContent: "flex-end", position: "relative" }}
       >
+        {/* Nav links */}
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginRight: 50 }}>
+          <NavLink label="Dashboard"  onClick={() => navigate("/dashboard")} />
+          <span style={{ color: t.cardBorder }}>·</span>
+          <NavLink label="Peticiones" onClick={() => navigate("/peticiones")} />
+          <span style={{ color: t.cardBorder }}>·</span>
+          <NavLink label="Menús"      onClick={() => navigate("/menus")} />
+          {isProduccion && (
+            <>
+              <span style={{ color: t.cardBorder }}>·</span>
+              <NavLink label="USR" onClick={() => navigate("/usuarios")} />
+            </>
+          )}
+        </div>
+
         {/* Hamburger button → X when open */}
         <button
           onClick={() => setMenuOpen((o) => !o)}
