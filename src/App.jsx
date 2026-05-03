@@ -64,8 +64,8 @@ export default function App() {
       <div style={{ background: '#ffffff', minHeight: 'calc(100vh - 57px)', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
         {tabActiva === 'platos'  && <ListaPlatos />}
         {tabActiva === 'eventos' && <ListaEventos />}
-        {tabActiva === 'info'    && <InformacionEvento />}
-        {tabActiva === 'dietas'  && <DietasAlergias />}
+        {tabActiva === 'info'    && <InformacionEvento eventoId="evt-1" />}
+        {tabActiva === 'dietas'  && <DietasAlergias eventoId="evt-1" />}
       </div>
     </>
   );

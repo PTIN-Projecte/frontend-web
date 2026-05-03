@@ -18,7 +18,6 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import t from "../styles/tokens";
 import "../styles/InformacionEvento.css";
 
-// ── Icons ─────────────────────────────────────────────────────────────────────
 function CalendarIcon() {
   return (
     <svg width="26" height="26" viewBox="0 0 28 28" fill="none" style={{ flexShrink: 0 }}>
@@ -38,6 +37,7 @@ function LocationIcon() {
     </svg>
   );
 }
+
 function PeopleIcon() {
   return (
     <svg width="13" height="13" viewBox="0 0 14 14" fill="none" style={{ flexShrink: 0 }}>
@@ -48,7 +48,6 @@ function PeopleIcon() {
   );
 }
 
-// ── Reusable edit input ───────────────────────────────────────────────────────
 function EditInput({ value, onChange, error, type = "text", style = {} }) {
   return (
     <div style={{ width: "100%" }}>
@@ -64,15 +63,16 @@ function EditInput({ value, onChange, error, type = "text", style = {} }) {
   );
 }
 
-// ── Page ─────────────────────────────────────────────────────────────────────
-export default function InformacionEvento() {
-  const { eventoId }      = useParams();
+export default function InformacionEvento({ eventoId: eventoIdProp }) {
+  const { eventoId: eventoIdParam } = useParams();
+  const eventoId = eventoIdProp ?? eventoIdParam;
+
   const { role, setRole } = useRole();
   const { navigate }      = useNavigation();
   const { evento, loading } = useEvento(eventoId);
   const isComercial = role === "comercial";
 
-  const [recintos, setRecintos]       = useState([]);
+  const [recintos, setRecintos]         = useState([]);
   const [showDatePicker, setDatePicker] = useState(false);
 
   useEffect(() => {
@@ -93,7 +93,6 @@ export default function InformacionEvento() {
   const d  = edit.draft;
   const isEditing = edit.isEditing;
 
-  // Recinto to show (draft or saved)
   const currentRecinto = isEditing
     ? recintos.find((r) => r.id === d.recintoId)
     : ev.recinto;
@@ -103,14 +102,12 @@ export default function InformacionEvento() {
       {!role && <RoleSelector onSelect={setRole} />}
       <Navbar onChangeRole={() => setRole(null)} />
 
-      {/* Loading overlay while saving */}
       {edit.saving && (
         <div style={{ position: "fixed", inset: 0, background: "rgba(240,236,230,0.85)", zIndex: 600, display: "flex", alignItems: "center", justifyContent: "center" }}>
           <LoadingSpinner message="Guardando cambios…" />
         </div>
       )}
 
-      {/* Date picker overlay */}
       {showDatePicker && (
         <DateTimePicker
           dateISO={d.dateISO}
@@ -125,7 +122,6 @@ export default function InformacionEvento() {
         />
       )}
 
-      {/* Cancel confirm modal */}
       {edit.showCancelWarning && (
         <ConfirmModal
           title="¿Descartar cambios?"
@@ -137,7 +133,6 @@ export default function InformacionEvento() {
         />
       )}
 
-      {/* Capacity warning modal */}
       {edit.showCapacityWarning && (
         <ConfirmModal
           title="Advertencia de capacidad"
@@ -150,9 +145,6 @@ export default function InformacionEvento() {
       )}
 
       <main className="ie-content">
-
-      
-        {/* Title */}
         <div className="ie-title-row">
           <span className="ie-back" onClick={() => navigate(-1)}>‹</span>
           {isEditing ? (
@@ -172,30 +164,21 @@ export default function InformacionEvento() {
           )}
         </div>
 
-        {/* Date card */}
         <div className="ie-card ie-date-card">
           <CalendarIcon />
           <div style={{ flex: 1 }}>
             <div className="ie-date-text">
               {isEditing ? (
-                <button
-                  onClick={() => setDatePicker(true)}
-                  className="ie-date-edit-btn"
-                >
+                <button onClick={() => setDatePicker(true)} className="ie-date-edit-btn">
                   {d.dateISO
                     ? `${formatDateDisplay(d.dateISO)} - (${d.startTime}-${d.endTime}h)`
                     : "Seleccionar fecha…"}
                 </button>
               ) : (
-                <>
-                  {ev.date} <strong>- ({ev.startTime}-{ev.endTime}h)</strong>
-                </>
+                <>{ev.date} <strong>- ({ev.startTime}-{ev.endTime}h)</strong></>
               )}
-              {/* Edit / Save / Cancel buttons */}
               {isComercial && !isEditing && (
-                <button className="ie-edit-btn" onClick={edit.startEdit}>
-                  Editar evento
-                </button>
+                <button className="ie-edit-btn" onClick={edit.startEdit}>Editar evento</button>
               )}
               {isEditing && (
                 <>
@@ -213,16 +196,13 @@ export default function InformacionEvento() {
               className="ie-coincidentes"
               onClick={!isEditing ? () => navigate("/eventos") : undefined}
               style={{ cursor: isEditing ? "default" : "pointer", textDecoration: isEditing ? "none" : "underline dotted" }}
-              title={!isEditing ? "Ver todos los eventos coincidentes" : undefined}
             >
               {ev.coincidentes} eventos coincidentes.
             </div>
           </div>
         </div>
 
-        {/* Stats grid */}
         <div className="ie-stats-grid">
-          {/* Comensales — editable */}
           <StatCard label="Comensales" className={isEditing ? "ie-stat-editable" : ""}>
             {isEditing ? (
               <EditInput
@@ -237,7 +217,6 @@ export default function InformacionEvento() {
             )}
           </StatCard>
 
-          {/* Confirmados — editable by comercial */}
           <StatCard label="Confirmados">
             {isEditing ? (
               <EditInput
@@ -251,7 +230,6 @@ export default function InformacionEvento() {
             )}
           </StatCard>
 
-          {/* Dietas — navigates to dietas page */}
           <StatCard
             label="Dietas especiales"
             style={{ cursor: "pointer" }}
@@ -261,7 +239,6 @@ export default function InformacionEvento() {
             <span className="ie-stat-link">Consultar →</span>
           </StatCard>
 
-          {/* Contacto — editable */}
           <StatCard label="Contacto" className={isEditing ? "ie-stat-editable" : ""}>
             {isEditing ? (
               <div style={{ display: "flex", flexDirection: "column", gap: 5, width: "100%" }}>
@@ -285,7 +262,6 @@ export default function InformacionEvento() {
             )}
           </StatCard>
 
-          {/* Recinto — editable, hover tooltip in view mode */}
           <StatCard label="Recinto" className={isEditing ? "ie-stat-editable" : "ie-recinto-card"}>
             {isEditing ? (
               <div style={{ width: "100%" }}>
@@ -313,7 +289,6 @@ export default function InformacionEvento() {
                     <span className="ie-stat-sub">Capacidad: {ev.recinto.capacidad}</span>
                   </div>
                 </div>
-                {/* Hover tooltip */}
                 <div className="ie-recinto-tooltip">
                   <div className="ie-tooltip-name">{ev.recinto.sala} — {ev.recinto.planta}</div>
                   <div className="ie-tooltip-line">{ev.recinto.direccion}</div>
@@ -325,7 +300,6 @@ export default function InformacionEvento() {
           </StatCard>
         </div>
 
-        {/* Sections */}
         <div className="ie-sections">
           <SectionRow
             label="Menú"

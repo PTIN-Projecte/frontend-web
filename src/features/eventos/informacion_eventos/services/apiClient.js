@@ -1,25 +1,12 @@
 /**
  * apiClient.js
- *
- * ─────────────────────────────────────────────────────────────────────────────
- * THIS IS THE ONLY FILE THAT CHANGES WHEN THE REAL API IS READY.
- * ─────────────────────────────────────────────────────────────────────────────
- *
- * Current mode: sessionStorage mock
- *   - Data persists across page reloads within the same browser tab
- *   - Data resets when the tab/browser is closed (clean dev state)
- *   - Simulates network latency with configurable delay
- *
  */
 
-// ── Config ────────────────────────────────────────────────────────────────────
-const MOCK_DELAY_MS = 400; // simulated network latency
-const IS_MOCK = true;      // flip to false when real API is connected
+const MOCK_DELAY_MS = 400;
+const IS_MOCK = true;
 
-// ── Initial seed data (used on first load if sessionStorage is empty) ─────────
 import { db as _db } from "./mockSeedData";
 
-// Carga desde localStorage si hay datos guardados, si no usa el mock original
 function loadDb() {
   try {
     const saved = localStorage.getItem("mockDb");
@@ -33,7 +20,6 @@ function saveDb(db) {
   localStorage.setItem("mockDb", JSON.stringify(db));
 }
 
-// Estado en memoria, inicializado desde localStorage
 const db = loadDb();
 
 const clone = (x) => JSON.parse(JSON.stringify(x));
@@ -44,6 +30,7 @@ export async function get(path) {
   await delay(SIMULATED_DELAY_MS);
 
   const eventoMatch = path.match(/^\/eventos\/([^/]+)$/);
+  console.log('path:', path, 'match:', eventoMatch);
   if (eventoMatch) {
     const ev = db.eventos.find((e) => e.id === eventoMatch[1]);
     if (!ev) throw new Error(`404 – Evento '${eventoMatch[1]}' not found`);
@@ -70,7 +57,7 @@ export async function put(path, body) {
     const idx = db.eventos.findIndex((e) => e.id === eventoMatch[1]);
     if (idx === -1) throw new Error(`404 – Evento '${eventoMatch[1]}' not found`);
     db.eventos[idx] = { ...db.eventos[idx], ...body };
-    saveDb(db);  // ← persiste
+    saveDb(db);
     return clone(db.eventos[idx]);
   }
 
@@ -83,7 +70,7 @@ export async function putList(path, body) {
   const dietasMatch = path.match(/^\/eventos\/([^/]+)\/dietas$/);
   if (dietasMatch) {
     db.dietas[dietasMatch[1]] = clone(body);
-    saveDb(db);  // ← persiste
+    saveDb(db);
     return clone(body);
   }
 

@@ -81,12 +81,15 @@ function PeopleIcon({ size = 40 }) {
 }
 
 // ── Page ─────────────────────────────────────────────────────────────────────
-export default function DietasAlergias() {
-  const { eventoId }      = useParams();
+export default function DietasAlergias(props) {
+  const { eventoId: eventoIdParam } = useParams();
+  const eventoId = eventoIdParam ?? props.eventoId;
+
   const { role, setRole } = useRole();
   const { goBack }        = useNavigation();
   const [sortId, setSortId]   = useState("comun");
   const [sortOpen, setSortOpen] = useState(false);
+
   const { viewType, data, loading, rawDietas, eventoInfo } = useDietas(eventoId, sortId);
   const isComercial = role === "comercial";
 
@@ -95,19 +98,21 @@ export default function DietasAlergias() {
 
   const currentSortLabel = SORT_OPTIONS.find((o) => o.id === sortId)?.label ?? "";
 
+  if (!eventoId) {
+    console.error("DietasAlergias: eventoId is missing");
+  }
+
   return (
     <div style={{ minHeight: "100vh", background: "#ffffff", fontFamily: "'Helvetica Neue', Arial, sans-serif", color: t.textPrimary }}>
       {!role && <RoleSelector onSelect={setRole} />}
       <Navbar onChangeRole={() => setRole(null)} />
 
-      {/* Saving overlay */}
       {editDietas.saving && (
         <div style={{ position: "fixed", inset: 0, background: "rgba(255,255,255,0.85)", zIndex: 600, display: "flex", alignItems: "center", justifyContent: "center" }}>
           <LoadingSpinner message="Guardando dietas…" />
         </div>
       )}
 
-      {/* Cancel confirm */}
       {editDietas.showCancelWarn && (
         <ConfirmModal
           title="¿Descartar cambios?"
@@ -120,18 +125,17 @@ export default function DietasAlergias() {
       )}
 
       <main className="da-content">
-
-        {/* Title row */}
         <div className="da-title-row">
-          {/*<span className="da-back" onClick={goBack}>‹</span>*/}
           <h1 className="da-title">
             Dietas y Alergias — {eventoInfo?.nombre ?? "…"}
           </h1>
+
           {isComercial && !isEditing && (
             <button className="da-edit-btn" onClick={editDietas.startEdit}>
               Editar evento
             </button>
           )}
+
           {isEditing && (
             <>
               <button className="da-cancel-btn" onClick={editDietas.requestCancel}>Cancelar</button>
@@ -140,64 +144,61 @@ export default function DietasAlergias() {
           )}
         </div>
 
-        {/* Stats */}
         <div className="da-top-section">
           <div className="da-stats-row">
             <StatCard label="Dietas especiales" style={{ maxWidth: 280 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <span className="da-stat-num">{eventoInfo?.totalDietas ?? "–"}</span>
-
                 <PeopleIcon size={60} />
               </div>
             </StatCard>
+
             <StatCard label="Contacto" style={{ maxWidth: 540, gap: 15, padding: 20 }}>
               <span className="da-stat-name">{eventoInfo?.contacto?.nombre ?? "–"}</span>
               <span className="da-stat-sub">{eventoInfo?.contacto?.telefono ?? "–"}</span>
             </StatCard>
           </div>
-          {/* Allergen catalogue */}
+
           <div className="da-allergen-grid">
             {ALLERGEN_ORDER.map((id) => (
               <AllergenIcon key={id} id={id} size={150} showLabel showBan />
             ))}
           </div>
         </div>
-        
-        {/* Sort — hidden in edit mode */}
+
         {!isEditing && (
-          
-            <div style={{ position: "relative", paddingBottom: 5, paddingLeft: 30 }}>
-              <button className="da-sort-btn" onClick={() => setSortOpen((o) => !o)}>
-                {currentSortLabel}
-                <svg width="12" height="8" viewBox="0 0 12 8" fill="none" style={{ marginLeft: 6 }}>
-                  <path d="M1 1.5L6 6.5L11 1.5" stroke="#2B2520" strokeWidth="1.5" strokeLinecap="round"/>
-                </svg>
-              </button>
-              {sortOpen && (
-                <div className="da-sort-dropdown">
-                  {SORT_OPTIONS.map((opt) => (
-                    <button
-                      key={opt.id}
-                      className={`da-sort-option${sortId === opt.id ? " active" : ""}`}
-                      onClick={() => { setSortId(opt.id); setSortOpen(false); }}
-                    >
-                      {opt.label}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+          <div style={{ position: "relative", paddingBottom: 5, paddingLeft: 30 }}>
+            <button className="da-sort-btn" onClick={() => setSortOpen((o) => !o)}>
+              {currentSortLabel}
+            </button>
+
+            {sortOpen && (
+              <div className="da-sort-dropdown">
+                {SORT_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.id}
+                    className={`da-sort-option${sortId === opt.id ? " active" : ""}`}
+                    onClick={() => {
+                      setSortId(opt.id);
+                      setSortOpen(false);
+                    }}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         )}
 
-        {/* Main content */}
         {loading ? (
           <LoadingSpinner message="Cargando dietas y alergias…" />
         ) : isEditing ? (
-          /* ── Edit mode ─────────────────────────────────────────── */
           <div className="da-edit-container">
             <button className="da-add-row-btn" onClick={editDietas.addRow}>
               + Añadir dieta
             </button>
+
             <div className="da-edit-rows">
               {editDietas.draftRows.map((row) => (
                 <EditDietRow
