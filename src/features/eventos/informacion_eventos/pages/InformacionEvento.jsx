@@ -151,11 +151,7 @@ export default function InformacionEvento() {
 
       <main className="ie-content">
 
-        {/* Breadcrumb */}
-        <div className="ie-breadcrumb">
-          Informacion detallada ({isComercial ? "Comercial" : "Producción"})
-        </div>
-
+      
         {/* Title */}
         <div className="ie-title-row">
           <span className="ie-back" onClick={() => navigate(-1)}>‹</span>

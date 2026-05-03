@@ -69,6 +69,17 @@ function AllergenSectionsView({ data }) {
   );
 }
 
+function PeopleIcon({ size = 40 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 28" fill="none">
+      <circle cx="10" cy="9" r="5" fill="#C0B8B0"/>
+      <circle cx="22" cy="9" r="5" fill="#8A8480"/>
+      <path d="M2 26c0-6 4-10 8-10s8 4 8 10" fill="#C0B8B0"/>
+      <path d="M14 26c0-6 4-10 8-10s8 4 8 10" fill="#8A8480"/>
+    </svg>
+  );
+}
+
 // ── Page ─────────────────────────────────────────────────────────────────────
 export default function DietasAlergias() {
   const { eventoId }      = useParams();
@@ -136,15 +147,10 @@ export default function DietasAlergias() {
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <span className="da-stat-num">{eventoInfo?.totalDietas ?? "–"}</span>
 
-                <svg width="40" height="50" viewBox="0 0 50 28" fill="none">
-                  <circle cx="10" cy="9" r="5" fill="#C0B8B0"/>
-                  <circle cx="22" cy="9" r="5" fill="#8A8480"/>
-                  <path d="M2 26c0-6 4-10 8-10s8 4 8 10" fill="#C0B8B0"/>
-                  <path d="M14 26c0-6 4-10 8-10s8 4 8 10" fill="#8A8480"/>
-                </svg>
+                <PeopleIcon size={60} />
               </div>
             </StatCard>
-            <StatCard label="Contacto" style={{ maxWidth: 340 }}>
+            <StatCard label="Contacto" style={{ maxWidth: 540, gap: 15, padding: 20 }}>
               <span className="da-stat-name">{eventoInfo?.contacto?.nombre ?? "–"}</span>
               <span className="da-stat-sub">{eventoInfo?.contacto?.telefono ?? "–"}</span>
             </StatCard>
@@ -189,6 +195,9 @@ export default function DietasAlergias() {
         ) : isEditing ? (
           /* ── Edit mode ─────────────────────────────────────────── */
           <div className="da-edit-container">
+            <button className="da-add-row-btn" onClick={editDietas.addRow}>
+              + Añadir dieta
+            </button>
             <div className="da-edit-rows">
               {editDietas.draftRows.map((row) => (
                 <EditDietRow
@@ -201,9 +210,6 @@ export default function DietasAlergias() {
                 />
               ))}
             </div>
-            <button className="da-add-row-btn" onClick={editDietas.addRow}>
-              + Añadir dieta
-            </button>
           </div>
         ) : viewType === "allergens" ? (
           <AllergenSectionsView data={data} />

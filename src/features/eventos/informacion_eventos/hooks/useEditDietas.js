@@ -38,8 +38,9 @@ export function useEditDietas(rawDietas, eventoId) {
 
   const addRow = () => {
     setDraftRows((prev) => [
-      ...prev,
       { id: getNextDietaId(), personas: 1, etiqueta: "", alergenos: [] },
+      ...prev,
+      
     ]);
   };
 

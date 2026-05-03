@@ -43,7 +43,10 @@
   border: 1px solid #E4DFD6;
   border-radius: 12px;
   margin-top: 1%;
+  min-width: 50px;
+  
 }
+
 
 /* ── Date card ────────────────────────────────────────────────── */
 .ie-date-card {
@@ -52,6 +55,7 @@
   align-items: flex-start;
   gap: 12px;
   margin-bottom: 2%;
+  min-width: 1700px;
 }
 
 .ie-date-text {
@@ -129,6 +133,7 @@
   grid-template-columns: repeat(5, 1fr);
   gap: 1.5%;
   margin-bottom: 2%;
+  min-width: 1700px;
 }
 
 /* Edit input inside stat card */
@@ -159,6 +164,7 @@
   font-weight: 300;
   color: #2B2520;
   line-height: 1.1;
+  min-width: 1500px;
 }
 .ie-stat-name { font-size: 14px; font-weight: 500; color: #2B2520; }
 .ie-stat-sub  { font-size: 12px; color: #7A746E; }
@@ -215,6 +221,7 @@
   display: flex;
   flex-direction: column;
   gap: 25px;
+  min-width: 1700px;
 }
 
 .ie-menu-row {

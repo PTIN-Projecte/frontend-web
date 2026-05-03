@@ -8,18 +8,19 @@ export default function EditDietRow({ group, onChange, onToggleAllergen, onDelet
       style={{
         background: "#fff",
         border: `2px solid ${error ? "#DA0000" : t.gold}`,
-        borderRadius: 10,
-        padding: "12px 14px",
+        borderRadius: 14,
+        padding: "18px 20px",
         display: "flex",
         flexDirection: "column",
-        gap: 10,
+        gap: 14,
       }}
     >
       {/* Top row: personas + etiqueta + delete */}
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+
         {/* Personas */}
         <div style={{ flexShrink: 0 }}>
-          <div style={{ fontSize: 10, color: t.textSecondary, marginBottom: 3, textTransform: "uppercase", letterSpacing: "0.05em" }}>
+          <div style={{ fontSize: 15, color: t.textSecondary, marginBottom: 5, textTransform: "uppercase", letterSpacing: "0.07em" }}>
             Personas
           </div>
           <input
@@ -28,12 +29,12 @@ export default function EditDietRow({ group, onChange, onToggleAllergen, onDelet
             value={group.personas}
             onChange={(e) => onChange(group.id, "personas", parseInt(e.target.value) || 1)}
             style={{
-              width: 56,
+              width: 68,
               border: `1px solid ${t.cardBorder}`,
-              borderRadius: 6,
-              padding: "5px 8px",
-              fontSize: 15,
-              fontWeight: 400,
+              borderRadius: 8,
+              padding: "8px 10px",
+              fontSize: 18,
+              fontWeight: 500,
               fontFamily: "inherit",
               color: t.textPrimary,
               outline: "none",
@@ -44,7 +45,7 @@ export default function EditDietRow({ group, onChange, onToggleAllergen, onDelet
 
         {/* Etiqueta */}
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 10, color: t.textSecondary, marginBottom: 3, textTransform: "uppercase", letterSpacing: "0.05em" }}>
+          <div style={{ fontSize: 15, color: t.textSecondary, marginBottom: 5, textTransform: "uppercase", letterSpacing: "0.07em" }}>
             Etiqueta
           </div>
           <input
@@ -55,9 +56,9 @@ export default function EditDietRow({ group, onChange, onToggleAllergen, onDelet
             style={{
               width: "100%",
               border: `1px solid ${t.cardBorder}`,
-              borderRadius: 6,
-              padding: "5px 10px",
-              fontSize: 13,
+              borderRadius: 8,
+              padding: "8px 14px",
+              fontSize: 18,
               fontFamily: "inherit",
               color: t.textPrimary,
               outline: "none",
@@ -74,9 +75,9 @@ export default function EditDietRow({ group, onChange, onToggleAllergen, onDelet
             border: "none",
             cursor: "pointer",
             color: t.textMuted,
-            fontSize: 18,
+            fontSize: 30,
             lineHeight: 1,
-            padding: 4,
+            padding: 6,
             flexShrink: 0,
             alignSelf: "flex-end",
           }}
@@ -87,10 +88,10 @@ export default function EditDietRow({ group, onChange, onToggleAllergen, onDelet
 
       {/* Allergen toggle row */}
       <div>
-        <div style={{ fontSize: 10, color: t.textSecondary, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>
+        <div style={{ fontSize: 15, color: t.textSecondary, marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.07em" }}>
           Alérgenos (clic para activar/desactivar)
         </div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
           {ALLERGEN_ORDER.map((aid) => {
             const active = group.alergenos.includes(aid);
             return (
@@ -103,12 +104,12 @@ export default function EditDietRow({ group, onChange, onToggleAllergen, onDelet
                   border: "none",
                   cursor: "pointer",
                   padding: 0,
-                  opacity: active ? 1 : 0.28,
+                  opacity: active ? 1 : 0.25,
                   transition: "opacity 0.15s",
                   borderRadius: "50%",
                 }}
               >
-                <AllergenIcon id={aid} size={28} showBan={false} />
+                <AllergenIcon id={aid} size={50} showBan={false} />
               </button>
             );
           })}
@@ -117,7 +118,7 @@ export default function EditDietRow({ group, onChange, onToggleAllergen, onDelet
 
       {/* Error message */}
       {error && (
-        <div style={{ fontSize: 11, color: "#DA0000" }}>{error}</div>
+        <div style={{ fontSize: 12, color: "#DA0000" }}>{error}</div>
       )}
     </div>
   );

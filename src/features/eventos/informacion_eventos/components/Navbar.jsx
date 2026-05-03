@@ -23,17 +23,6 @@ function IconConfiguracio() {
   );
 }
 
-/*function IconPeticions() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="8" y="2" width="8" height="4" rx="1" stroke={t.textSecondary} />
-      <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" stroke={t.textSecondary} />
-      <line x1="9" y1="11" x2="15" y2="11" stroke="#3B82F6" />
-      <line x1="9" y1="15" x2="13" y2="15" stroke="#3B82F6" />
-      <path d="M15 13l1.5 1.5L19 11" stroke="#F59E0B" strokeWidth="1.5" />
-    </svg>
-  );
-}*/
 
 function IconTancar() {
   return (
@@ -78,7 +67,6 @@ function NavLink({ label, onClick }) {
 const menuItems = [
   { id: "perfil",        label: "Perfil",        Icon: IconPerfil },
   { id: "configuracio",  label: "Configuración",  Icon: IconConfiguracio },
-  /*{ id: "peticions",     label: "Peticiones",     Icon: IconPeticions },*/
 ];
 
 // ─── Navbar ───────────────────────────────────────────────────────────────────
@@ -162,7 +150,7 @@ export default function Navbar({ onChangeRole }) {
           {isProduccion && (
             <>
               <span style={{ color: t.cardBorder }}>·</span>
-              <NavLink label="USR" onClick={() => navigate("/usuarios")} />
+              <NavLink label="USUARIOS" onClick={() => navigate("/usuarios")} />
             </>
           )}
         </div>

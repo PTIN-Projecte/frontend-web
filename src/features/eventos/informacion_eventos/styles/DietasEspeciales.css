@@ -46,6 +46,7 @@
   max-width: 500px;
 }
 
+
 .da-stat-num {
   font-size: 60px; 
   font-weight: 300px;
@@ -72,7 +73,7 @@
   align-content: flex-start;
 }
 
-/* ── Graella de Dietes (Contingut Principal) ── */
+/* ── Graella de Dietes ── */
 .da-table-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -80,12 +81,15 @@
   background: #F3F1EB;
   border-radius: 20px;
   padding: 25px;
+  min-width: 1700px;
+  max-width: 1700px;
 }
 
 .da-table-col {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  min-width: 700px;
 }
 
 /* ── Fila de Dieta Individual ── */
@@ -93,10 +97,11 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  background: #ffffff; /* Fons blanc per ressaltar sobre el gris */
+  background: #ffffff;
   border-radius: 12px;
   padding: 16px 20px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  min-width: 700px;
 }
 
 .da-diet-personas {
@@ -109,6 +114,7 @@
   font-weight: 500;
   color: #2B2520;
   display: block;
+  min-width: 120px;
 }
 
 .da-diet-etiqueta {
@@ -165,6 +171,41 @@
   font-family: inherit;
 }
 
+
+/* ── pantalla en edición ── */
+.da-edit-container {
+  flex-direction: column;
+  gap: 10px;
+  width: 1750px;
+}
+
+.da-edit-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 10px;
+}
+
+.da-add-row-btn {
+  background: t.gold;
+  color: t.gold;
+  border: 1.5px solid #B8915A;
+  border-radius: 20px;
+  padding: 10px 25px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  margin-bottom: 10px;
+  color: #B8915A;
+  letter-spacing: 0.05em;
+  transition: background 0.15s, color 0.15s;
+}
+
+.da-add-row-btn:hover {
+  background: #B8915A;
+  color: #ffffff;
+}
 
 /* ── Botón de ordenación ── */
 .da-sort-btn {
