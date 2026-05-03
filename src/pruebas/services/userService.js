@@ -1,8 +1,5 @@
-import { BASE_URL } from '../../api.config';
-
-// Función para crear usuario
 export const createUser = async (userData) => {
-  const response = await fetch(`${BASE_URL}/api/users`, {
+  const response = await fetch(`/api/users`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(userData),
@@ -11,9 +8,8 @@ export const createUser = async (userData) => {
   return await response.json();
 };
 
-// Función para login
 export const loginRequest = async (username, password) => {
-  const response = await fetch(`${BASE_URL}/api/login`, {
+  const response = await fetch(`/api/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username, password }),
