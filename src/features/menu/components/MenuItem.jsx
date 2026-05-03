@@ -12,13 +12,13 @@ function MenuItem({ titulo, descripcion, alergenos }) {
       {alergenos && (
         <div className="menu-item-alergenos">
           {alergenos.map((alergeno, index) => (
-            <span 
+            <img 
               key={index} 
-              className="icono-alergeno"
-              title={alergeno.nombre} /* para que salga el nombre del alergeno al pasar el ratón por encima del incono */
-            >
-              {alergeno.icono}
-            </span>
+              src={alergeno.icono} 
+              alt={alergeno.nombre} 
+              title={alergeno.nombre} /* Truco: así al pasar el ratón por encima saldrá el nombre */
+              style={{ width: '35px', height: '35px', marginLeft: '8px' }} /* Para asegurarnos de que no salgan gigantes */
+            />
           ))}
         </div>
       )}
@@ -27,3 +27,6 @@ function MenuItem({ titulo, descripcion, alergenos }) {
 }
 
 export default MenuItem;
+
+
+{/* Así le decimos a React que es una imagen */}
