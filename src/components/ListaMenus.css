@@ -1,0 +1,326 @@
+/* src/components/ListaMenus.css */
+@font-face {
+  font-family: 'CalBlay2';
+  src: url('../assets/fonts/CalBlay2.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Light';
+  src: url('../assets/fonts/Light.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.layout-principal {
+  display: flex;
+  min-height: 100vh;
+  background-color: #faf9f7;
+  font-family: 'CalBlay2', sans-serif;
+  color: #333;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar {
+  width: 220px;
+  background-color: #f6f4f0;
+  padding: 30px 20px;
+  border-right: 1px solid #eaeaea;
+  flex-shrink: 0;
+  border-radius: 24px;
+  margin: 20px;
+  height: fit-content;
+}
+
+.sidebar-titulo {
+  font-size: 12px;
+  font-weight: 600;
+  color: #d4cfc7;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  margin-top: 32px;
+}
+
+.sidebar-titulo:first-child {
+  margin-top: 0;
+}
+
+/* Checkboxes de filtros */
+.filtros-checkbox {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #8a857e;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.checkbox-item:hover {
+  color: #333;
+}
+
+.checkbox-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #8a857e;
+  cursor: pointer;
+  margin: 0;
+}
+
+/* Tres puntos separador */
+.sidebar-dots {
+  color: #d4cfc7;
+  font-size: 18px;
+  margin: 8px 0 24px 16px;
+  letter-spacing: 2px;
+}
+
+/* Botón limpiar filtros */
+.btn-limpiar {
+  background: none;
+  border: 1px solid #d4cfc7;
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin-top: 32px;
+  cursor: pointer;
+  color: #8a857e;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'CalBlay2', sans-serif;
+  transition: all 0.2s;
+}
+
+.btn-limpiar:hover {
+  background-color: #ebe7e0;
+  border-color: #8a857e;
+}
+
+.btn-limpiar::before {
+  content: '✦';
+  font-size: 14px;
+}
+
+/* ================= CONTENIDO PRINCIPAL ================= */
+.contenido-principal {
+  flex: 1;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header superior */
+.header-superior {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 48px;
+  border-bottom: 1px solid #f0ede8;
+  background-color: #ffffff;
+}
+
+.idioma-selector {
+  display: flex;
+  gap: 16px;
+  font-size: 11px;
+  color: #d4cfc7;
+  letter-spacing: 0.5px;
+}
+
+.idioma-selector span {
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.idioma-selector span:hover {
+  color: #8a857e;
+}
+
+.logo {
+  font-family: 'CalBlay2', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #1a1a1a;
+  text-align: center;
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+  font-size: 10px;
+  color: #d4cfc7;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.nav-links span {
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.nav-links span:hover {
+  color: #8a857e;
+}
+
+/* Barra de controles (buscador + botón) */
+.controles-superiores {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 48px;
+  background-color: #faf9f7;
+}
+
+/* Buscador */
+.buscador-wrapper {
+  position: relative;
+  width: 480px;
+}
+
+.buscador-wrapper input {
+  width: 100%;
+  padding: 14px 48px 14px 20px;
+  border-radius: 24px;
+  border: 1px solid #e8e6e1;
+  background-color: #ffffff;
+  font-size: 14px;
+  outline: none;
+  font-family: 'CalBlay2', sans-serif;
+  color: #333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.buscador-wrapper input::placeholder {
+  color: #b8b3ab;
+}
+
+.buscador-wrapper input:focus {
+  border-color: #d4cfc7;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.buscador-wrapper::after {
+  content: '🔍';
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: #8a857e;
+}
+
+/* Botón Añadir Menú */
+.btn-anadir-menu {
+  padding: 14px 48px;
+  border-radius: 8px;
+  border: none;
+  background-color: #c9e4c9;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  color: #1a1a1a;
+  font-family: 'CalBlay2', sans-serif;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.btn-anadir-menu:hover {
+  background-color: #b8d8b8;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+/* Grid de menús */
+.grid-platos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  padding: 0 48px 48px 48px;
+  flex: 1;
+}
+
+/* Tarjeta de menú */
+.menu-card {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.menu-imagen {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  display: block;
+}
+
+.menu-info {
+  padding: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #faf9f7;
+  min-height: 120px;
+}
+
+.menu-titulo {
+  font-family: 'Light', sans-serif;
+  font-size: 28px;
+  font-weight: 300;
+  margin: 0;
+  color: #1a1a1a;
+  letter-spacing: -0.5px;
+}
+
+.menu-opciones {
+  align-self: flex-end;
+  font-size: 20px;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 4px;
+  line-height: 1;
+}
+
+.menu-opciones:hover {
+  color: #8a857e;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .grid-platos {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-platos {
+    grid-template-columns: 1fr;
+  }
+  
+  .sidebar {
+    width: 240px;
+  }
+}
