@@ -22,7 +22,27 @@ const provider = new WebTracerProvider({
 provider.addSpanProcessor(new BatchSpanProcessor(exporter));
 provider.register();
 
-
+//Registra las instumentaciones automaticas que generan spans sin que tengamos que añadir codigo en cada llamada
 registerInstrumentations({
-  instrumentations: [getWebAutoInstrumentations()],
+  tracerProvider: provider, //Vincula las instrumentaciones al provider que creamos, en lugar de buscar uno global
+  instrumentations: [
+    getWebAutoInstrumentations({
+      '@opentelemetry/instrumentation-fetch': { //Intercepta automaticamente todos los fetch de la app y genera un span por cada llamada
+        ignoreUrls: [/\/api\/otlp/],  //Evita el loop, sin esto, el fetch que envia spans al collector generaria un nuevo span, que generaria otro fetch, infinitamente
+      },
+      '@opentelemetry/instrumentation-xml-http-request': { //Igual, pero para llamadas XMLHttpRequest
+        ignoreUrls: [/\/api\/otlp/],
+      },
+      '@opentelemetry/instrumentation-document-load': { enabled: true }, //Genera un span cuando se carga la pagina, con tiempos de navegacion, carga de recursos, etc
+      '@opentelemetry/instrumentation-user-interaction': { enabled: false }, // Desactivado porque instrumemta clcisk, inputs y otros eventos del usuario, generando demasiado ruido sin mucho valor
+    }),
+  ],
+});
+
+
+//Forzamos a que cuando el usuario recarge o cambie de pestaña, toda la informacion restante se envie al collector
+window.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') {
+    provider.forceFlush().catch(console.error);
+  }
 });
