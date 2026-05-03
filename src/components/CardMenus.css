@@ -1,0 +1,180 @@
+.card-contenedor {
+  background-color: #f3f0ea;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.card-contenedor:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.card-imagen-wrapper {
+  position: relative;
+  height: 220px;
+  width: 100%;
+  border-radius: 24px 24px 0 0;
+  overflow: hidden;
+}
+
+.card-imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.etiquetas-wrapper {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  width: max-content;
+  max-width: 90%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.etiqueta {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  backdrop-filter: blur(4px);
+}
+
+.etiqueta-nuevo { 
+    background-color: #fff9e6; 
+    color: #c99c35;
+    border: 1px solid #e0c273;
+}
+
+.card-contenido {
+  padding: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-contenido h3 {
+  margin: 0 0 12px 0;
+  font-size: 24px;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  margin-top: auto;
+}
+
+.alergenos-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 15px;
+}
+
+.tag-alergeno {
+  background-color: #fcebeb;
+  color: #d9534f;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid #f5c6c6;
+}
+
+.btn-opciones {
+  background: none;
+  border: 1px solid #d9d9d9;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  color: #666;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.btn-opciones:hover { background-color: #e6e6e6; }
+
+/*Menú de "Modificar" / "Eliminar"*/
+.opciones-desplegable {
+  position: absolute;
+  bottom: calc(100% + 8px); /*Encima del botón opciones*/
+  right: 0;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  z-index: 20;
+  min-width: 140px;
+  
+  /*Margen entre la 'x' y el botón de arriba*/
+  padding-top: 24px; 
+  
+  /* Oculto por defecto */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.2s ease;
+}
+
+/* Hacerlo visible */
+.opciones-desplegable.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* La X para cerrar */
+.btn-cerrar-menu {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  line-height: 1;
+  color: #999;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.btn-cerrar-menu:hover {
+  color: #333;
+}
+
+/* Modificar y Eliminar */
+.opcion-btn {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  border: none;
+  background: none;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: background-color 0.2s;
+}
+
+.opcion-btn:hover {
+  background-color: #f5f3f0;
+}
