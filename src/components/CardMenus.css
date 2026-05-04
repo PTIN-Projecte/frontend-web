@@ -129,7 +129,7 @@
   min-width: 140px;
   
   /*Margen entre la 'x' y el botón de arriba*/
-  padding-top: 24px; 
+  padding-top: 4px 0; 
   
   /* Oculto por defecto */
   opacity: 0;
@@ -143,25 +143,6 @@
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
-}
-
-/* La X para cerrar */
-.btn-cerrar-menu {
-  position: absolute;
-  top: 4px;
-  right: 6px;
-  background: none;
-  border: none;
-  font-size: 18px;
-  line-height: 1;
-  color: #999;
-  cursor: pointer;
-  padding: 0;
-  transition: color 0.2s;
-}
-
-.btn-cerrar-menu:hover {
-  color: #333;
 }
 
 /* Modificar y Eliminar */

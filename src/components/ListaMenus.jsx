@@ -90,9 +90,6 @@ export default function ListaMenus() {
           ))}
         </div>
 
-        {/* Separador visual */}
-        <div className="sidebar-dots">•••</div>
-
         {/* ALÉRGENOS (siempre visible, sin desplegable) */}
         <h3 className="sidebar-titulo">ALÉRGENOS</h3>
         <div className="filtros-checkbox">
@@ -119,37 +116,23 @@ export default function ListaMenus() {
       <main className="contenido-principal">
         
         {/* Header superior con logo y navegación */}
-        <header className="header-superior">
-          <div className="idioma-selector">
-            <span>CA</span>
-            <span>EN</span>
-            <span>ES</span>
-          </div>
-          
-          <div className="logo">CAL BLAY</div>
-          
-          <nav className="nav-links">
-            <span>REGALA</span>
-            <span>AGENDA</span>
-            <span>CALÇOTADAS</span>
-            <span>CONTACTO</span>
-          </nav>
+        <header className="cabecera-pagina">
+            <h1>Lista de Menús Cal Blay: todas nuestras formas de disfrutar de la buena gastronomía</h1>
+            <p>En Cal Blay, creemos que comer es mucho más que alimentarse; es una forma de celebrar la vida...</p>
+
+            {/* Controles: Buscador + Botón */}
+            <div className="controles-superiores">
+            <div className="buscador-wrapper">
+                <input
+                type="text"
+                placeholder="Buscar menú..."
+                value={busqueda}
+                onChange={(e) => setBusqueda(e.target.value)}
+                />
+            </div>
+            <button className="btn-anadir-menu">Añadir Menú</button>
+            </div>
         </header>
-
-
-        {/* Controles: Buscador + Botón Añadir */}
-        <div className="controles-superiores">
-          <div className="buscador-wrapper">
-            <input
-              type="text"
-              placeholder="Buscar menú..."
-              value={busqueda}
-              onChange={(e) => setBusqueda(e.target.value)}
-            />
-          </div>
-          
-          <button className="btn-anadir-menu">Añadir Menú</button>
-        </div>
 
 
         {/* GRID DE TARJETAS */}

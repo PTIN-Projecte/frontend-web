@@ -71,7 +71,6 @@ export default function MenuCard({ menu, onModificar, onEliminar }) {
             <div style={{ position: 'relative' }}>
 
                 <div className={`opciones-desplegable ${menuVisible ? 'visible' : ''}`}>
-                    <button className="btn-cerrar-menu" onClick={(e) => { e.stopPropagation(); setMenuVisible(false); }}>×</button>
                     <button className="opcion-btn" onClick={(e) => { e.stopPropagation(); onModificar(menu); setMenuVisible(false); }}>Modificar</button>
                     <button className="opcion-btn" onClick={(e) => { e.stopPropagation(); onEliminar(menu.id); setMenuVisible(false); }}>Eliminar</button>
                 </div>
