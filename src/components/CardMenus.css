@@ -57,6 +57,12 @@
     border: 1px solid #e0c273;
 }
 
+.etiqueta-evento { 
+    background-color: #e6f3ff; 
+    color: #4da6ff; 
+    border: 1px solid #99ccff;
+}
+
 .card-contenido {
   padding: 24px;
   flex: 1;
