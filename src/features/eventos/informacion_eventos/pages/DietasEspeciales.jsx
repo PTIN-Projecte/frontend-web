@@ -161,7 +161,7 @@ export default function DietasAlergias(props) {
 
           <div className="da-allergen-grid">
             {ALLERGEN_ORDER.map((id) => (
-              <AllergenIcon key={id} id={id} size={150} showLabel showBan />
+              <AllergenIcon key={id} id={id} size={80} showLabel showBan />
             ))}
           </div>
         </div>

@@ -1,16 +1,9 @@
-/* ── Page layout ─────────────────────────────────────────────── */
+/* ── Page layout ── */
 .ie-content {
-  max-width: 1760px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 24px 5px 60px;
+  padding: 24px 20px 60px;
   box-sizing: border-box;
-}
-
-.ie-breadcrumb {
-  font-size: 15px;
-  color: #A09990;
-  margin-bottom: 6px;
-  letter-spacing: 0.04em;
 }
 
 .ie-title-row {
@@ -29,7 +22,7 @@
 }
 
 .ie-title {
-  font-size: clamp(25px, 2.8vw, 40px);
+  font-size: clamp(20px, 2.8vw, 40px);
   font-weight: 400;
   margin: 0;
   color: #2B2520;
@@ -37,25 +30,23 @@
   letter-spacing: -0.01em;
 }
 
-/* ── Generic card ─────────────────────────────────────────────── */
+/* ── Generic card ── */
 .ie-card {
   background: #F3F1EB;
   border: 1px solid #E4DFD6;
   border-radius: 12px;
   margin-top: 1%;
-  min-width: 50px;
-  
 }
 
-
-/* ── Date card ────────────────────────────────────────────────── */
+/* ── Date card ── */
 .ie-date-card {
   padding: 14px 20px;
   display: flex;
   align-items: flex-start;
   gap: 12px;
   margin-bottom: 2%;
-  min-width: 1700px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .ie-date-text {
@@ -67,7 +58,6 @@
   gap: 8px;
 }
 
-/* Button styles */
 .ie-edit-btn {
   background: #B8915A;
   color: #fff;
@@ -107,7 +97,6 @@
   white-space: nowrap;
 }
 
-/* Clickable date button in edit mode */
 .ie-date-edit-btn {
   background: #fff;
   border: 2px solid #B8915A;
@@ -127,16 +116,16 @@
   margin-top: 3px;
 }
 
-/* ── Stats grid ───────────────────────────────────────────────── */
+/* ── Stats grid ── */
 .ie-stats-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 1.5%;
   margin-bottom: 2%;
-  min-width: 1700px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* Edit input inside stat card */
 .ie-edit-input {
   width: 100%;
   background: #fff;
@@ -158,23 +147,19 @@
   margin-top: 3px;
 }
 
-/* Numbers in stat cards */
 .ie-stat-num {
-  font-size: clamp(26px, 3vw, 34px);
+  font-size: clamp(22px, 3vw, 34px);
   font-weight: 300;
   color: #2B2520;
   line-height: 1.1;
-  min-width: 1500px;
 }
 .ie-stat-name { font-size: 14px; font-weight: 500; color: #2B2520; }
 .ie-stat-sub  { font-size: 12px; color: #7A746E; }
 .ie-stat-link { font-size: 12px; color: #B8915A; cursor: pointer; }
 
-/* ── Recinto hover tooltip ─────────────────────────────────────── */
+/* ── Recinto tooltip ── */
 .ie-recinto-card { position: relative; overflow: visible !important; }
-
 .ie-recinto-wrap { position: relative; width: 100%; }
-
 .ie-recinto-tooltip {
   display: none;
   position: absolute;
@@ -190,60 +175,37 @@
   pointer-events: none;
 }
 .ie-recinto-wrap:hover .ie-recinto-tooltip { display: block; }
+.ie-tooltip-name { font-size: 13px; font-weight: 500; margin-bottom: 6px; color: #fff; }
+.ie-tooltip-line { font-size: 12px; color: rgba(255,255,255,0.8); line-height: 1.6; }
 
-.ie-tooltip-name {
-  font-size: 13px;
-  font-weight: 500;
-  margin-bottom: 6px;
-  color: #fff;
-}
-.ie-tooltip-line {
-  font-size: 12px;
-  color: rgba(255,255,255,0.8);
-  line-height: 1.6;
-}
+.ie-location-row { display: flex; align-items: flex-start; gap: 5px; margin-top: 3px; }
+.ie-capacity-row { display: flex; align-items: center; gap: 5px; margin-top: 5px; }
 
-.ie-location-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 5px;
-  margin-top: 3px;
-}
-.ie-capacity-row {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  margin-top: 5px;
-}
-
-/* ── Sections ─────────────────────────────────────────────────── */
+/* ── Sections ── */
 .ie-sections {
   display: flex;
   flex-direction: column;
   gap: 25px;
-  min-width: 1700px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.ie-menu-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
+.ie-menu-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .ie-menu-name { font-size: 20px; font-weight: 500; color: #2B2520; }
 .ie-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
 .ie-peticions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 20px; }
 .ie-peticio { display: flex; align-items: center; gap: 7px; font-size: 15px; color: #2B2520; flex-wrap: wrap; }
 .ie-sep { color: #A09990; }
 
-/* ── Responsive ───────────────────────────────────────────────── */
-@media (max-width: 760px) {
+/* ── Responsive ── */
+@media (max-width: 1100px) {
   .ie-stats-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 760px) {
+  .ie-stats-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 500px) {
   .ie-content { padding: 16px 14px 48px; }
   .ie-stats-grid { grid-template-columns: 1fr 1fr; }
-  .ie-stats-grid > :nth-child(3) { grid-column: span 2; }
-  .ie-stats-grid > :nth-child(4), .ie-stats-grid > :nth-child(5) { grid-column: span 2; }
   .ie-peticions-grid { grid-template-columns: 1fr; }
 }
