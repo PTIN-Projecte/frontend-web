@@ -11,6 +11,10 @@ export default function ListaMenus() {
   const [ingredientesFiltro, setIngredientesFiltro] = useState([]);
   const [alergenosFiltro, setAlergenosFiltro] = useState([]);
 
+  //Estados para saber si abrimos o cerramos el menú desplegable
+  const [mostrarIngredientes, setMostrarIngredientes] = useState(false);
+  const [mostrarAlergenos, setMostrarAlergenos] = useState(false);
+
   // Toggle para checkboxes de ingredientes
   const toggleIngrediente = (ingrediente) => {
     setIngredientesFiltro(prev =>
@@ -75,34 +79,52 @@ export default function ListaMenus() {
       {/* ================= BARRA LATERAL ================= */}
       <aside className="sidebar">
         
-        {/* INGREDIENTES (siempre visible, sin desplegable) */}
-        <h3 className="sidebar-titulo">INGREDIENTES</h3>
-        <div className="filtros-checkbox">
-          {ingredientesLista.map(ing => (
-            <label key={ing} className="checkbox-item">
-              <input
-                type="checkbox"
-                checked={ingredientesFiltro.includes(ing)}
-                onChange={() => toggleIngrediente(ing)}
-              />
-              <span>{ing}</span>
-            </label>
-          ))}
+        {/* INGREDIENTES (desplegable) */}
+        <div
+          className={`desplegable-header ${mostrarIngredientes ? 'abierto' : ''}`}
+          onClick={() => setMostrarIngredientes(!mostrarIngredientes)}
+        >
+          <span>INGREDIENTES</span>
+          <span className="icono-flecha">{mostrarIngredientes ? '▲' : '▼'}</span>
         </div>
 
-        {/* ALÉRGENOS (siempre visible, sin desplegable) */}
-        <h3 className="sidebar-titulo">ALÉRGENOS</h3>
-        <div className="filtros-checkbox">
-          {alergenosLista.map(alergeno => (
-            <label key={alergeno} className="checkbox-item">
-              <input
-                type="checkbox"
-                checked={alergenosFiltro.includes(alergeno)}
-                onChange={() => toggleAlergeno(alergeno)}
-              />
-              <span>{alergeno}</span>
-            </label>
-          ))}
+        <div className={`desplegable-contenido ${mostrarIngredientes ? 'abierto' : ''}`}>
+          <div className="filtros-checkbox">
+            {ingredientesLista.map(ing => (
+              <label key={ing} className="checkbox-item">
+                <input
+                  type="checkbox"
+                  checked={ingredientesFiltro.includes(ing)}
+                  onChange={() => toggleIngrediente(ing)}
+                />
+                <span>{ing}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        {/* ALÉRGENOS (desplegable) */}
+        <div
+          className={`desplegable-header ${mostrarAlergenos ? 'abierto' : ''}`}
+          onClick={() => setMostrarAlergenos(!mostrarAlergenos)}
+        >
+          <span>ALÉRGENOS</span>
+          <span className="icono-flecha">{mostrarAlergenos ? '▲' : '▼'}</span>
+        </div>
+
+        <div className={`desplegable-contenido ${mostrarAlergenos ? 'abierto' : ''}`}>
+          <div className="filtros-checkbox">
+            {alergenosLista.map(alergeno => (
+              <label key={alergeno} className="checkbox-item">
+                <input
+                  type="checkbox"
+                  checked={alergenosFiltro.includes(alergeno)}
+                  onChange={() => toggleAlergeno(alergeno)}
+                />
+                <span>{alergeno}</span>
+              </label>
+            ))}
+          </div>
         </div>
 
         {/* Botón limpiar */}
