@@ -62,13 +62,18 @@ export default function ListaMenus() {
 
   /* Modificar y Eliminar del botón opciones */  
   const handleModificar = (menu) => {
-    console.log("Modificar menú:", menu.id);
-    // Aquí iría: navigate(`/menu-editar/${menu.id}`); --> Tipo la navegación
+    console.log("Modificar menú:", menu.id);  //De momento esto lo muestra por consola (Inspeccionar)
+    // Aquí iría la navegación hacia la otra pantalla
   };
 
   const handleEliminar = (id) => {
-    console.log("Eliminar menú:", id);
-    // Aquí iría: navigate(`/menu-eliminar/${id}`); --> Tipo la navegación
+    console.log("Eliminar menú:", id);  //De momento esto lo muestra por consola (Inspeccionar)
+    // Aquí iría la navegación hacia la otra pantalla
+  };
+
+  const handleAñadirMenu = () => {
+    console.log("Añadir nuevo menú");
+    // Aquí iría la navegación hacia la otra pantalla
   };
 
 
@@ -152,7 +157,10 @@ export default function ListaMenus() {
                 onChange={(e) => setBusqueda(e.target.value)}
                 />
             </div>
-            <button className="btn-anadir-menu">Añadir Menú</button>
+            <button
+              className="btn-anadir-menu"
+              onClick={handleAñadirMenu}>Añadir Menú
+            </button>
             </div>
         </header>
 
