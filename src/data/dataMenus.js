@@ -35,7 +35,8 @@ export const menusDb = [
     nombre: "Menú Degustación",
     imagen: "https://restauranteimperialvillena.com/wp-content/uploads/2025/04/que-es-menu-degustacion-post-con-ejemplos.jpeg",
     ingredientes: ["Pescado", "Marisco", "Trufa", "Caviar", "Lácteos"],
-    alergenos: ["Gluten", "Lácteos", "Huevos", "Pescado", "Moluscos", "Crustáceos"]
+    alergenos: ["Gluten", "Lácteos", "Huevos", "Pescado", "Moluscos", "Crustáceos"],
+    etiqueta: { tipo: "nuevo" }
   },
   {
     id: 2,
