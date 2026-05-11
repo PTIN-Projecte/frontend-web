@@ -12,6 +12,10 @@ export default defineConfig({
       '/api': {
         target: 'http://192.168.10.10:30080',
         changeOrigin: true,
+      },
+      '/api/images/': {
+        target: "http://192.168.10.10:30081",
+        changeOrigin: true
       }
     }
   }
