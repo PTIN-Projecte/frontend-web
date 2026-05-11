@@ -14,8 +14,8 @@ const resource = resourceFromAttributes ({
   'deployment.environment': config.ENVIRONMENT || 'testing',
 });
 
-const traceUrl = 'http://ptincatering-test.me/api/otlp/v1/traces';
-const metricUrl = 'http://ptincatering-test.me/api/otlp/v1/metrics';
+const traceUrl = '/api/otlp/v1/traces';
+const metricUrl = '/api/otlp/v1/metrics';
 
 
 const exporter = new OTLPTraceExporter({ url: traceUrl });
