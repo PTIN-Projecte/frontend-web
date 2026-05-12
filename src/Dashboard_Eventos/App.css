@@ -1,0 +1,256 @@
+:root {
+  --bg-main: #F3F1EB;
+  --sidebar-bg: #FFFFFF;
+
+  --accent-color: #D1B67B; /* dorado */
+  --accent-strong: #831F31; /* vino */
+
+  --text-main: #363940;
+  --text-soft: #A79F89;
+
+  --green-soft: #95B387;
+  --green-dark: #104229;
+
+  --border-soft: #E7DFC8;
+}
+
+/* --- ESTRUCTURA GENERAL --- */
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--bg-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  overflow: hidden;
+  color: var(--text-main);
+}
+
+/* --- SIDEBAR --- */
+.sidebar {
+  width: 320px;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border-soft);
+  padding: 15px 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.sidebar-title {
+  color: var(--green-dark);
+  font-size: 1.8rem;
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  flex-shrink: 0;
+}
+
+.event-list-container {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  margin-bottom: 20px;
+  padding-right: 5px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Scrollbar estilo suave */
+.event-list-container::-webkit-scrollbar {
+  width: 5px;
+}
+.event-list-container::-webkit-scrollbar-thumb {
+  background: var(--border-soft);
+  border-radius: 10px;
+}
+
+/* --- TARJETAS SIDEBAR --- */
+.evento {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  border-left: 6px solid var(--accent-color);
+  border-radius: 18px;
+  padding: 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.evento:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(131, 31, 49, 0.08);
+}
+
+.evento h4 {
+  margin: 0;
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+.evento p {
+  margin: 5px 0 0;
+  color: var(--text-soft);
+  font-size: 0.9rem;
+}
+
+/* --- BOTÓN AÑADIR --- */
+.buttonAdd {
+  flex-shrink: 0;
+  width: 100%;
+  background-color: var(--accent-strong);
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 6px 18px rgba(131, 31, 49, 0.25);
+}
+
+.buttonAdd:hover {
+  background-color: #6e1828;
+  transform: translateY(-2px);
+}
+
+/* --- CALENDARIO CONTENEDOR --- */
+.calendar-main {
+  flex-grow: 1;
+  padding: 30px;
+  overflow: hidden;
+}
+
+.calendario-custom {
+  background: white;
+  padding: 5px;
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.04);
+  height: 100%;
+  border: 1px solid var(--border-soft);
+}
+
+/* --- EVENTOS CALENDARIO (Base) --- */
+.fc-event {
+  border: none !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  overflow: visible !important; /* Para que se vea la sombra */
+  background: transparent !important; 
+}
+
+.custom-event-content {
+  padding-left: 12px;
+  padding-right: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: white !important;
+  
+  /* Quitamos el color fijo aquí para que funcione el dinámico de React */
+  border-left: 6px solid transparent; 
+
+  /* Sombra idéntica a la de semana */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* --- AJUSTES VISTA MES (Daygrid) --- */
+.fc-daygrid-event .custom-event-content {
+  width: 100% !important;
+  flex: 1 !important;
+}
+
+/* --- FORMATO DE TEXTO (Horas y Título) --- */
+.custom-event-content .event-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.custom-event-content .event-time {
+  font-size: 0.7rem;
+  font-weight: 600; /* Un poco más de peso para que sea legible */
+  color: var(--text-soft);
+  margin-top: 2px;
+  display: block;
+}
+
+/* --- FULLCALENDAR AJUSTES (Manteniendo tus medidas) --- */
+.fc .fc-timegrid-slots td {
+  height: 4.5rem !important;
+  border-color: var(--border-soft) !important;
+}
+
+/* --- FULLCALENDAR AJUSTES --- */
+.fc-timegrid-slots, 
+.fc-timegrid-cols {
+    overflow: visible !important;
+}
+
+.fc-timegrid-slot-label:first-child .fc-timegrid-slot-label-cushion {
+    transform: translateY(0); /* La primera la dejamos normal o con un ajuste mínimo */
+    padding-top: 2px !important;
+}
+
+.fc .fc-timegrid-axis,
+.fc .fc-timegrid-slot-label {
+  vertical-align: top !important;
+}
+
+.fc .fc-timegrid-slot-label-cushion {
+    display: inline-block !important;
+    padding: 0 !important;
+    /* Movemos el texto exactamente a la mitad de la línea */
+    transform: translateY(-50%); 
+    position: relative;
+    top: 0;
+}
+
+.fc .fc-timegrid-slots td {
+  height: 4.5rem !important;
+  border-color: var(--border-soft) !important;
+}
+
+.fc-theme-standard .fc-scrollgrid {
+  border: none !important;
+}
+
+.fc .fc-col-header-cell-cushion {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-soft);
+  padding: 12px 0 !important;
+  text-decoration: none !important;
+}
+
+/* BOTONES CALENDARIO */
+.fc .fc-button {
+  background-color: var(--border-soft) !important;
+  border: none !important;
+  color: var(--green-dark) !important;
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active {
+  background-color: var(--accent-strong) !important;
+  color: white !important;
+}
+
+
+
