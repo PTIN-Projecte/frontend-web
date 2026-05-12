@@ -1,11 +1,11 @@
 import React from 'react';
-import './EventoDetalle.css';
-import { eventoDb } from '../data/dataEventos';
+import './EventoInfo.css';
+import { eventoDb } from '../data/dataEvento';
 
-export default function EventoDetalle() {
+export default function EventoInfo() {
   
   //De momento con el .js generado para esto
-  const evento = eventoDb;
+  const evento = eventoDb[0];
 
   const formatearFecha = (fechaStr) => {
     const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
