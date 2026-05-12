@@ -38,13 +38,14 @@
 }
 
 .sidebar-title {
-  color: var(--green-dark);
-  font-size: 1.8rem;
+  color: #000000;         
+  font-size: 1.8rem;      
   margin-top: 0;
   margin-bottom: 15px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
+  font-weight: 400;       
+  letter-spacing: normal; 
   flex-shrink: 0;
+  font-family: sans-serif; 
 }
 
 .event-list-container {
@@ -67,7 +68,7 @@
 
 /* --- TARJETAS SIDEBAR --- */
 .evento {
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(242, 241, 237, 0.8);
   backdrop-filter: blur(12px);
   border-left: 6px solid var(--accent-color);
   border-radius: 18px;
@@ -109,6 +110,12 @@
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 6px 18px rgba(131, 31, 49, 0.25);
+  margin-bottom: 12px;
+}
+
+/* Para que el último no tenga un margen sobrante abajo */
+.buttonAdd:last-child {
+  margin-bottom: 0;
 }
 
 .buttonAdd:hover {

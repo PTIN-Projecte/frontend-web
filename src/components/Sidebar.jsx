@@ -4,7 +4,6 @@ const Sidebar = ({ eventos }) => {
   return (
     <aside className="sidebar">
       <h2 className="sidebar-title">Próximos Eventos</h2>
-      
       {/* 1. El Slider (ocupa el centro) */}
       <div className="event-list-container">
         <div className="event-list">
@@ -15,6 +14,7 @@ const Sidebar = ({ eventos }) => {
       </div>
 
       {/* 2. El Botón (se queda fijo abajo) */}
+      <button className="buttonAdd">Información de eventos</button>
       <button className="buttonAdd">+ Añadir Evento</button>
     </aside>
   )
