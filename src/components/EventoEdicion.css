@@ -1,0 +1,165 @@
+:root {
+  --edit-border: #C4A484;
+  --btn-save: #2E7D32;
+  --btn-cancel: #D32F2F;
+  --bg-overlay: rgba(0, 0, 0, 0.45);
+}
+
+/* Inputs generales */
+.input-titulo {
+  font-family: 'Light', sans-serif;
+  font-size: 32px;
+  border: 2px solid var(--edit-border);
+  border-radius: 8px;
+  padding: 6px 12px;
+  width: 100%;
+  background: #fff;
+  color: #2C2A26;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.input-titulo:focus { border-color: #a38463; }
+
+.input-stat {
+  font-family: 'Light', sans-serif;
+  font-size: 38px;
+  font-weight: 300;
+  border: 2px solid var(--edit-border);
+  border-radius: 12px;
+  padding: 8px;
+  width: 100%;
+  text-align: center;
+  background: #fff;
+  color: #2C2A26;
+}
+
+.contacto-edit-grid { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+.input-contacto {
+  font-size: 14px;
+  border: 2px solid var(--edit-border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: #fff;
+  width: 100%;
+}
+
+.input-recinto {
+  font-size: 14px;
+  border: 2px solid var(--edit-border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: #fff;
+  width: 100%;
+  color: #6B655B;
+  cursor: pointer;
+}
+
+/* Fecha clicable */
+.campo-fecha.clickable {
+  border: 2px solid var(--edit-border);
+  border-radius: 8px;
+  padding: 8px 14px;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+.campo-fecha.clickable:hover { background: #faf9f7; }
+
+/* Botones Guardar/Cancelar */
+.botones-accion { display: flex; gap: 10px; margin-left: 16px; }
+.btn-cancelar {
+  background: var(--btn-cancel);
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-guardar {
+  background: var(--btn-save);
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-cancelar:hover, .btn-guardar:hover { opacity: 0.9; }
+
+/* =========================================
+   POPUPS / MODALES
+   ========================================= */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: var(--bg-overlay);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+/* Calendario */
+.modal-calendario {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  width: 340px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+}
+.calendario-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-weight: 600; }
+.mes-anio { display: flex; gap: 8px; align-items: center; }
+.anio-selector { font-weight: 400; color: #6B655B; cursor: pointer; }
+.arrow { cursor: pointer; padding: 4px; }
+
+.calendario-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.dia-header { font-size: 12px; color: #8a857e; padding-bottom: 6px; font-weight: 600; }
+.dia { padding: 8px 0; font-size: 14px; border-radius: 50%; cursor: pointer; transition: 0.2s; }
+.dia:hover { background: #f5f3f0; }
+.dia.activo { background: var(--edit-border); color: #fff; font-weight: 600; }
+.dia.vacio { cursor: default; }
+
+.calendario-footer { border-top: 1px solid #eee; padding-top: 16px; }
+.time-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-size: 12px; color: #6B655B; }
+.time-row input { border: 1px solid #ddd; border-radius: 6px; padding: 6px; font-size: 13px; }
+.calendario-botones { display: flex; gap: 10px; }
+.btn-hoy { flex: 1; background: #f5f3f0; border: none; padding: 10px; border-radius: 20px; cursor: pointer; font-weight: 500; }
+.btn-confirmar { flex: 2; background: var(--edit-border); color: #fff; border: none; padding: 10px; border-radius: 20px; cursor: pointer; font-weight: 600; }
+
+/* Modal Descarte / Error */
+.modal-descarte {
+  background: #fff;
+  border-radius: 14px;
+  padding: 28px;
+  width: 420px;
+  text-align: center;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+}
+.modal-descarte h3 { margin-bottom: 8px; font-size: 20px; color: #2C2A26; }
+.modal-descarte h3.text-error { color: var(--btn-cancel); }
+.modal-descarte p { color: #6B655B; margin-bottom: 24px; font-size: 15px; line-height: 1.5; }
+
+.modal-botones-descarte { display: flex; justify-content: center; gap: 14px; }
+.btn-modal-cancelar { 
+  background: #fff; border: 1px solid #ccc; padding: 10px 24px; border-radius: 20px; cursor: pointer; font-size: 14px; 
+}
+.btn-modal-descartar { 
+  background: var(--btn-cancel); color: #fff; border: none; padding: 10px 24px; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 14px; 
+}
+.btn-modal-aceptar { 
+  background: var(--edit-border); color: #fff; border: none; padding: 10px 24px; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 14px; 
+}
+.btn-modal-cancelar:hover { background: #f9f9f9; }
+.btn-modal-descartar:hover, .btn-modal-aceptar:hover { opacity: 0.9; }
