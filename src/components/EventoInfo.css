@@ -1,0 +1,381 @@
+/* src/components/EventoDetalle.css */
+@font-face {
+  font-family: 'CalBlay2';
+  src: url('../assets/fonts/CalBlay2.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Light';
+  src: url('../assets/fonts/Light.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.layout-principal {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #faf9f7;
+  font-family: 'CalBlay2', sans-serif;
+  color: #333;
+}
+
+/* ================= HEADER SUPERIOR ================= */
+.header-superior {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 48px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #f0ede8;
+}
+
+.idioma-selector {
+  display: flex;
+  gap: 16px;
+  font-size: 11px;
+  color: #d4cfc7;
+  letter-spacing: 0.5px;
+}
+
+.idioma-selector span {
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.idioma-selector span:hover {
+  color: #8a857e;
+}
+
+.logo {
+  font-family: 'CalBlay2', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #1a1a1a;
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+  font-size: 10px;
+  color: #d4cfc7;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  align-items: center;
+}
+
+.nav-links span {
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.nav-links span:hover {
+  color: #8a857e;
+}
+
+.menu-hamburguesa {
+  font-size: 18px;
+  margin-left: 10px;
+}
+
+/* ================= CONTENIDO PRINCIPAL ================= */
+.contenido-evento {
+  flex: 1;
+  padding: 40px 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Título y fecha */
+.evento-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.btn-volver {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #1a1a1a;
+  padding: 0 8px;
+  transition: color 0.2s;
+}
+
+.btn-volver:hover {
+  color: #8a857e;
+}
+
+.evento-header h1 {
+  font-family: 'Light', sans-serif;
+  font-size: 32px;
+  font-weight: 300;
+  color: #1a1a1a;
+}
+
+/* Info principal (fecha + botón editar) */
+.evento-info-principal {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #f0ede8;
+}
+
+.fecha-hora {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.icono-calendario {
+  font-size: 24px;
+}
+
+.fecha-texto {
+  display: block;
+  font-size: 15px;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.eventos-coincidentes {
+  display: block;
+  font-size: 13px;
+  color: #d32f2f;
+  font-weight: 500;
+}
+
+.btn-editar-evento {
+  padding: 8px 20px;
+  border-radius: 16px;
+  border: none;
+  background-color: #d4c4a8;
+  color: #1a1a1a;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-editar-evento:hover {
+  opacity: 0.9;
+}
+
+/* ================= GRID DE ESTADÍSTICAS ================= */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  background-color: #f5f3f0;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #8a857e;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  font-family: 'Light', sans-serif;
+  font-size: 36px;
+  font-weight: 300;
+  color: #1a1a1a;
+}
+
+.stat-contacto {
+  font-size: 16px;
+  font-family: 'CalBlay2', sans-serif;
+}
+
+.btn-consultar {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  font-size: 13px;
+  color: #8a857e;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: color 0.2s;
+}
+
+.btn-consultar:hover {
+  color: #333;
+}
+
+.stat-recinto {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 15px;
+  color: #333;
+}
+
+.icono-ubicacion, .icono-personas {
+  margin-right: 4px;
+}
+
+/* ================= SECCIONES CARD ================= */
+.seccion-card {
+  background-color: #f5f3f0;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.seccion-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid #ebe7e0;
+}
+
+.seccion-titulo {
+  font-size: 14px;
+  color: #8a857e;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.seccion-contenido {
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Menú */
+.menu-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.menu-nombre {
+  font-size: 16px;
+  color: #1a1a1a;
+  font-weight: 500;
+}
+
+.estado-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.estado-confirmada {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.estado-pendiente {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.estado-cancelado {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.menu-tags {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+}
+
+.tag {
+  background-color: #ebe7e0;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  color: #666;
+}
+
+.seccion-flecha {
+  font-size: 24px;
+  color: #8a857e;
+  cursor: pointer;
+}
+
+/* Útiles grid */
+.utiles-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.util-item {
+  background-color: #ebe7e0;
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  color: #666;
+}
+
+/* Peticiones */
+.peticiones-list {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.peticion-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.peticion-nombre {
+  flex: 1;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .evento-info-principal {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .seccion-contenido {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .menu-info, .menu-tags {
+    width: 100%;
+  }
+}
