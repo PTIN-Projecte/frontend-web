@@ -6,20 +6,35 @@ import SelectorRol from './components/SelectorRol';
 
 function App() {
   const [userRole, setUserRole]=useState(null);
+  const [showRoleModal, setShowRoleModal] = useState(false);
+
+  //Rol por defecto
+  const displayRole = userRole || 'produccion';
+
+  const handleChangeRole = () => {
+    setShowRoleModal(true);
+  };
+
+const handleRoleSelect = (role) => {
+    setUserRole(role);
+    setShowRoleModal(false);
+  };
+
   return (
     <BrowserRouter>
-      {!userRole && <SelectorRol onSelect={setUserRole} />}
-      <Routes>
-        <Route path="/" element={<Navigate to="/evento/1" replace />} />
+    <div className="app-layout">
+      {(showRoleModal || !userRole) && (
+        <SelectorRol onSelect={handleRoleSelect} />
+      )}
 
-        <Route path="/evento/:id" element={<EventoInfo userRole={userRole} setUserRole={setUserRole} />} />
-        <Route path="/evento/:id/dietas" element={<DietasAlergias userRole={userRole} />} />
-        <Route path="*" element={<Navigate to="/evento/1" replace />} />
+        <Routes>
+          <Route path="/" element={<Navigate to="/evento/1" replace />} />
 
-        {/*<Route path="/evento/:id" element={<EventoInfo />} />
-        <Route path="/evento/:id/dietas" element={<DietasAlergias />} />
-        <Route path="*" element={<Navigate to="/evento/1" replace />} />*/}
-      </Routes>
+          <Route path="/evento/:id" element={<EventoInfo userRole={displayRole} setUserRole={setUserRole} onChangeRole={handleChangeRole} />} />
+          <Route path="/evento/:id/dietas" element={<DietasAlergias userRole={displayRole} />} />
+          <Route path="*" element={<Navigate to="/evento/1" replace />} />
+        </Routes>
+    </div>
     </BrowserRouter>
   );
 }

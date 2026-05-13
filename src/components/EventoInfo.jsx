@@ -6,7 +6,7 @@ import EventoDetalle from './EventoDetalle';
 import SelectorRol from './SelectorRol';
 import { eventoDb } from '../data/dataEvento';
 
-export default function EventoInfo({ userRole, setUserRole }) {
+export default function EventoInfo({ userRole, setUserRole, onChangeRole }) {
 
   const location = useLocation(); 
   const original = eventoDb[0];
@@ -122,7 +122,7 @@ export default function EventoInfo({ userRole, setUserRole }) {
       {/* HEADER (siempre visible) */}
       <header className="header-superior">
         <div className="header-left">
-          <span className={`badge-comercial ${userRole === 'produccion' ? 'badge-produccion' : ''}`}onClick={handleChangeRole}style={{ cursor: !isEditing ? 'pointer' : 'default' }}title={!isEditing ? "Cambiar rol" : "No se puede cambiar en modo edición"}>{userRole === 'comercial' ? 'Comercial' : 'Producción'}</span>
+          <span className={`badge-comercial ${userRole === 'produccion' ? 'badge-produccion' : ''}`}onClick={onChangeRole}style={{ cursor: !isEditing ? 'pointer' : 'default' }}title={!isEditing ? "Cambiar rol" : "No se puede cambiar en modo edición"}>{userRole === 'comercial' ? 'Comercial' : 'Producción'}</span>
         </div>
         <div className="logo">CAL BLAY</div>
         <nav className="nav-links">

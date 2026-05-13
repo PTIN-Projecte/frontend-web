@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import './DietasAlergias.css';
 import { alergenosList, dietasData, eventoDietasInfo } from '../data/dataDietas';
@@ -10,6 +10,23 @@ export default function DietasAlergias({ userRole }) {
   const role = userRole || 'comercial';
   const [filtroActivo, setFiltroActivo] = useState('comunes');
   const [showDropdown, setShowDropdown] = useState(false);
+
+  useEffect(() => {
+    const visitedDietas = sessionStorage.getItem('dietas_visited');
+    
+    if (visitedDietas) {
+      // Ya habíamos estado aquí en esta sesión → Es una recarga (F5)
+      navigate(`/evento/${id}`, { replace: true });
+    } else {
+      // Primera vez en esta sesión → Marcar como visitado
+      sessionStorage.setItem('dietas_visited', 'true');
+    }
+    
+    // Limpiar al salir
+    return () => {
+      sessionStorage.removeItem('dietas_visited');
+    };
+  }, [navigate, id]);
 
   // Opciones de filtrado
   const opcionesFiltro = [
