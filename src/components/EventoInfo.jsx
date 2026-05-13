@@ -17,6 +17,7 @@ export default function EventoInfo() {
     recinto: { ...original.recinto }
   });
 
+
   // --- HANDLERS DE EDICIÓN ---
 
   // Actualizar campos normales
@@ -42,11 +43,11 @@ export default function EventoInfo() {
   // Guardar cambios
   const handleGuardar = () => {
     setIsEditing(false);
-    console.log("✅ Datos guardados:", datos);
-    // Aquí iría: enviar 'datos' a tu backend
+    console.log("Datos guardados:", datos);
+    //De momento, más adelante enviar datos al backend
   };
 
-  // Cancelar edición (restaura datos originales)
+  // Cancelar edición (dejarlo como estaba)
   const handleCancelar = () => {
     setDatos({
       ...original,
@@ -57,11 +58,11 @@ export default function EventoInfo() {
   };
 
   // --- HANDLERS DE NAVEGACIÓN (solo lectura) ---
-  const handleConsultarDietas = () => console.log("🥗 Ver dietas");
-  const handleVerMenu = () => console.log("🍽️ Ver menú");
-  const handleVerPeticiones = () => console.log("📋 Ver peticiones");
+  const handleConsultarDietas = () => console.log("Ver dietas");
+  const handleVerMenu = () => console.log("Ver menú");
+  const handleVerPeticiones = () => console.log("Ver peticiones");
+  //De momento está en el console log, cambiar por la navegación
 
-  // --- RENDER ---
   return (
     <div className="layout-principal">
       

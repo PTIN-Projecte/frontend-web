@@ -2,9 +2,16 @@ import React, { useState } from 'react';
 import './EventoEdicion.css';
 
 export default function EventoEdicion({ datos, onChange, onTelefonoChange, onGuardar, onCancel }) {
+  // Estados para los popups
   const [showCalendar, setShowCalendar] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalConfig, setModalConfig] = useState({ title: '', message: '', type: 'discard' });
+  const [showYearDropdown, setShowYearDropdown] = useState(false);    //Para el desplegable de años
+
+  //Estados calendario
+  const [calMonth, setCalMonth] = useState(new Date(datos.fecha).getMonth());
+  const [calYear, setCalYear] = useState(new Date(datos.fecha).getFullYear());
+  const [selectedDay, setSelectedDay] = useState(new Date(datos.fecha).getDate());
 
   const formatearFecha = (fechaStr) => {
     const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -22,7 +29,7 @@ export default function EventoEdicion({ datos, onChange, onTelefonoChange, onGua
   // Click en GUARDAR
   const handleGuardar = () => {
     if (validarFechaHora()) {
-      onGuardar(); // Vuelve a la pantalla principal
+      onGuardar();
     } else {
       setModalConfig({
         title: 'Fecha inválida',
@@ -43,21 +50,77 @@ export default function EventoEdicion({ datos, onChange, onTelefonoChange, onGua
     setShowModal(true);
   };
 
-  // Acciones del modal
   const handleModalAction = (action) => {
     setShowModal(false);
-    if (action === 'confirm') {
-      if (modalConfig.type === 'discard') onCancel(); // Restaura datos originales
-    }
+    if (action === 'confirm' && modalConfig.type === 'discard') onCancel();
   };
 
-  // Confirmar calendario
-  const handleConfirmarCalendario = (fecha, inicio, fin) => {
-    // Aquí actualizaríamos el estado padre. Por simplicidad, simulamos el cambio:
-    onChange({ target: { value: fecha } }, 'fecha');
-    onChange({ target: { value: inicio } }, 'horaInicio');
-    onChange({ target: { value: fin } }, 'horaFin');
+  // LÓGICA DEL CALENDARIO
+  
+  // Navegar meses
+  const cambiarMes = (delta) => {
+    let nuevoMes = calMonth + delta;
+    let nuevoYear = calYear;
+    if (nuevoMes > 11) { nuevoMes = 0; nuevoYear++; }
+    if (nuevoMes < 0) { nuevoMes = 11; nuevoYear--; }
+    setCalMonth(nuevoMes);
+    setCalYear(nuevoYear);
+  };
+
+  // Seleccionar día
+  const seleccionarDia = (dia) => {
+    setSelectedDay(dia);
+  };
+
+  // Confirmar selección y cerrar
+  const confirmarFecha = () => {
+    // Formatear fecha a YYYY-MM-DD
+    const mm = String(calMonth + 1).padStart(2, '0');
+    const dd = String(selectedDay).padStart(2, '0');
+    const nuevaFecha = `${calYear}-${mm}-${dd}`;
+    
+    // Actualizar estado padre
+    onChange({ target: { value: nuevaFecha } }, 'fecha');
     setShowCalendar(false);
+  };
+
+  // Generar días del mes actual
+  const generarDiasCalendario = () => {
+    const diasEnMes = new Date(calYear, calMonth + 1, 0).getDate();
+    const primerDiaSemana = new Date(calYear, calMonth, 1).getDay(); // 0 = Domingo
+    const dias = [];
+    
+    // Días vacíos antes del día 1
+    for (let i = 0; i < (primerDiaSemana === 0 ? 6 : primerDiaSemana - 1); i++) {
+      dias.push(<span key={`empty-${i}`} className="dia vacio"></span>);
+    }
+    
+    // Días del mes
+    for (let d = 1; d <= diasEnMes; d++) {
+      dias.push(
+        <span 
+          key={d} 
+          className={`dia ${d === selectedDay ? 'activo' : ''}`}
+          onClick={() => seleccionarDia(d)}
+        >
+          {d}
+        </span>
+      );
+    }
+    return dias;
+  };
+
+
+  const nombresMeses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+
+  //Desplegables desde este año hasta 15 más
+  const generarListaAños = () => {
+    const añoActual = new Date().getFullYear();
+    const años = [];
+    for (let i = 0; i <= 15; i++) {
+      años.push(añoActual + i);
+    }
+    return años;
   };
 
   return (
@@ -66,21 +129,14 @@ export default function EventoEdicion({ datos, onChange, onTelefonoChange, onGua
       {/* TÍTULO */}
       <div className="evento-header">
         <button className="btn-volver" onClick={onCancel}>&lt;</button>
-        <input 
-          className="input-titulo" 
-          value={datos.nombre} 
-          onChange={(e) => onChange(e, 'nombre')} 
-        />
+        <input className="input-titulo" value={datos.nombre} onChange={(e) => onChange(e, 'nombre')} />
       </div>
 
       {/* BARRA DE FECHA */}
       <div className="fecha-bar modo-edicion">
         <div className="fecha-info">
           <span className="icono-calendario">📅</span>
-          <div 
-            className="campo-fecha clickable" 
-            onClick={() => setShowCalendar(true)}
-          >
+          <div className="campo-fecha clickable" onClick={() => setShowCalendar(true)}>
             {formatearFecha(datos.fecha)} - ({datos.horaInicio}-{datos.horaFin}h)
           </div>
           <div className="botones-accion">
@@ -131,30 +187,99 @@ export default function EventoEdicion({ datos, onChange, onTelefonoChange, onGua
         <div className="detalle-row"><div className="detalle-label">Peticiones</div><div className="detalle-body peticiones-body">{datos.peticionesProduccion.map((p, i) => <div key={i} className="peticion-row"><span>{p.item} - </span><span className={`badge ${p.estado === 'Pendiente' ? 'badge-rojo' : 'badge-verde'}`}>{p.estado}</span></div>)}</div></div>
       </div>
 
-      {/* POPUP CALENDARIO */}
+      {/* POPUP CALENDARIO FUNCIONAL */}
       {showCalendar && (
         <div className="modal-overlay" onClick={() => setShowCalendar(false)}>
           <div className="modal-calendario" onClick={e => e.stopPropagation()}>
+            
+            {/* ✅ HEADER CON DESPLEGABLE DE AÑOS */}
             <div className="calendario-header">
-              <span className="arrow">◀</span>
-              <div className="mes-anio"><span>Junio</span><span className="anio-selector">2026 ▼</span></div>
-              <span className="arrow">▶</span>
+              <span className="arrow" onClick={() => cambiarMes(-1)}>◀</span>
+              
+              <div className="mes-ano">
+                <span>{nombresMeses[calMonth]}</span>
+                
+                {/* Contenedor relativo para posicionar el dropdown */}
+                <div className="ano-selector-container" style={{ position: 'relative', display: 'inline-block' }}>
+                  <span 
+                    className="ano-selector" 
+                    onClick={() => setShowYearDropdown(!showYearDropdown)}
+                    style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+                  >
+                    {calYear} ▼
+                  </span>
+                  
+                  {/* Dropdown de años */}
+                  {showYearDropdown && (
+                    <div 
+                      className="ano-dropdown"
+                      style={{
+                        position: 'absolute',
+                        top: '100%',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        backgroundColor: '#fff',
+                        border: '1px solid #E8E4DC',
+                        borderRadius: '8px',
+                        boxShadow: '0 4px 16px rgba(0,0,0,0.15)',
+                        zIndex: 10,
+                        maxHeight: '200px',
+                        overflowY: 'auto',
+                        minWidth: '100px',
+                        marginTop: '4px'
+                      }}
+                    >
+                      {generarListaAños().map(año => (
+                        <div
+                          key={año}
+                          className="ano-option"
+                          onClick={() => {
+                            setCalYear(año);
+                            setShowYearDropdown(false);
+                          }}
+                          style={{
+                            padding: '8px 12px',
+                            fontSize: '14px',
+                            cursor: 'pointer',
+                            color: año === calYear ? '#C4A484' : '#2C2A26',
+                            fontWeight: año === calYear ? '600' : '400',
+                            borderBottom: '1px solid #f5f5f5',
+                            transition: 'background 0.2s'
+                          }}
+                          onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f5f3f0'}
+                          onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                        >
+                          {año}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+              
+              <span className="arrow" onClick={() => cambiarMes(1)}>▶</span>
             </div>
+            
+            {/* Resto del calendario (grid de días, footer, etc.) */}
             <div className="calendario-grid">
               {['Lu','Ma','Mi','Ju','Vi','Sa','Do'].map(d => <span key={d} className="dia-header">{d}</span>)}
-              {Array.from({length: 6}, (_, i) => <span key={`e${i}`} className="dia vacio"></span>)}
-              {Array.from({length: 30}, (_, i) => (
-                <span key={i+1} className={`dia ${i+1 === 14 ? 'activo' : ''}`}>{i+1}</span>
-              ))}
+              {generarDiasCalendario()}
             </div>
+
             <div className="calendario-footer">
               <div className="time-row">
-                <span>Inicio</span><input type="time" defaultValue={datos.horaInicio} onChange={(e) => onChange(e, 'horaInicio')} />
-                <span>Fin</span><input type="time" defaultValue={datos.horaFin} onChange={(e) => onChange(e, 'horaFin')} />
+                <span>Inicio</span><input type="time" value={datos.horaInicio} onChange={(e) => onChange(e, 'horaInicio')} />
+                <span>Fin</span><input type="time" value={datos.horaFin} onChange={(e) => onChange(e, 'horaFin')} />
               </div>
               <div className="calendario-botones">
-                <button className="btn-hoy" onClick={() => handleConfirmarCalendario(new Date().toISOString().split('T')[0], '12:00', '16:00')}>Hoy</button>
-                <button className="btn-confirmar" onClick={() => handleConfirmarCalendario('2026-06-14', datos.horaInicio, datos.horaFin)}>Confirmar</button>
+                <button className="btn-hoy" onClick={() => {
+                  const hoy = new Date();
+                  setCalMonth(hoy.getMonth());
+                  setCalYear(hoy.getFullYear());
+                  setSelectedDay(hoy.getDate());
+                  setShowYearDropdown(false);
+                }}>Hoy</button>
+                <button className="btn-confirmar" onClick={confirmarFecha}>Confirmar</button>
               </div>
             </div>
           </div>
