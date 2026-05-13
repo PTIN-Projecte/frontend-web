@@ -27,15 +27,26 @@ export default function EventoInfo() {
 
   // Actualizar campos normales
   const handleChange = (e, campo, subcampo = null) => {
-    if (subcampo) {
-      setDatos(prev => ({ 
-        ...prev, 
-        [campo]: { ...prev[campo], [subcampo]: e.target.value } 
-      }));
-    } else {
-      setDatos(prev => ({ ...prev, [campo]: e.target.value }));
-    }
-  };
+  let valor = e.target.value;
+
+  // Nombre mínimo 3 caracteres mientras escribe
+  if (campo === 'nombre' && valor.length < 3 && valor.length > 0) {
+  }
+
+  // Filtro: Solo números para comensales y confirmados
+  if (campo === 'comensales' || campo === 'confirmados') {
+    valor = valor.replace(/[^0-9]/g, '');
+  }
+
+  if (subcampo) {
+    setDatos(prev => ({ 
+      ...prev, 
+      [campo]: { ...prev[campo], [subcampo]: valor } 
+    }));
+  } else {
+    setDatos(prev => ({ ...prev, [campo]: valor }));
+  }
+};
 
   // Formatear teléfono con espacios
   const handleTelefonoChange = (e) => {
@@ -47,6 +58,11 @@ export default function EventoInfo() {
 
   // Guardar cambios
   const handleGuardar = () => {
+    // Validar nombre mínimo 3 caracteres
+    if (datos.nombre.trim().length < 3) {
+      alert("El nombre del evento debe tener al menos 3 caracteres.");
+      return;
+    }
     setIsEditing(false);
     console.log("Datos guardados:", datos);
     //De momento, más adelante enviar datos al backend

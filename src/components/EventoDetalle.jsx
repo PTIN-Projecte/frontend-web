@@ -8,7 +8,9 @@ export default function EventoDetalle({ evento, onEditar, onConsultarDietas, onV
   
   const formatearFecha = (fechaStr) => {
     const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(fechaStr).toLocaleDateString('es-ES', opciones);
+    const fechaFormateada = new Date(fechaStr).toLocaleDateString('es-ES', opciones);
+
+    return fechaFormateada.charAt(0).toUpperCase() + fechaFormateada.slice(1);
   };
 
   const getBadgeClass = (estado) => {
@@ -34,7 +36,8 @@ export default function EventoDetalle({ evento, onEditar, onConsultarDietas, onV
           <span className="fecha-texto">{formatearFecha(evento.fecha)} - ({evento.horaInicio}-{evento.horaFin}h)</span>
           <button className="btn-editar-evento" onClick={onEditar}>Editar evento</button>
         </div>
-        <span className="link-coincidentes">{evento.eventosCoincidentes} eventos coincidentes.</span>
+        <span className="link-coincidentes"onClick={() => {console.log("Ver eventos coincidentes:", evento.eventosCoincidentes);}}style={{ cursor: 'pointer' }}>{evento.eventosCoincidentes} eventos coincidentes.</span>
+        {/*Más adelante: navigate(`/evento/${evento.id}/coincidentes`)*/}
       </div>
 
       {/* ESTADÍSTICAS */}

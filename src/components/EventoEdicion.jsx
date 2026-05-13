@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './EventoEdicion.css';
+import AgregarRecinto from './AgregarRecinto';
 
 export default function EventoEdicion({ datos, onChange, onTelefonoChange, onGuardar, onCancel }) {
 
@@ -11,6 +12,8 @@ const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [modalConfig, setModalConfig] = useState({ title: '', message: '', type: 'discard' });
   const [showYearDropdown, setShowYearDropdown] = useState(false);    //Para el desplegable de años
+  const [showRecintoModal, setShowRecintoModal] = useState(false);
+
 
   //Estados calendario
   const [calMonth, setCalMonth] = useState(new Date(datos.fecha).getMonth());
@@ -19,7 +22,9 @@ const navigate = useNavigate();
 
   const formatearFecha = (fechaStr) => {
     const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(fechaStr).toLocaleDateString('es-ES', opciones);
+    const fechaFormateada = new Date(fechaStr).toLocaleDateString('es-ES', opciones);
+
+    return fechaFormateada.charAt(0).toUpperCase() + fechaFormateada.slice(1);
   };
 
   // Validar fecha/hora >= ahora
@@ -32,6 +37,16 @@ const navigate = useNavigate();
 
   // Click en GUARDAR
   const handleGuardar = () => {
+    // Nombre mínimo 3 caracteres
+    if (datos.nombre.trim().length < 3) {
+      setModalConfig({
+        title: 'Nombre inválido',
+        message: 'El nombre del evento debe tener al menos 3 caracteres.',
+        type: 'error'
+      });
+      setShowModal(true);
+      return;
+    }
     if (validarFechaHora()) {
       onGuardar();
     } else {
@@ -57,6 +72,16 @@ const navigate = useNavigate();
   const handleModalAction = (action) => {
     setShowModal(false);
     if (action === 'confirm' && modalConfig.type === 'discard') onCancel();
+  };
+
+  const handleRecintoChange = (e) => {
+    const valor = e.target.value;
+    if (valor === 'nuevo') {
+      setShowRecintoModal(true);
+      onChange({ target: { value: datos.recinto.nombre } }, 'recinto', 'nombre');
+    } else {
+      onChange(e, 'recinto', 'nombre');
+    }
   };
 
   // LÓGICA DEL CALENDARIO
@@ -174,12 +199,12 @@ const navigate = useNavigate();
         </div>
         <div className="stat-card">
           <span className="stat-label">RECINTO</span>
-          <select className="input-recinto" value={datos.recinto.nombre} onChange={(e) => onChange(e, 'recinto', 'nombre')}>
+          <select className="input-recinto" value={datos.recinto.nombre} onChange={handleRecintoChange}>
             <option value="">Seleccionar recinto...</option>
             <option value="Sala Principal Planta 1">Sala Principal Planta 1</option>
             <option value="Sala Blava - Planta Baja">Sala Blava - Planta Baja</option>
             <option value="Terraza Exterior">Terraza Exterior</option>
-            <option value="nuevo" disabled>➕ Agregar nuevo recinto</option>
+            <option value="nuevo">➕ Agregar nuevo recinto</option>
           </select>
         </div>
       </div>
@@ -306,6 +331,17 @@ const navigate = useNavigate();
             </div>
           </div>
         </div>
+      )}
+
+      {/* MODAL AGREGAR RECINTO */}
+      {showRecintoModal && (
+        <AgregarRecinto 
+          onClose={() => setShowRecintoModal(false)}
+          onAdd={(nuevoRecinto) => {
+            console.log("✅ Recinto añadido:", nuevoRecinto);
+            setShowRecintoModal(false);
+          }}
+        />
       )}
 
     </div>

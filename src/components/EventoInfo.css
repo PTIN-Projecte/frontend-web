@@ -280,6 +280,24 @@
 }
 .flecha-derecha:hover { opacity: 1; }
 
+.icono-calendario {
+  font-size: 32px;
+  min-width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F5F2EB;
+  border-radius: 12px;
+  padding: 8px;
+}
+
+.fecha-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 /* ================= RESPONSIVE ================= */
 @media (max-width: 1100px) {
   .stats-grid { grid-template-columns: repeat(3, 1fr); }

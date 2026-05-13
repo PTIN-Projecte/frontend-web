@@ -230,20 +230,26 @@
 .dietas-lista {
   background: #F5F2EB;
   border-radius: 24px;
-  padding: 40px 48px;
+  padding: 48px 56px;
 }
 
 .dietas-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(460px, 1fr)); 
-  gap: 32px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
 }
 
 .dieta-card {
-  padding: 20px 24px;
-  min-height: 100px;
-  gap: 32px;
+  background: #fff;
   border-radius: 20px;
+  padding: 32px 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  min-height: 110px;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
 .dieta-info {
@@ -253,26 +259,27 @@
 }
 
 .personas-cantidad {
-  font-size: 17px;
+  font-size: 18px;
+  font-weight: 700;
   color: #2C2A26;
-  font-weight: 600;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
+  display: block;
 }
 
 .dieta-tipo {
-  background: #EBE7E0;
-  padding: 8px 18px;
-  border-radius: 16px;
   font-size: 16px;
+  padding: 8px 18px;
+  border-radius: 14px;
+  background: #EBE7E0;
   color: #6B655B;
-  display: inline-block;
-  width: fit-content;
 }
+ 
 
 .dieta-alergenos {
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 12px;
 }
 
 .mini-icono {
@@ -300,42 +307,41 @@
 
 .alergeno-seccion {
   background: #fff;
-  border-radius: 12px;
-  padding: 32px 40px;
+  border-radius: 20px;
+  padding: 36px 40px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
 .alergeno-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: 16px;
+  margin-bottom: 28px;
   padding-bottom: 16px;
   border-bottom: 2px solid #F5F2EB;
 }
 
 .alergeno-icono-small {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
 }
 
 .alergeno-header h3 {
-  font-family: 'Light', sans-serif;
   font-size: 20px;
-  font-weight: 400;
+  font-weight: 600;
+  color: #2C2A26;
   margin: 0;
   flex: 1;
 }
 
 .afectados-count {
-  font-size: 15px;
-  padding: 8px 18px;
-  border-radius: 14px;
+  font-size: 14px;
   color: #8A857E;
+  font-weight: 500;
 }
 
 /* RESPONSIVE */
@@ -394,12 +400,11 @@
 
 /* Icono pequeño */
 .mini-icono-img {
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   object-fit: contain;
-  border-radius: 50%;
-  padding: 4px;
   display: block;
+  flex-shrink: 0;
 }
 
 /* Contenedor del icono en cabecera de alérgeno */
@@ -413,8 +418,8 @@
 }
 
 .icono-small-img {
-  width: 100%;
-  height: 100%;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
 }
 
