@@ -1,30 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import './EventoInfo.css';
 import EventoEdicion from './EventoEdicion';
 import EventoDetalle from './EventoDetalle';
+import SelectorRol from './SelectorRol';
 import { eventoDb } from '../data/dataEvento';
 
-export default function EventoInfo() {
+export default function EventoInfo({ userRole, setUserRole }) {
 
   const location = useLocation(); 
-
   const original = eventoDb[0];
   
   const [isEditing, setIsEditing] = useState(() => {
       return location.state?.wasEditing || false;
     });
 
-  // Estado: Datos que se pueden modificar
   const [datos, setDatos] = useState({
     ...original,
     contacto: { ...original.contacto },
     recinto: { ...original.recinto }
   });
 
+  const [showMenu, setShowMenu] = useState(false);
+
+  /* Handler selección rol */
+  const handleRoleSelect = (role) => {
+    setUserRole(role);
+  };
+
+  const handleChangeRole = () => {
+    //Cambio se puede si no estamos editando
+    if (!isEditing) {
+      setUserRole(null);
+    }
+  };
+
+  const handlePerfil = () => {
+    console.log("Ir a Perfil");
+    setShowMenu(false);
+    // Más adelante: navigate('/perfil')
+  };
+
+  const handleConfiguracion = () => {
+    console.log("Ir a Configuración");
+    setShowMenu(false);
+    // Más adelante: navigate('/configuracion')
+  };
+
+  const handleCerrarSesion = () => {
+    console.log("Cerrar sesión");
+    setShowMenu(false);
+    // Más adelante: navigate a dnd sea, o lo q toque
+  };
 
   // --- HANDLERS DE EDICIÓN ---
-
   // Actualizar campos normales
   const handleChange = (e, campo, subcampo = null) => {
   let valor = e.target.value;
@@ -86,18 +115,44 @@ export default function EventoInfo() {
 
   return (
     <div className="layout-principal">
+
+      {/* Modal selección rol */}
+      {!userRole && <SelectorRol onSelect={handleRoleSelect} />}
       
       {/* HEADER (siempre visible) */}
       <header className="header-superior">
         <div className="header-left">
-          <span className="badge-comercial">Comercial</span>
+          <span className={`badge-comercial ${userRole === 'produccion' ? 'badge-produccion' : ''}`}onClick={handleChangeRole}style={{ cursor: !isEditing ? 'pointer' : 'default' }}title={!isEditing ? "Cambiar rol" : "No se puede cambiar en modo edición"}>{userRole === 'comercial' ? 'Comercial' : 'Producción'}</span>
         </div>
         <div className="logo">CAL BLAY</div>
         <nav className="nav-links">
           <span>DASHBOARD</span>
           <span>PETICIONES</span>
           <span>MENÚS</span>
-          <span className="menu-hamburguesa">☰</span>
+
+          {/* MENÚ HAMBURGUESA CON DESPLEGABLE */}
+          <div className="menu-container" style={{ position: 'relative' }}>
+            <span className="menu-hamburguesa"onClick={() => !isEditing && setShowMenu(!showMenu)}style={{ cursor: !isEditing ? 'pointer' : 'default', opacity: isEditing ? 0.5 : 1 }}>☰</span>
+
+            {/* Menú desplegable */}
+            {showMenu && !isEditing && (
+              <div className="menu-dropdown">
+                <div className="menu-item" onClick={handlePerfil}>
+                  <span className="menu-icon">👤</span>
+                  <span>Perfil</span>
+                </div>
+                <div className="menu-item" onClick={handleConfiguracion}>
+                  <span className="menu-icon">⚙️</span>
+                  <span>Configuración</span>
+                </div>
+                <div className="menu-divider"></div>
+                <div className="menu-item logout" onClick={handleCerrarSesion}>
+                  <span className="menu-icon">🚪</span>
+                  <span>Cerrar sesión</span>
+                </div>
+              </div>
+            )}
+          </div>
         </nav>
       </header>
 
@@ -118,9 +173,28 @@ export default function EventoInfo() {
             onConsultarDietas={handleConsultarDietas}
             onVerMenu={handleVerMenu}
             onVerPeticiones={handleVerPeticiones}
+            userRole={userRole}
           />
         )}
       </main>
+
+      {/* Click fuera para cerrar el menú */}
+      {showMenu && (
+        <div 
+          className="menu-overlay"
+          onClick={() => setShowMenu(false)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            zIndex: 999,
+            pointerEvents: 'auto'
+          }}
+        />
+      )}
+
     </div>
   );
 }

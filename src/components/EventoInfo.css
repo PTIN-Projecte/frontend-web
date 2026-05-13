@@ -47,6 +47,10 @@
   letter-spacing: 0.5px;
 }
 
+.badge-comercial:hover {
+  opacity: 0.8;
+}
+
 .logo {
   font-size: 20px;
   font-weight: bold;
@@ -297,6 +301,95 @@
   align-items: center;
   gap: 16px;
 }
+
+.badge-produccion {
+  background: #E3F2FD !important;
+  color: #1976D2 !important;
+}
+
+
+/* =========================================
+   MENÚ DESPLEGABLE (HAMBURGUESA)
+   ========================================= */
+
+.menu-container {
+  position: relative;
+  display: inline-block;
+}
+
+.menu-hamburguesa {
+  font-size: 24px;
+  color: #6B655B;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.menu-hamburguesa:hover {
+  background: #F5F2EB;
+  color: #2C2A26;
+}
+
+.menu-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  min-width: 220px;
+  z-index: 1000;
+  overflow: hidden;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+  color: #2C2A26;
+  font-size: 14px;
+}
+
+.menu-item:hover {
+  background: #F5F2EB;
+}
+
+.menu-icon {
+  font-size: 18px;
+  width: 24px;
+  text-align: center;
+}
+
+.menu-divider {
+  height: 1px;
+  background: #E8E4DC;
+  margin: 4px 0;
+}
+
+.menu-item.logout {
+  color: #D32F2F;
+}
+
+.menu-item.logout:hover {
+  background: #FFEBEE;
+}
+
+
 
 /* ================= RESPONSIVE ================= */
 @media (max-width: 1100px) {

@@ -188,7 +188,7 @@ const navigate = useNavigate();
         <div className="stat-card">
           <span className="stat-label">DIETAS ESPECIALES</span>
           <span className="stat-value">{datos.dietasEspeciales}</span>
-          <button className="btn-consultar" onClick={() => navigate(`/evento/${datos.id}/dietas`, { state: { wasEditing: true } })}>Consultar →</button>
+          <button className="btn-consultar" onClick={() => navigate(`/evento/${datos.id}/dietas`, { state: { wasEditing: true, role: 'comercial' } })}>Consultar →</button>
         </div>
         <div className="stat-card">
           <span className="stat-label">CONTACTO</span>

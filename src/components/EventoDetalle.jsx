@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './EventoDetalle.css';
 
-export default function EventoDetalle({ evento, onEditar, onConsultarDietas, onVerMenu, onVerPeticiones }) {
+export default function EventoDetalle({ evento, onEditar, onConsultarDietas, onVerMenu, onVerPeticiones, userRole }) {
 
   const navigate = useNavigate();
   
@@ -34,7 +34,7 @@ export default function EventoDetalle({ evento, onEditar, onConsultarDietas, onV
         <div className="fecha-info">
           <span className="icono-calendario">📅</span>
           <span className="fecha-texto">{formatearFecha(evento.fecha)} - ({evento.horaInicio}-{evento.horaFin}h)</span>
-          <button className="btn-editar-evento" onClick={onEditar}>Editar evento</button>
+          {userRole === 'comercial' && (<button className="btn-editar-evento" onClick={onEditar}>Editar evento</button>)}
         </div>
         <span className="link-coincidentes"onClick={() => {console.log("Ver eventos coincidentes:", evento.eventosCoincidentes);}}style={{ cursor: 'pointer' }}>{evento.eventosCoincidentes} eventos coincidentes.</span>
         {/*Más adelante: navigate(`/evento/${evento.id}/coincidentes`)*/}
@@ -53,7 +53,7 @@ export default function EventoDetalle({ evento, onEditar, onConsultarDietas, onV
         <div className="stat-card">
           <span className="stat-label">DIETAS ESPECIALES</span>
           <span className="stat-value">{evento.dietasEspeciales}</span>
-          <button className="btn-consultar" onClick={() => navigate(`/evento/${evento.id}/dietas`, { state: { wasEditing: false } })}>Consultar →</button>
+          <button className="btn-consultar" onClick={() => navigate(`/evento/${evento.id}/dietas`, { state: { wasEditing: false, role: userRole } })}>Consultar →</button>
         </div>
         <div className="stat-card">
           <span className="stat-label">CONTACTO</span>

@@ -3,10 +3,11 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import './DietasAlergias.css';
 import { alergenosList, dietasData, eventoDietasInfo } from '../data/dataDietas';
 
-export default function DietasAlergias() {
+export default function DietasAlergias({ userRole }) {
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
+  const role = userRole || 'comercial';
   const [filtroActivo, setFiltroActivo] = useState('comunes');
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -75,7 +76,7 @@ export default function DietasAlergias() {
       {/* HEADER */}
       <header className="header-superior">
         <div className="header-left">
-          <span className="badge-comercial">Comercial</span>
+          <span className={`badge-comercial ${role === 'produccion' ? 'badge-produccion' : ''}`}>{role === 'comercial' ? 'Comercial' : 'Producción'}</span>
         </div>
         <div className="logo">CAL BLAY</div>
         <nav className="nav-links">
@@ -94,7 +95,12 @@ export default function DietasAlergias() {
             <button className="btn-volver" onClick={() => {navigate(`/evento/${id}`, { state: location.state });}}>←</button>
             <h1>Dietas y Alergias — {eventoDietasInfo.nombre}</h1>
           </div>
-          <button className="btn-editar-evento" onClick={() => navigate(-1)}>Editar evento</button>
+
+          {/* BOTÓN SOLO PARA COMERCIAL */}
+          {role === 'comercial' && (
+            <button className="btn-editar-evento" onClick={() => navigate(`/evento/${id}`, { state: { wasEditing: true, role: 'comercial' } })}>Editar evento</button>
+          )}
+
         </div>
 
         <div className="info-superior">
