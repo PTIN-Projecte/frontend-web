@@ -1,53 +1,19 @@
-# ─────────────────────────────────────────────────────────────────────────────
-# frontend-ci.yml
-#
-# CI/CD para el frontend de Cal Blay (ptincatering).
-#
-# Se ejecuta cuando:
-#   - Se hace push a develop (incluye merges de PRs)
-#   - Se abre o actualiza un Pull Request hacia develop
-# ─────────────────────────────────────────────────────────────────────────────
-
 name: Frontend CI
 
 on:
   push:
     branches:
       - develop
+      - master     # También en master para que el CD pueda reutilizar el artefacto
   pull_request:
     branches:
       - develop
 
 jobs:
 
-  # ── 1. LINT ──────────────────────────────────────────────────────────────────
-  lint:
-    name: 🔍 Lint
+  ci:
+    name: 🔍 Lint + 🏗️ Build
     runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout del repositorio
-        uses: actions/checkout@v4
-
-      - name: Configurar Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm' # Cachea node_modules para acelerar futuras ejecuciones
-
-      - name: Instalar dependencias
-        run: npm ci
-
-      - name: Ejecutar ESLint
-        run: npm run lint
-        # ESLint v9 detecta eslint.config.js automáticamente
-
-
-  # ── 2. BUILD ─────────────────────────────────────────────────────────────────
-  build:
-    name: 🏗️ Build
-    runs-on: ubuntu-latest
-    needs: lint   # Solo corre si lint ha pasado
 
     steps:
       - name: Checkout del repositorio
@@ -62,67 +28,19 @@ jobs:
       - name: Instalar dependencias
         run: npm ci
 
+      - name: Ejecutar ESLint
+        run: npm run lint
+
       - name: Compilar la aplicación
         run: npm run build
-        # Vite genera el resultado en /dist
+        # Genera la carpeta /dist
 
-      - name: Guardar artefacto del build
+      # Solo guarda el artefacto cuando estamos en master
+      # En develop y PRs solo nos interesa saber si compila
+      - name: Guardar dist como artefacto
+        if: github.ref == 'refs/heads/master'
         uses: actions/upload-artifact@v4
         with:
-          name: frontend-build
-          path: dist/          # Carpeta que genera Vite
-          retention-days: 7    # Disponible para descargar 7 días
-
-
-  # ── 3. NOTIFICACIÓN DE ÉXITO ──────────────────────────────────────────────────
-  notify-success:
-    name: ✅ Notificar éxito
-    runs-on: ubuntu-latest
-    needs: [lint, build]
-    if: success() && github.event_name == 'push'
-
-    steps:
-      - name: Resultado
-        run: |
-          echo "✅ CI completado correctamente."
-          echo "🔀 La rama develop está lista para merge a master."
-          echo "Commit: ${{ github.sha }}"
-          echo "Autor:  ${{ github.actor }}"
-
-      # ── Slack (descomenta y añade SLACK_WEBHOOK_URL en Secrets) ──────────────
-      # - name: Notificar por Slack
-      #   uses: slackapi/slack-github-action@v1.26.0
-      #   with:
-      #     payload: |
-      #       {
-      #         "text": "✅ *Frontend CI OK* en `develop`\nAutor: ${{ github.actor }}\nCommit: `${{ github.sha }}`\n🔀 Listo para merge a *master*."
-      #       }
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
-
-  # ── 4. NOTIFICACIÓN DE FALLO ──────────────────────────────────────────────────
-  notify-failure:
-    name: ❌ Notificar fallo
-    runs-on: ubuntu-latest
-    needs: [lint, build]
-    if: failure() && github.event_name == 'push'
-
-    steps:
-      - name: Resultado
-        run: |
-          echo "❌ CI fallido en develop."
-          echo "Revisa los logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          echo "Commit: ${{ github.sha }}"
-          echo "Autor:  ${{ github.actor }}"
-
-      # ── Slack (descomenta y añade SLACK_WEBHOOK_URL en Secrets) ──────────────
-      # - name: Notificar fallo por Slack
-      #   uses: slackapi/slack-github-action@v1.26.0
-      #   with:
-      #     payload: |
-      #       {
-      #         "text": "❌ *Frontend CI FALLIDO* en `develop`\nAutor: ${{ github.actor }}\n🔍 Logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-      #       }
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          name: frontend-dist
+          path: dist/
+          retention-days: 1   # Solo necesita durar hasta que el CD lo descargue
