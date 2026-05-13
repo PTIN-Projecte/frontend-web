@@ -119,7 +119,6 @@ export default function DietasAlergias() {
             <div key={alergeno.id} className="alergeno-item">
               <div 
                 className="alergeno-icono" 
-                style={{ backgroundColor: alergeno.color }}
               >
                 <img src={alergeno.icon} alt={alergeno.nombre} className="icono-img" />
               </div>
@@ -176,7 +175,6 @@ export default function DietasAlergias() {
                           src={alergeno.icon} 
                           alt={alergeno.nombre} 
                           className="mini-icono-img"
-                          style={{ backgroundColor: alergeno.color }}
                           title={alergeno.nombre}
                         />
                       );
@@ -193,11 +191,12 @@ export default function DietasAlergias() {
               {Object.values(vistaPorAlérgeno).map(alergenoGrupo => (
                 <div key={alergenoGrupo.id} className="alergeno-seccion">
                   <div className="alergeno-header">
-                    <div 
-                      className="alergeno-icono-small"
-                      style={{ backgroundColor: alergenoGrupo.color }}
-                    >
-                      <img src={alergenoGrupo.icon} alt={alergenoGrupo.nombre} className="icono-small-img" />
+                    <div className="alergeno-icono-small">
+                      <img 
+                        src={alergenoGrupo.icon} 
+                        alt={alergenoGrupo.nombre} 
+                        className="icono-small-img"
+                      />
                     </div>
                     <h3>{alergenoGrupo.nombre}</h3>
                     <span className="afectados-count">{alergenoGrupo.totalAfectados} personas afectadas</span>
@@ -210,6 +209,7 @@ export default function DietasAlergias() {
                           <span className="personas-cantidad">{grupo.personas} Personas</span>
                           <span className="dieta-tipo">{grupo.tipo}</span>
                         </div>
+                        
                         <div className="dieta-alergenos">
                           {grupo.alergenos.map(alergenoId => {
                             const alergeno = getAlergenoIcon(alergenoId);
@@ -219,7 +219,6 @@ export default function DietasAlergias() {
                                 src={alergeno.icon} 
                                 alt={alergeno.nombre} 
                                 className="mini-icono-img"
-                                style={{ backgroundColor: alergeno.color }}
                                 title={alergeno.nombre}
                               />
                             );
