@@ -1,0 +1,240 @@
+import React, { useState } from 'react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import './DietasAlergias.css';
+import { alergenosList, dietasData, eventoDietasInfo } from '../data/dataDietas';
+
+export default function DietasAlergias() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { id } = useParams();
+  const [filtroActivo, setFiltroActivo] = useState('comunes');
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  // Opciones de filtrado
+  const opcionesFiltro = [
+    { value: 'comunes', label: 'Por alergias/dietas comunes' },
+    { value: 'numero', label: 'Por número de afectados' },
+    { value: 'complejidad', label: 'Por complejidad' },
+    { value: 'alergeno', label: 'Por alérgeno' }
+  ];
+
+  // Función para obtener el icono de un alérgeno
+  const getAlergenoIcon = (alergenoId) => {
+    const alergeno = alergenosList.find(a => a.id === alergenoId);
+    return alergeno ? alergeno : { icon: '❓', color: '#999' };
+  };
+
+  // Filtrar y ordenar datos según el filtro seleccionado
+  const getDatosFiltrados = () => {
+    let datos = [...dietasData];
+
+    switch (filtroActivo) {
+      case 'numero':
+        // Ordenar por número de personas (descendente)
+        return datos.sort((a, b) => b.personas - a.personas);
+      
+      case 'complejidad':
+        // Ordenar por cantidad de alérgenos (más complejas primero)
+        return datos.sort((a, b) => b.alergenos.length - a.alergenos.length);
+      
+      case 'alergeno':
+        // Agrupar por alérgeno (vista especial)
+        return null; // Manejamos esto separado
+      
+      default:
+        // Por comunes (orden original)
+        return datos;
+    }
+  };
+
+  // Vista especial: agrupar por alérgeno
+  const getVistaPorAlérgeno = () => {
+    const grupos = {};
+    
+    alergenosList.forEach(alergeno => {
+      const personasConAlergeno = dietasData.filter(d => d.alergenos.includes(alergeno.id));
+      if (personasConAlergeno.length > 0) {
+        const totalAfectados = personasConAlergeno.reduce((sum, d) => sum + d.personas, 0);
+        grupos[alergeno.id] = {
+          ...alergeno,
+          personas: personasConAlergeno,
+          totalAfectados
+        };
+      }
+    });
+    
+    return grupos;
+  };
+
+  const datosFiltrados = getDatosFiltrados();
+  const vistaPorAlérgeno = getVistaPorAlérgeno();
+
+  return (
+    <div className="layout-principal">
+      
+      {/* HEADER */}
+      <header className="header-superior">
+        <div className="header-left">
+          <span className="badge-comercial">Comercial</span>
+        </div>
+        <div className="logo">CAL BLAY</div>
+        <nav className="nav-links">
+          <span>DASHBOARD</span>
+          <span>PETICIONES</span>
+          <span>MENÚS</span>
+          <span className="menu-hamburguesa">☰</span>
+        </nav>
+      </header>
+
+      <main className="contenido-dietas">
+        
+        {/* TÍTULO CON FLECHA VOLVER */}
+        <div className="dietas-header">
+          <div className="titulo-con-flecha">
+            <button className="btn-volver" onClick={() => {navigate(`/evento/${id}`, { state: location.state });}}>←</button>
+            <h1>Dietas y Alergias — {eventoDietasInfo.nombre}</h1>
+          </div>
+          <button className="btn-editar-evento" onClick={() => navigate(-1)}>Editar evento</button>
+        </div>
+
+        <div className="info-superior">
+          <div className="card-resumen">
+            <span className="label">DIETAS ESPECIALES</span>
+            <div className="valor-grande">{eventoDietasInfo.totalDietas}</div>
+            <span className="icono-personas">👥</span>
+          </div>
+
+          <div className="card-resumen">
+            <span className="label">CONTACTO</span>
+            <div className="valor-contacto">
+              <strong>{eventoDietasInfo.contacto.nombre}</strong>
+              <span>{eventoDietasInfo.contacto.telefono}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* ICONOS DE ALÉRGENOS */}
+        <div className="alergenos-grid">
+          {alergenosList.map(alergeno => (
+            <div key={alergeno.id} className="alergeno-item">
+              <div 
+                className="alergeno-icono" 
+                style={{ backgroundColor: alergeno.color }}
+              >
+                <span className="icono-svg">{alergeno.icon}</span>
+              </div>
+              <span className="alergeno-nombre">{alergeno.nombre}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* FILTRO DESPLEGABLE */}
+        <div className="filtro-container">
+          <div 
+            className="filtro-button" 
+            onClick={() => setShowDropdown(!showDropdown)}
+          >
+            {opcionesFiltro.find(op => op.value === filtroActivo)?.label} ↓
+          </div>
+          
+          {showDropdown && (
+            <div className="filtro-dropdown">
+              {opcionesFiltro.map(opcion => (
+                <div
+                  key={opcion.value}
+                  className={`filtro-option ${filtroActivo === opcion.value ? 'activo' : ''}`}
+                  onClick={() => {
+                    setFiltroActivo(opcion.value);
+                    setShowDropdown(false);
+                  }}
+                >
+                  {opcion.label}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* LISTA DE DIETAS */}
+        <div className="dietas-lista">
+          
+          {/* Vista normal (comunes, número, complejidad) */}
+          {filtroActivo !== 'alergeno' && datosFiltrados && (
+            <div className="dietas-grid">
+              {datosFiltrados.map(grupo => (
+                <div key={grupo.id} className="dieta-card">
+                  <div className="dieta-info">
+                    <span className="personas-cantidad">{grupo.personas} Personas</span>
+                    <span className="dieta-tipo">{grupo.tipo}</span>
+                  </div>
+                  <div className="dieta-alergenos">
+                    {grupo.alergenos.map(alergenoId => {
+                      const alergeno = getAlergenoIcon(alergenoId);
+                      return (
+                        <span 
+                          key={alergenoId} 
+                          className="mini-icono"
+                          style={{ backgroundColor: alergeno.color }}
+                          title={alergeno.nombre}
+                        >
+                          {alergeno.icon}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Vista por alérgeno */}
+          {filtroActivo === 'alergeno' && (
+            <div className="vista-por-alergeno">
+              {Object.values(vistaPorAlérgeno).map(alergenoGrupo => (
+                <div key={alergenoGrupo.id} className="alergeno-seccion">
+                  <div className="alergeno-header">
+                    <span 
+                      className="alergeno-icono-small"
+                      style={{ backgroundColor: alergenoGrupo.color }}
+                    >
+                      {alergenoGrupo.icon}
+                    </span>
+                    <h3>{alergenoGrupo.nombre}</h3>
+                    <span className="afectados-count">{alergenoGrupo.totalAfectados} personas afectadas</span>
+                  </div>
+                  
+                  <div className="dietas-grid">
+                    {alergenoGrupo.personas.map(grupo => (
+                      <div key={grupo.id} className="dieta-card">
+                        <div className="dieta-info">
+                          <span className="personas-cantidad">{grupo.personas} Personas</span>
+                          <span className="dieta-tipo">{grupo.tipo}</span>
+                        </div>
+                        <div className="dieta-alergenos">
+                          {grupo.alergenos.map(alergenoId => {
+                            const alergeno = getAlergenoIcon(alergenoId);
+                            return (
+                              <span 
+                                key={alergenoId} 
+                                className="mini-icono"
+                                style={{ backgroundColor: alergeno.color }}
+                                title={alergeno.nombre}
+                              >
+                                {alergeno.icon}
+                              </span>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+      </main>
+    </div>
+  );
+}

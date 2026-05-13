@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './EventoEdicion.css';
 
 export default function EventoEdicion({ datos, onChange, onTelefonoChange, onGuardar, onCancel }) {
+
+const navigate = useNavigate();
+
   // Estados para los popups
   const [showCalendar, setShowCalendar] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -159,7 +163,7 @@ export default function EventoEdicion({ datos, onChange, onTelefonoChange, onGua
         <div className="stat-card">
           <span className="stat-label">DIETAS ESPECIALES</span>
           <span className="stat-value">{datos.dietasEspeciales}</span>
-          <button className="btn-consultar">Consultar →</button>
+          <button className="btn-consultar" onClick={() => navigate(`/evento/${datos.id}/dietas`, { state: { wasEditing: true } })}>Consultar →</button>
         </div>
         <div className="stat-card">
           <span className="stat-label">CONTACTO</span>

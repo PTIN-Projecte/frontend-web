@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import './EventoInfo.css';
 import EventoEdicion from './EventoEdicion';
 import EventoDetalle from './EventoDetalle';
@@ -6,10 +7,14 @@ import { eventoDb } from '../data/dataEvento';
 
 export default function EventoInfo() {
 
+  const location = useLocation(); 
+
   const original = eventoDb[0];
   
-  const [isEditing, setIsEditing] = useState(false);
-  
+  const [isEditing, setIsEditing] = useState(() => {
+      return location.state?.wasEditing || false;
+    });
+
   // Estado: Datos que se pueden modificar
   const [datos, setDatos] = useState({
     ...original,

@@ -1,7 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './EventoDetalle.css';
 
 export default function EventoDetalle({ evento, onEditar, onConsultarDietas, onVerMenu, onVerPeticiones }) {
+
+  const navigate = useNavigate();
   
   const formatearFecha = (fechaStr) => {
     const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -47,7 +50,7 @@ export default function EventoDetalle({ evento, onEditar, onConsultarDietas, onV
         <div className="stat-card">
           <span className="stat-label">DIETAS ESPECIALES</span>
           <span className="stat-value">{evento.dietasEspeciales}</span>
-          <button className="btn-consultar" onClick={onConsultarDietas}>Consultar →</button>
+          <button className="btn-consultar" onClick={() => navigate(`/evento/${evento.id}/dietas`, { state: { wasEditing: false } })}>Consultar →</button>
         </div>
         <div className="stat-card">
           <span className="stat-label">CONTACTO</span>
