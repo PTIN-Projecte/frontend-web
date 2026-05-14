@@ -1,5 +1,5 @@
 import React from "react";
-import TituloPagina from "../components/TituloPagina";
+import Navbar from "../components/Navbar"; // <-- IMPORTAMOS EL NAVBAR AQUÍ
 import BotonesPerfil from "../components/BotonesPerfil";
 import ListaInfoPerfil from "../components/ListaInfoPerfil";
 import "../styles/ConsultaClient.css";
@@ -13,20 +13,25 @@ const ConsultaClient = () => {
   };
 
   return (
-    <div className="perfil-container">
+    <div className="page-container">
+      <Navbar /> 
 
-      <div className="perfil-header">
-        <h1 className="perfil-title">Perfil</h1>
-        <span className="username-label">{usuario.usuario}</span>
-      </div>
+      {/* Contenido principal del perfil */}
+      <main className="perfil-container">
+        <div className="perfil-header-section">
+          <div className="grid-spacer"></div>
+          <h1 className="perfil-title">Perfil</h1>
+          <div className="config-header">
+            <span className="config-text">Configuració</span>
+          </div>
+        </div>
 
-      <div className="perfil-info">
-        <ListaInfoPerfil usuario={usuario} />
-        <BotonesPerfil />
-      </div>
-
+        <div className="perfil-content">
+          <ListaInfoPerfil usuario={usuario} />
+          <BotonesPerfil />
+        </div>
+      </main>
     </div>
-
   );
 }
 

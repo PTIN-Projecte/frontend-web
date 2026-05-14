@@ -1,52 +1,225 @@
-/*BOTONES DEL PERFIL*/
-
-.perfil-actions {
-  margin-top: 40px;
+/* --- Contenido Principal --- */
+.perfil-container {
+  flex: 1;
   display: flex;
-  gap: 24px;
-}
-
-.perfil-button {
-  padding: 8px 22px;
-  border-radius: 999px;
-  border: 1px solid #ccc;
-  background: #F3F1EB;
-  cursor: pointer;
-  color: #49454F
-}
-
-.perfil-button:hover {
-  background-color: #f4f4f4;
-}
-
-
-
-/*HEADER, CON EL TÍTULO DE LA PÁGINA
-Y NOMBRE DE USUARIO*/
-
-
-.perfil-header {
+  flex-direction: column;
   width: 100%;
+  margin: 0 auto;
+  padding: 2rem 5vw; /* Se adapta a la pantalla */
+  box-sizing: border-box;
+}
+
+.perfil-header-section {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  margin-bottom: 40px;
+  width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
 }
 
 .perfil-title {
   grid-column: 2;
   text-align: center;
-  font-size: 2rem;
-  font-weight: 600;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0;
 }
 
-.username-label {
+.config-header {
   grid-column: 3;
-  justify-self: end;
-  background-color: #ede7e1;
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 0.9rem;
-  white-space: nowrap;
+  display: flex;
+  justify-content: flex-end;
 }
 
+.config-text {
+  color: #c9b385;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.perfil-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem; 
+  gap: 2.5rem;
+}
+
+/* --- Tarjetas de Información --- */
+.lista-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 600px; /* Ancho exacto para parecerse al diseño */
+}
+
+.info-card {
+  background-color: #eeebe3; /* Tono beige calcado de la imagen */
+  padding: 1.2rem 2rem;
+  border-radius: 12px; /* Bordes menos agresivos */
+  font-size: 1.1rem;
+  color: #1a1a1a;
+  text-align: left; /* Texto alineado a la izquierda */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* --- Botones --- */
+.perfil-actions {
+  display: flex;
+  justify-content: center;
+  gap: 8rem; /* Separación amplia */
+  width: 100%;
+  max-width: 600px;
+}
+
+.perfil-btn {
+  background-color: #fcfbf9;
+  border: 1px solid #e0dcd5;
+  padding: 12px 30px;
+  border-radius: 30px; /* Forma de pastilla */
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: #333;
+  /* Sombra más marcada abajo y a la derecha como en tu mockup */
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.15); 
+  transition: all 0.2s ease-in-out;
+}
+
+.perfil-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 2px 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Responsividad para móviles y tablets pequeñas --- */
+@media (max-width: 768px) {
+  .perfil-header-section {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    text-align: center;
+  }
+  .perfil-title {
+    grid-column: 1;
+  }
+  .config-header {
+    grid-column: 1;
+    justify-content: center;
+  }
+  .perfil-actions {
+    gap: 2rem;
+    flex-direction: column;
+    align-items: center;
+  }
+  .perfil-btn {
+    width: 80%;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
+#root {
+  max-width: 100%; /* Rompemos el límite de Vite */
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+}
+
+/* =========================================
+   VENTANA EMERGENTE (MODAL ELIMINAR)
+========================================= */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Asegura que esté por encima del Navbar y todo lo demás */
+}
+
+.modal-content {
+  background-color: #fdfcf9; /* Mismo color beige claro del fondo de la web */
+  padding: 2.5rem 2rem;
+  border-radius: 16px;
+  border: 1px solid #e0dcd5;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  animation: modalAparecer 0.3s ease-out; /* Pequeña animación al abrir */
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  color: #1a1a1a;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.modal-content p {
+  color: #6b7280;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.modal-btn {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+/* Estilo botón cancelar */
+.modal-btn.cancel {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+.modal-btn.cancel:hover {
+  background-color: #d1d5db;
+}
+
+/* Estilo botón eliminar (Rojo para indicar peligro) */
+.modal-btn.delete {
+  background-color: #ef4444;
+  color: white;
+}
+
+.modal-btn.delete:hover {
+  background-color: #dc2626;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* Animación para que el modal entre suavemente */
+@keyframes modalAparecer {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
