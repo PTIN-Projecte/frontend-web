@@ -3,6 +3,10 @@ import PlatoCard from '../components/PlatoCard';
 import '../styles/ListaPlatos.css';
 import { platosDb, categorias, ingredientesLista, alergenosLista } from '../assets/dataPlatos';
 
+/**
+ * @pre Ninguna
+ * @post Se renderiza el componente ListaPlatos con su barra lateral y cuadrícula.
+ */
 export default function ListaPlatos() {
 
   const [categoriaActiva, setCategoriaActiva] = useState("Todos");
@@ -15,177 +19,326 @@ export default function ListaPlatos() {
   const [desplegarAlergenos, setDesplegarAlergenos] = useState(false);
 
   /**
-   * @pre El ID pasado debe pertenecer a un plato válido.
-   * @post Si el ID estaba en el menú, se elimina; si no estaba, se añade.
-   * @invariable El resto de platos en el menú no sufren modificaciones.
+   * @pre idDelPlato debe ser un identificador válido.
+   * @post Si idDelPlato estaba en el menú, se elimina. Si no, se añade.
    */
-  const alternarPlatoEnMenu = (id) => {
-    if (platosEnMenu.includes(id)) {
-      setPlatosEnMenu(platosEnMenu.filter(platoId => platoId !== id));
+  function alternarPlatoEnMenu(idDelPlato) {
+    const yaEstaEnMenu = platosEnMenu.includes(idDelPlato);
+    
+    if (yaEstaEnMenu === true) {
+      let nuevaListaMenu = [];
+      for (let i = 0; i < platosEnMenu.length; i++) {
+        if (platosEnMenu[i] !== idDelPlato) {
+          nuevaListaMenu.push(platosEnMenu[i]);
+        }
+      }
+      setPlatosEnMenu(nuevaListaMenu);
     } else {
-      setPlatosEnMenu([...platosEnMenu, id]);
+      let nuevaListaMenu = [];
+      for (let i = 0; i < platosEnMenu.length; i++) {
+        nuevaListaMenu.push(platosEnMenu[i]);
+      }
+      nuevaListaMenu.push(idDelPlato);
+      setPlatosEnMenu(nuevaListaMenu);
     }
-  };
+  }
 
   /**
-   * @pre Se recibe una cadena de texto correspondiente a un ingrediente.
-   * @post El ingrediente se añade a la lista de seleccionados si no estaba, o se elimina si ya estaba.
-   * @invariable Los demás filtros de ingredientes se mantienen iguales.
+   * @pre nombreIngrediente es un string válido.
+   * @post nombreIngrediente se añade o se elimina de ingredientesSeleccionados.
    */
-  const alternarIngrediente = (ingrediente) => {
-    if (ingredientesSeleccionados.includes(ingrediente)) {
-      setIngredientesSeleccionados(ingredientesSeleccionados.filter(i => i !== ingrediente));
+  function alternarIngrediente(nombreIngrediente) {
+    const yaEstaSeleccionado = ingredientesSeleccionados.includes(nombreIngrediente);
+    
+    if (yaEstaSeleccionado === true) {
+      let nuevaLista = [];
+      for (let i = 0; i < ingredientesSeleccionados.length; i++) {
+        if (ingredientesSeleccionados[i] !== nombreIngrediente) {
+          nuevaLista.push(ingredientesSeleccionados[i]);
+        }
+      }
+      setIngredientesSeleccionados(nuevaLista);
     } else {
-      setIngredientesSeleccionados([...ingredientesSeleccionados, ingrediente]);
+      let nuevaLista = [];
+      for (let i = 0; i < ingredientesSeleccionados.length; i++) {
+        nuevaLista.push(ingredientesSeleccionados[i]);
+      }
+      nuevaLista.push(nombreIngrediente);
+      setIngredientesSeleccionados(nuevaLista);
     }
-  };
+  }
 
   /**
-   * @pre Se recibe una cadena de texto correspondiente a un alérgeno.
-   * @post El alérgeno se añade a la lista de seleccionados si no estaba, o se elimina si ya estaba.
-   * @invariable Los demás filtros de alérgenos se mantienen iguales.
+   * @pre nombreAlergeno es un string válido.
+   * @post nombreAlergeno se añade o se elimina de alergenosSeleccionados.
    */
-  const alternarAlergeno = (alergeno) => {
-    if (alergenosSeleccionados.includes(alergeno)) {
-      setAlergenosSeleccionados(alergenosSeleccionados.filter(a => a !== alergeno));
+  function alternarAlergeno(nombreAlergeno) {
+    const yaEstaSeleccionado = alergenosSeleccionados.includes(nombreAlergeno);
+    
+    if (yaEstaSeleccionado === true) {
+      let nuevaLista = [];
+      for (let i = 0; i < alergenosSeleccionados.length; i++) {
+        if (alergenosSeleccionados[i] !== nombreAlergeno) {
+          nuevaLista.push(alergenosSeleccionados[i]);
+        }
+      }
+      setAlergenosSeleccionados(nuevaLista);
     } else {
-      setAlergenosSeleccionados([...alergenosSeleccionados, alergeno]);
+      let nuevaLista = [];
+      for (let i = 0; i < alergenosSeleccionados.length; i++) {
+        nuevaLista.push(alergenosSeleccionados[i]);
+      }
+      nuevaLista.push(nombreAlergeno);
+      setAlergenosSeleccionados(nuevaLista);
     }
-  };
+  }
 
   /**
-   * @pre No hay restricciones iniciales de estado.
-   * @post Todos los estados de filtrado se devuelven a sus valores por defecto (vacíos o "Todos").
-   * @invariable La base de datos original de platos se mantiene intacta.
+   * @pre Ninguna.
+   * @post Se restablecen los estados de los filtros a sus valores por defecto.
    */
-  const limpiarTodosLosFiltros = () => {
+  function limpiarTodosLosFiltros() {
     setCategoriaActiva("Todos");
     setTextoBuscado("");
     setIngredientesSeleccionados([]);
     setAlergenosSeleccionados([]);
-  };
+  }
 
   /**
-   * @pre El objeto plato debe tener propiedades nombre, ingredientes y alergenos definidas.
-   * @post Retorna true si el plato cumple con los criterios de texto, ingredientes y alérgenos actuales, o false si no.
-   * @invariable No modifica el estado global ni las propiedades del plato.
+   * @pre plato es un objeto válido.
+   * @post Retorna true si cumple con textoBuscado, ingredientesSeleccionados y alergenosSeleccionados.
    */
-  const elPlatoPasaLosFiltros = (plato) => {
-    const pasaFiltroTexto = plato.nombre.toLowerCase().includes(textoBuscado.toLowerCase());
+  function elPlatoPasaLosFiltros(plato) {
+    const nombreEnMinusculas = plato.nombre.toLowerCase();
+    const buscadoEnMinusculas = textoBuscado.toLowerCase();
+    const pasaFiltroTexto = nombreEnMinusculas.includes(buscadoEnMinusculas);
 
     let pasaFiltroIngredientes = true;
     if (ingredientesSeleccionados.length > 0) {
-      pasaFiltroIngredientes = plato.ingredientes.some(ingrediente => ingredientesSeleccionados.includes(ingrediente));
+      pasaFiltroIngredientes = false;
+      for (let i = 0; i < plato.ingredientes.length; i++) {
+        if (ingredientesSeleccionados.includes(plato.ingredientes[i])) {
+          pasaFiltroIngredientes = true;
+        }
+      }
     }
 
     let pasaFiltroAlergenos = true;
     if (alergenosSeleccionados.length > 0) {
-      pasaFiltroAlergenos = !plato.alergenos.some(alergeno => alergenosSeleccionados.includes(alergeno));
+      let tieneAlergenoProhibido = false;
+      for (let i = 0; i < plato.alergenos.length; i++) {
+        if (alergenosSeleccionados.includes(plato.alergenos[i])) {
+          tieneAlergenoProhibido = true;
+        }
+      }
+      if (tieneAlergenoProhibido === true) {
+        pasaFiltroAlergenos = false;
+      }
     }
 
     return pasaFiltroTexto && pasaFiltroIngredientes && pasaFiltroAlergenos;
-  };
+  }
 
-  const platosMostrados = platosDb.filter(plato => {
+  let platosMostrados = [];
+  for (let i = 0; i < platosDb.length; i++) {
+    let plato = platosDb[i];
     let pasaFiltroCategoria = false;
 
     if (categoriaActiva === "Todos") {
       pasaFiltroCategoria = true;
     } else if (categoriaActiva === "En menú") {
-      pasaFiltroCategoria = platosEnMenu.includes(plato.id);
+      if (platosEnMenu.includes(plato.id)) {
+        pasaFiltroCategoria = true;
+      }
     } else {
-      pasaFiltroCategoria = plato.categoria === categoriaActiva;
+      if (plato.categoria === categoriaActiva) {
+        pasaFiltroCategoria = true;
+      }
     }
 
-    return pasaFiltroCategoria && elPlatoPasaLosFiltros(plato);
-  });
+    if (pasaFiltroCategoria === true) {
+      if (elPlatoPasaLosFiltros(plato) === true) {
+        platosMostrados.push(plato);
+      }
+    }
+  }
 
   /**
-   * @pre Recibe una categoría válida o los valores especiales "Todos" o "En menú".
-   * @post Devuelve un número entero con la cantidad de platos que pertenecen a esa categoría y pasan los filtros actuales.
-   * @invariable La lista de platos actual y los filtros activos permanecen inalterados.
+   * @pre categoria es un string válido.
+   * @post Retorna el número de platos que cumplen los filtros actuales en dicha categoría.
    */
-  const contarPlatosPorCategoria = (categoria) => {
-    const platosDeEsaCategoria = platosDb.filter(plato => {
+  function contarPlatosPorCategoria(categoria) {
+    let conteo = 0;
+    for (let i = 0; i < platosDb.length; i++) {
+      let plato = platosDb[i];
       let pasaFiltroCategoria = false;
 
       if (categoria === "Todos") {
         pasaFiltroCategoria = true;
       } else if (categoria === "En menú") {
-        pasaFiltroCategoria = platosEnMenu.includes(plato.id);
+        if (platosEnMenu.includes(plato.id)) {
+          pasaFiltroCategoria = true;
+        }
       } else {
-        pasaFiltroCategoria = plato.categoria === categoria;
+        if (plato.categoria === categoria) {
+          pasaFiltroCategoria = true;
+        }
       }
 
-      return pasaFiltroCategoria && elPlatoPasaLosFiltros(plato);
-    });
+      if (pasaFiltroCategoria === true) {
+        if (elPlatoPasaLosFiltros(plato) === true) {
+          conteo++;
+        }
+      }
+    }
+    return conteo;
+  }
+  
+  /**
+   * @pre evento es un objeto del DOM.
+   * @post Actualiza el estado textoBuscado.
+   */
+  function manejarCambioTextoBuscador(evento) {
+    setTextoBuscado(evento.target.value);
+  }
+  
+  /**
+   * @pre Ninguna.
+   * @post Alterna desplegarIngredientes.
+   */
+  function abrirOCerrarIngredientes() {
+    setDesplegarIngredientes(!desplegarIngredientes);
+  }
+  
+  /**
+   * @pre Ninguna.
+   * @post Alterna desplegarAlergenos.
+   */
+  function abrirOCerrarAlergenos() {
+    setDesplegarAlergenos(!desplegarAlergenos);
+  }
 
-    return platosDeEsaCategoria.length;
-  };
+  let listaCategoriasElementos = [];
+  let opcionesCategoria = ["Todos", "En menú"];
+  for (let i = 0; i < categorias.length; i++) {
+    if (categorias[i] !== "Todos") {
+      opcionesCategoria.push(categorias[i]);
+    }
+  }
+
+  for (let i = 0; i < opcionesCategoria.length; i++) {
+    let categoria = opcionesCategoria[i];
+    let numeroPlatos = contarPlatosPorCategoria(categoria);
+    
+    let claseCategoria = "";
+    if (categoriaActiva === categoria) {
+      claseCategoria = "activo";
+    }
+    
+    listaCategoriasElementos.push(
+      <li key={categoria} className={claseCategoria} onClick={function() { setCategoriaActiva(categoria) }}>
+        {categoria}
+        <span className="contador">{numeroPlatos}</span>
+      </li>
+    );
+  }
+
+  let claseCabeceraIngredientes = "cabecera-desplegable";
+  let claseContenidoIngredientes = "contenido-desplegable";
+  let flechaIngredientes = "▼";
+  if (desplegarIngredientes === true) {
+    claseCabeceraIngredientes = "cabecera-desplegable abierto";
+    claseContenidoIngredientes = "contenido-desplegable abierto";
+    flechaIngredientes = "▲";
+  }
+
+  let listaIngredientesElementos = [];
+  for (let i = 0; i < ingredientesLista.length; i++) {
+    let ingrediente = ingredientesLista[i];
+    let estaChequeado = false;
+    if (ingredientesSeleccionados.includes(ingrediente)) {
+      estaChequeado = true;
+    }
+    
+    listaIngredientesElementos.push(
+      <label key={ingrediente} className="elemento-casilla">
+        <input type="checkbox" checked={estaChequeado} onChange={function() { alternarIngrediente(ingrediente) }} />
+        <span>{ingrediente}</span>
+      </label>
+    );
+  }
+
+  let claseCabeceraAlergenos = "cabecera-desplegable";
+  let claseContenidoAlergenos = "contenido-desplegable";
+  let flechaAlergenos = "▼";
+  if (desplegarAlergenos === true) {
+    claseCabeceraAlergenos = "cabecera-desplegable abierto";
+    claseContenidoAlergenos = "contenido-desplegable abierto";
+    flechaAlergenos = "▲";
+  }
+
+  let listaAlergenosElementos = [];
+  for (let i = 0; i < alergenosLista.length; i++) {
+    let alergeno = alergenosLista[i];
+    let estaChequeado = false;
+    if (alergenosSeleccionados.includes(alergeno)) {
+      estaChequeado = true;
+    }
+    
+    listaAlergenosElementos.push(
+      <label key={alergeno} className="elemento-casilla">
+        <input type="checkbox" checked={estaChequeado} onChange={function() { alternarAlergeno(alergeno) }} />
+        <span>{alergeno}</span>
+      </label>
+    );
+  }
+
+  let tituloSeccion = categoriaActiva;
+  if (categoriaActiva === "Todos") {
+    tituloSeccion = "Todos los platos";
+  }
+
+  let tarjetasPlatos = [];
+  for (let i = 0; i < platosMostrados.length; i++) {
+    let plato = platosMostrados[i];
+    let platoEstaSeleccionado = false;
+    if (platosEnMenu.includes(plato.id)) {
+      platoEstaSeleccionado = true;
+    }
+    
+    tarjetasPlatos.push(
+      <PlatoCard key={plato.id} plato={plato} seleccionado={platoEstaSeleccionado} alHacerClic={function() { alternarPlatoEnMenu(plato.id) }} />
+    );
+  }
 
   return (
     <div className="estructura-principal">
       <aside className="barra-lateral">
         <h3 className="titulo-barra-lateral">CATEGORÍAS</h3>
+        
         <ul className="lista-conceptos">
-          {["Todos", "En menú", ...categorias.filter(c => c !== "Todos")].map(categoria => {
-            const numeroPlatos = contarPlatosPorCategoria(categoria);
-            return (
-              <li
-                key={categoria}
-                className={categoriaActiva === categoria ? "activo" : ""}
-                onClick={() => setCategoriaActiva(categoria)}
-              >
-                {categoria}
-                <span className="contador">{numeroPlatos}</span>
-              </li>
-            );
-          })}
+          {listaCategoriasElementos}
         </ul>
 
-        <div
-          className={`cabecera-desplegable ${desplegarIngredientes ? 'abierto' : ''}`}
-          onClick={() => setDesplegarIngredientes(!desplegarIngredientes)}
-        >
+        <div className={claseCabeceraIngredientes} onClick={abrirOCerrarIngredientes}>
           <span>INGREDIENTES</span>
-          <span className="icono-flecha">{desplegarIngredientes ? '▲' : '▼'}</span>
+          <span className="icono-flecha">{flechaIngredientes}</span>
         </div>
 
-        <div className={`contenido-desplegable ${desplegarIngredientes ? 'abierto' : ''}`}>
+        <div className={claseContenidoIngredientes}>
           <div className="filtros-casillas">
-            {ingredientesLista.map(ingrediente => (
-              <label key={ingrediente} className="elemento-casilla">
-                <input
-                  type="checkbox"
-                  checked={ingredientesSeleccionados.includes(ingrediente)}
-                  onChange={() => alternarIngrediente(ingrediente)}
-                />
-                <span>{ingrediente}</span>
-              </label>
-            ))}
+            {listaIngredientesElementos}
           </div>
         </div>
 
-        <div
-          className={`cabecera-desplegable ${desplegarAlergenos ? 'abierto' : ''}`}
-          onClick={() => setDesplegarAlergenos(!desplegarAlergenos)}
-        >
+        <div className={claseCabeceraAlergenos} onClick={abrirOCerrarAlergenos}>
           <span>ALÉRGENOS</span>
-          <span className="icono-flecha">{desplegarAlergenos ? '▲' : '▼'}</span>
+          <span className="icono-flecha">{flechaAlergenos}</span>
         </div>
 
-        <div className={`contenido-desplegable ${desplegarAlergenos ? 'abierto' : ''}`}>
+        <div className={claseContenidoAlergenos}>
           <div className="filtros-casillas">
-            {alergenosLista.map(alergeno => (
-              <label key={alergeno} className="elemento-casilla">
-                <input
-                  type="checkbox"
-                  checked={alergenosSeleccionados.includes(alergeno)}
-                  onChange={() => alternarAlergeno(alergeno)}
-                />
-                <span>{alergeno}</span>
-              </label>
-            ))}
+            {listaAlergenosElementos}
           </div>
         </div>
 
@@ -201,12 +354,7 @@ export default function ListaPlatos() {
 
           <div className="controles-superiores">
             <div className="contenedor-buscador">
-              <input
-                type="text"
-                placeholder="Buscar un plato..."
-                value={textoBuscado}
-                onChange={(evento) => setTextoBuscado(evento.target.value)}
-              />
+              <input type="text" placeholder="Buscar un plato..." value={textoBuscado} onChange={manejarCambioTextoBuscador} />
             </div>
             <button className="boton-nuevo-plato">+ Nuevo plato</button>
           </div>
@@ -214,19 +362,12 @@ export default function ListaPlatos() {
 
         <div className="contenedor-titulo">
           <h2 className="titulo-seccion">
-            <span>{categoriaActiva === "Todos" ? "Todos los platos" : categoriaActiva}</span>
+            <span>{tituloSeccion}</span>
           </h2>
         </div>
 
         <div className="cuadricula-platos">
-          {platosMostrados.map(plato => (
-            <PlatoCard
-              key={plato.id}
-              plato={plato}
-              seleccionado={platosEnMenu.includes(plato.id)}
-              alHacerClic={() => alternarPlatoEnMenu(plato.id)}
-            />
-          ))}
+          {tarjetasPlatos}
         </div>
       </main>
     </div>

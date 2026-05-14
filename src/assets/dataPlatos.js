@@ -1,4 +1,4 @@
-// src/data/dataPlatos.js
+// src/assets/dataPlatos.js
 
 export const categorias = ["Todos", "Entrantes", "Principales", "Postres", "Bebidas", "Vinos"];
 

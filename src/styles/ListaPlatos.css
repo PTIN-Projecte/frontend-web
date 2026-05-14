@@ -5,13 +5,6 @@
   font-style: normal;
 }
 
-@font-face {
-  font-family: 'Light';
-  src: url('../assets/Light.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
 .estructura-principal {
   display: flex;
   min-height: 100vh;
@@ -22,8 +15,7 @@
 
 h1,
 h2,
-h3,
-.titulo-seccion {
+h3 {
   font-family: 'Light', sans-serif;
 }
 
@@ -39,87 +31,89 @@ h3,
 }
 
 .barra-lateral h3 {
-  font-size: 13px;
-  color: #bfaea3;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-  margin-top: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #8c8c8c;
+  margin: 0 0 20px 0;
+  letter-spacing: 0.5px;
 }
 
-.barra-lateral h3:first-child {
-  margin-top: 0;
-}
-
-.barra-lateral ul {
+.lista-conceptos {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0 0 30px 0;
 }
 
-.barra-lateral li {
-  padding: 10px 16px;
+.lista-conceptos li {
+  padding: 10px 12px;
   margin-bottom: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  border-radius: 20px;
-  font-size: 15px;
-  color: #666;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: all 0.2s ease;
+  transition: all 0.2s;
+  font-size: 15px;
+  color: #4a4a4a;
 }
 
-.barra-lateral li:hover {
-  background-color: #ebe7e0;
+.lista-conceptos li:hover {
+  background-color: #e6e6e6;
+  color: #1a1a1a;
 }
 
-.barra-lateral li.activo {
-  background-color: #e6dfd3;
-  font-weight: 600;
-  color: #3f3f3f;
+.lista-conceptos li.activo {
+  background-color: #ffffff;
+  color: #1a1a1a;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 
 .contador {
-  background: #ffffff;
-  padding: 2px 10px;
+  background-color: #e6e6e6;
+  color: #666;
+  padding: 2px 8px;
   border-radius: 12px;
   font-size: 12px;
-  color: #999;
+  font-weight: 600;
+}
+
+.activo .contador {
+  background-color: #f0f0f0;
+  color: #1a1a1a;
 }
 
 .cabecera-desplegable {
-  background-color: #ebe7e0;
-  padding: 12px 16px;
-  border-radius: 12px;
-  cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 24px;
-  font-family: 'Light', sans-serif;
-  font-weight: bold;
+  padding: 15px 12px;
+  cursor: pointer;
+  font-weight: 600;
   font-size: 14px;
-  transition: all 0.3s ease;
-  user-select: none;
+  color: #1a1a1a;
+  background-color: transparent;
+  border-radius: 12px;
+  transition: background-color 0.2s;
 }
 
 .cabecera-desplegable:hover {
-  background-color: #e6dfd3;
+  background-color: #e6e6e6;
 }
 
 .cabecera-desplegable.abierto {
-  background-color: #e6dfd3;
+  background-color: #e6e6e6;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
 .icono-flecha {
-  font-size: 10px;
-  transition: transform 0.3s ease;
+  font-size: 12px;
+  color: #8c8c8c;
+  transition: transform 0.3s;
 }
 
-.cabecera-desplegable.abierto .icono-flecha {
+.abierto .icono-flecha {
   transform: rotate(180deg);
 }
 
@@ -139,92 +133,86 @@ h3,
 
 .filtros-casillas {
   min-height: 0;
+  padding: 0 12px 15px 12px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 0 16px;
-}
-
-.contenido-desplegable.abierto .filtros-casillas {
-  padding-top: 16px;
-  padding-bottom: 16px;
+  gap: 10px;
 }
 
 .elemento-casilla {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #666;
-  font-size: 14px;
   cursor: pointer;
+  font-size: 14px;
+  color: #4a4a4a;
 }
 
 .elemento-casilla input[type="checkbox"] {
   width: 16px;
   height: 16px;
-  accent-color: #a6a6a6;
   cursor: pointer;
+  accent-color: #1a1a1a;
 }
 
 .boton-limpiar {
-  background: none;
-  border: 1px solid #ccc;
-  padding: 8px 16px;
-  border-radius: 16px;
-  margin-top: 30px;
-  cursor: pointer;
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background-color: transparent;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
   color: #666;
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
 .boton-limpiar:hover {
-  background-color: #ebe7e0;
+  background-color: #f0f0f0;
+  color: #1a1a1a;
+  border-color: #bfbfbf;
 }
 
 .contenido-principal {
   flex: 1;
   padding: 40px 60px;
+  background-color: #ffffff;
 }
 
 .cabecera-pagina {
-  text-align: center;
-  max-width: 900px;
-  margin: 0 auto 50px auto;
+  margin-bottom: 40px;
 }
 
 .cabecera-pagina h1 {
-  font-size: 32px;
+  font-size: 42px;
   font-weight: 400;
-  margin-bottom: 16px;
   color: #1a1a1a;
-  text-align: left;
+  margin: 0 0 16px 0;
+  line-height: 1.2;
 }
 
 .cabecera-pagina p {
-  color: #8c8c8c;
-  font-size: 15px;
-  line-height: 1.6;
-  text-align: left;
+  font-size: 18px;
+  color: #666;
+  margin: 0 0 32px 0;
+  max-width: 800px;
+  line-height: 1.5;
 }
 
 .controles-superiores {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 16px;
-  margin-top: 30px;
+  gap: 20px;
+}
+
+.contenedor-buscador {
+  flex: 1;
+  max-width: 400px;
 }
 
 .contenedor-buscador input {
-  padding: 12px 24px;
-  border-radius: 24px;
-  border: 1px solid #e6e6e6;
-  width: 400px;
-  background-color: #fbfaf9;
-  font-size: 15px;
   outline: none;
 }
 
@@ -268,8 +256,10 @@ h3,
   background-color: #000;
 }
 
+/* --- ZONA DE TARJETAS DE PLATOS --- */
+/* Este es el contenedor que agrupa a todos los PlatoCard */
 .cuadricula-platos {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
+  display: grid; /* Usamos CSS Grid para hacer la cuadrícula fácilmente */
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales (1 fracción de espacio cada una) */
+  gap: 32px; /* Separación de 32 píxeles entre tarjeta y tarjeta */
 }
