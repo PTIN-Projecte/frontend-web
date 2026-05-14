@@ -1,0 +1,25 @@
+.menu-item-acciones {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.menu-item-acciones button {
+  background: none;      /* ← quita el fondo blanco */
+  border: none;          /* ← quita el borde */
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.menu-item-acciones button:hover {
+    border-radius: 70%;  /* ← hace el hover circular */
+  background-color: rgba(0, 0, 0, 0.08);  /* efecto hover sutil */
+}
+
+.todo-izquierda {
+  display: flex;
+  flex-direction: row;  /* ← en fila, no en columna */
+  align-items: center;
+  gap: 25px;
+}

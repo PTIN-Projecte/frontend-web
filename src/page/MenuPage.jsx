@@ -1,22 +1,22 @@
 import React from 'react';
-import MenuItem from '../components/MenuItem';
-import './MenuPage.css';
+import MenuItem from '../components/MenuPlats/MenuItem.jsx';
+import '../styles/MenuPage.css';
 
 // 1. Icono con un nombre de variable ÚNICO
-import iconoPescado from '../../../assets/icons/pescado.ico';
-import iconoHuevo from '../../../assets/icons/huevos.ico';
-import iconoGluten from '../../../assets/icons/gluten.ico';
-import iconoLacteo from '../../../assets/icons/lacteos.ico';
-import iconoAltramuces from '../../../assets/icons/altamuces.ico';
-import iconoApio from '../../../assets/icons/apio.ico';
-import iconoCacahuete from '../../../assets/icons/cacahuete.ico';
-import iconoCrustaceo from '../../../assets/icons/crustaceo.ico';
-import iconoFrutosCas from '../../../assets/icons/frutosCas.ico';
-import iconoMoluscos from '../../../assets/icons/moluscos.ico';
-import iconoMostaza from '../../../assets/icons/mostaza.ico';
-import iconoSesamo from '../../../assets/icons/sesamo.ico';
-import iconoSoja from '../../../assets/icons/soja.ico';
-import iconoSulfitos from '../../../assets/icons/sulfitos.ico';
+import iconoPescado from '../assets/icons/pescado.ico';
+import iconoHuevo from '../assets/icons/huevos.ico';
+import iconoGluten from '../assets/icons/gluten.ico';
+import iconoLacteo from '../assets/icons/lacteos.ico';
+import iconoAltramuces from '../assets/icons/altamuces.ico';
+import iconoApio from '../assets/icons/apio.ico';
+import iconoCacahuete from '../assets/icons/cacahuete.ico';
+import iconoCrustaceo from '../assets/icons/crustaceo.ico';
+import iconoFrutosCas from '../assets/icons/frutosCas.ico';
+import iconoMoluscos from '../assets/icons/moluscos.ico';
+import iconoMostaza from '../assets/icons/mostaza.ico';
+import iconoSesamo from '../assets/icons/sesamo.ico';
+import iconoSoja from '../assets/icons/soja.ico';
+import iconoSulfitos from '../assets/icons/sulfitos.ico';
 
 // 2. Diccionario alérgenos conectado a las variables de arriba 
 const ALERGENOS = {
@@ -36,7 +36,19 @@ const ALERGENOS = {
   SULFITOS: { icono: iconoSulfitos, nombre: 'Sulfitos' }
 };
 
-function MenuPage() {
+const IconAñadir = () => (
+    <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="46"
+    height="46"
+    viewBox="0 0 24 24"
+    fill="#9acc71"
+    >
+    <path d="M4.929 4.929a10 10 0 1 1 14.141 14.141a10 10 0 0 1 -14.14 -14.14zm8.071 4.071a1 1 0 1 0 -2 0v2h-2a1 1 0 1 0 0 2h2v2a1 1 0 1 0 2 0v-2h2a1 1 0 1 0 0 -2h-2v-2z" />
+    </svg>
+);
+
+function MenuPage({ onAñadir }) {
     const nombreDelMenu = "Degustación Orígens";
 
     return (
@@ -45,8 +57,12 @@ function MenuPage() {
         <hr className="linea-separadora" /> 
 
         <section className="seccion-menu">
-            <h2 className="titulo-categoria">Entrantes</h2>
-        
+            <div className="categoria">
+                <h2 className="titulo-categoria">Entrantes</h2>
+                <button className="btn-añadir" onClick={onAñadir} title="Añadir">
+                    <IconAñadir />
+                </button>
+            </div>
             <MenuItem 
                 titulo="Virutas de Jamón Ibérico de Bellota:" 
                 descripcion='Con pan de coca artesano y tomate "de penjar".'
@@ -61,7 +77,13 @@ function MenuPage() {
         </section>
 
         <section className="seccion-menu2">
-            <h2 className="titulo-categoria">Principales</h2>
+
+            <div className="categoria">
+                <h2 className="titulo-categoria">Principales</h2>
+                <button className="btn-añadir" onClick={onAñadir} title="Añadir">
+                    <IconAñadir />
+                </button>
+            </div>
         
             <MenuItem 
                 titulo="Fricandó de Ternera:" 
@@ -77,7 +99,13 @@ function MenuPage() {
         </section> 
 
         <section className="seccion-menu3">
-            <h2 className="titulo-categoria">Postres</h2>
+
+            <div className="categoria">
+                <h2 className="titulo-categoria">Postres</h2>
+                <button className="btn-añadir" onClick={onAñadir} title="Añadir">
+                    <IconAñadir />
+                </button>
+            </div>
         
             <MenuItem 
                 titulo="Crema Catalana Quemada:" 

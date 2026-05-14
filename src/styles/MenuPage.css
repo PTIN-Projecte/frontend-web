@@ -31,10 +31,10 @@
 
 /* Efecto Hover */
 .menu-item-caja:hover {
-  transform: scale(1.02); /* Hace que crezca un 2% */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Hace la sombra más grande y difuminada */
-  filter: brightness(97%); /* Lo oscurece muy, muy sutilmente */
-  cursor: pointer; 
+    transform: scale(1.02); /* Hace que crezca un 2% */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Hace la sombra más grande y difuminada */
+    filter: brightness(97%); /* Lo oscurece muy, muy sutilmente */
+    cursor: pointer; 
 }
 
 .menu-item-texto {
@@ -78,3 +78,27 @@
     text-decoration: underline;   /* subrayado */
 }
 
+/* --------------------------------------------------------------------------------------------------- */
+/* BOTON AÑADIR */
+
+.btn-añadir {
+    background: none;      /* ← quita el fondo blanco */
+    border: none;          /* ← quita el borde */
+    cursor: pointer;
+    padding: 3px;
+    border-radius: 6px;
+    display: flex;
+}
+
+.btn-añadir:hover {
+    border-radius: 70%;  /* ← hace el hover circular */
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+.categoria {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    justify-content: center;  /* ← añade esto */
+}

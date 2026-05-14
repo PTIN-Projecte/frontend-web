@@ -1,4 +1,4 @@
-import MenuPage from './features/menu/pages/MenuPage';
+import MenuPage from './page/MenuPage';
 
 function App() {
   return (
