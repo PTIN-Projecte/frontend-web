@@ -1,0 +1,108 @@
+name: Frontend CD
+
+# Se dispara cuando el CI termina — no en push directo
+# Así garantizamos que el CD NUNCA corre si el CI ha fallado
+on:
+  workflow_run:
+    workflows: ["Frontend CI"]
+    types:
+      - completed
+    branches:
+      - master     # Solo cuando el CI corrió en master
+
+jobs:
+
+  # ── 1. BUILD Y PUSH DE LA IMAGEN DOCKER ──────────────────────────────────────
+  build-and-push:
+    name: 🐳 Build & Push imagen
+    runs-on: ubuntu-latest
+    # Si el CI ha fallado, no continuamos
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    outputs:
+      tag: ${{ steps.tag.outputs.TAG }}
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Generar tag
+        id: tag
+        run: echo "TAG=v${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
+
+      # Descarga el /dist que ya compiló el CI
+      # No hace falta instalar Node ni volver a compilar
+      - name: Descargar dist del CI
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-dist
+          path: dist/
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}   # El run exacto del CI que acaba de terminar
+
+      - name: Configurar QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Configurar Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login en Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Con el /dist ya descargado, el Dockerfile solo necesita
+      # el Stage 2 (Nginx) — no reinstala Node ni recompila nada
+      - name: Build & Push imagen
+        id: build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: asierhr/catering-front:${{ steps.tag.outputs.TAG }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Guardar digest como artefacto
+        run: echo "${{ steps.build.outputs.digest }}" > digest-front.txt
+
+      - name: Upload artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: digest-front
+          path: digest-front.txt
+          retention-days: 30
+
+
+  # ── 2. DEPLOY A TESTING ───────────────────────────────────────────────────────
+  deploy-testing:
+    name: 🚀 Deploy a Testing
+    needs: [build-and-push]
+    runs-on: self-hosted
+    environment: testing
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: 'v3.14.0'
+
+      - name: Helm deploy testing
+        run: |
+          export KUBECONFIG=/home/github-runner/actions-runner/.kube/config-testing
+          cd infra/Kubernetes/ptincatering
+          helm upgrade --install ptin-test . \
+            -f values.yaml \
+            -f values-dev.yaml \
+            --namespace testing \
+            --create-namespace \
+            --set front.image.tag=${{ needs.build-and-push.outputs.tag }} \
+            --wait \
+            --timeout 5m0s
+
+      - name: Confirmar deploy
+        run: |
+          echo "✅ Deploy a testing completado."
+          echo "🏷️  Imagen: asierhr/catering-front:${{ needs.build-and-push.outputs.tag }}"

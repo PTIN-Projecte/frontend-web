@@ -1,0 +1,46 @@
+name: Frontend CI
+
+on:
+  push:
+    branches:
+      - develop
+      - master     # También en master para que el CD pueda reutilizar el artefacto
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+
+  ci:
+    name: 🔍 Lint + 🏗️ Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Ejecutar ESLint
+        run: npm run lint
+
+      - name: Compilar la aplicación
+        run: npm run build
+        # Genera la carpeta /dist
+
+      # Solo guarda el artefacto cuando estamos en master
+      # En develop y PRs solo nos interesa saber si compila
+      - name: Guardar dist como artefacto
+        if: github.ref == 'refs/heads/master'
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: dist/
+          retention-days: 1   # Solo necesita durar hasta que el CD lo descargue
