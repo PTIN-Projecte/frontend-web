@@ -1,0 +1,149 @@
+.contenedor-tarjeta {
+  background-color: #f3f0ea;
+  border-radius: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.contenedor-tarjeta.seleccionado {
+  background-color: #eef7e9;
+  border-color: #72c05b;
+}
+
+.contenedor-tarjeta:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.contenedor-imagen-tarjeta {
+  position: relative;
+  height: 220px;
+  width: 100%;
+}
+
+.imagen-tarjeta {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.contenedor-etiquetas {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  width: max-content;
+  max-width: 90%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.etiqueta {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  backdrop-filter: blur(4px);
+}
+
+.etiqueta-menu { 
+    background-color: #eef7e9; 
+    color: #34a853; 
+    border: 1px solid #72c05b;
+}
+.etiqueta-nuevo { 
+    background-color: #fff9e6; 
+    color: #c99c35;
+    border: 1px solid #e0c273;
+}
+.etiqueta-evento { 
+    background-color: #e6f3ff; 
+    color: #4da6ff; 
+    border: 1px solid #99ccff;
+}
+
+.contenido-tarjeta {
+  padding: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.contenido-tarjeta h3 {
+  margin: 0 0 12px 0;
+  font-size: 24px;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.contenido-tarjeta p {
+  font-size: 14px;
+  color: #8c8c8c;
+  line-height: 1.5;
+  margin: 0 0 24px 0;
+  flex: 1;
+}
+
+.pie-tarjeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.etiquetas-alergenos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 15px;
+}
+
+.etiqueta-alergeno {
+  background-color: #fcebeb;
+  color: #d9534f;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid #f5c6c6;
+}
+
+.etiqueta-concepto-tarjeta {
+  color: #a6a6a6;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.punto-gris {
+  width: 8px;
+  height: 8px;
+  background-color: #cccccc;
+  border-radius: 50%;
+}
+
+.boton-opciones {
+  background: none;
+  border: 1px solid #d9d9d9;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  color: #666;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.boton-opciones:hover { background-color: #e6e6e6; }
