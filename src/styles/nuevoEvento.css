@@ -1,0 +1,63 @@
+.contenedor-evento {
+  padding: 40px;
+  background-color: #f9f9f9;
+}
+
+.formulario-card {
+  background-color: #f0eee7; /* El color cremita de tu foto */
+  border-radius: 50px;
+  padding: 50px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.campo {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+input {
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 60%;
+}
+
+.botones {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.btn-cancelar {
+  border-radius: 20px;
+  padding: 10px 30px;
+  border: 1px solid #ccc;
+}
+
+.btn-continuar {
+  border-radius: 20px;
+  padding: 10px 30px;
+  border: 1px solid #ccc;
+}
+
+.header-seccion {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.header-seccion h1 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fuente tipo sistema, limpia */
+  font-size: 28px;
+  margin: 0 0 10px 0;
+  color: #000; /* Negro puro para la negrita */
+  font-weight: 700; /* Muy negrita */
+}
+.linea-separadora {
+  border: 0;
+  height: 1px;
+  background: #e0e0e0; /* Gris clarito para la línea */
+  width: 100%;
+}
