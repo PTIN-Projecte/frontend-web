@@ -49,7 +49,7 @@ jobs:
         with:
           context: .
           
-          file: ./infra-repo/FrontDockerfile
+          file: ./infra-repo/FrontDockerfileCICD
           push: true
           tags: ptincatering/catering-frontend:${{ steps.tag.outputs.TAG }}
 
