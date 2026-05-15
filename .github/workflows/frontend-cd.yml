@@ -1,43 +1,52 @@
-name: Frontend CD Testing/Production
+name: CI y CD (Testing)
 
 on:
-  workflow_run:
-    workflows: ["Frontend CI"]
-    types: [completed]
-    branches: [main] 
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  build-and-push:
-    name: 🐳 Build & Push imagen
+  ci:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    outputs:
-      tag: ${{ steps.tag.outputs.TAG }}
     steps:
-      
-      - name: Checkout Frontend
+      - uses: actions/checkout@v4
+
+      - name: Configurar JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Compilar código
+        run: mvn clean compile -DskipTests
+
+      - name: Análisis de Formato y Linting
+        run: mvn checkstyle:check -Dcheckstyle.failOnViolation=false
+
+  build-and-push:
+    needs: [ci]
+    runs-on: ubuntu-latest
+    outputs:
+      TAG: ${{ steps.tag.outputs.TAG }}
+      DIGEST: ${{ steps.build.outputs.digest }}
+      COMMIT_SHA: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Checkout Infraestructura
         uses: actions/checkout@v4
+        with:
+          repository: 'PTIN-projecte/infrastructure-devops'
+          path: infra
+          token: ${{ secrets.INFRA_TOKEN }}
 
       - name: Generar tag
         id: tag
         run: echo "TAG=v${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
 
-      - name: Descargar dist del CI
-        uses: actions/download-artifact@v4
-        with:
-          name: frontend-dist
-          path: dist/
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          run-id: ${{ github.event.workflow_run.id }}
-        
-      - name: Checkout DevOps Repo
-        uses: actions/checkout@v4
-        with:
-          repository: PTIN-Projecte/infrastructure-devops
-          token: ${{ secrets.INFRA_REPO_TOKEN }}
-          path: infra-repo 
-
-      - name: Login en Docker Hub
+      - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -48,100 +57,50 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          
-          file: ./infra-repo/FrontDockerfileCICD
+          file: infra/FrontDockerfile
           push: true
-          tags: ptincatering/catering-frontend:${{ steps.tag.outputs.TAG }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/catering-frontend-dev:${{ steps.tag.outputs.TAG }}
 
-      - name: Guardar digest como artefacto
-        run: echo "${{ steps.build.outputs.digest }}" > digest-front.txt
+      - name: Guardar metadata como artifact
+        run: |
+          echo "${{ steps.build.outputs.digest }}" > digest-front.txt
+          echo "${{ steps.tag.outputs.TAG }}" > tag-front.txt
+          echo "${{ github.sha }}" > commit-sha.txt
 
-      - name: Upload artefacto digest
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: digest-front
-          path: digest-front.txt
+          name: digest-back-${{ github.sha }}
+          path: |
+            digest-front.txt
+            tag-front.txt
+            commit-sha.txt
+          retention-days: 30
 
-#Testing
   deploy-testing:
-    name: 🚀 Deploy a Testing
     needs: [build-and-push]
     runs-on: self-hosted
     environment: testing
     steps:
-      # Volvemos a bajar el repo de infra para tener los Charts de Helm actualizados
-      - name: Checkout Infra Repo
+      - name: Checkout Infraestructura
         uses: actions/checkout@v4
         with:
-          repository: PTIN-Projecte/infrastructure-devops
-          token: ${{ secrets.INFRA_REPO_TOKEN }}
-          path: infra-repo
+          repository: 'PTIN-projecte/infrastructure-devops'
+          path: infra
+          token: ${{ secrets.INFRA_TOKEN }}
+          persist-credentials: false
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: 'v3.14.0'
 
       - name: Helm deploy testing
         run: |
           export KUBECONFIG=/home/github-runner/actions-runner/.kube/config-testing
-          # Ajustamos la ruta según tu estructura: carpeta 'infra-repo' > 'Kubernetes' > 'ptincatering'
-          cd infra-repo/Kubernetes/ptincatering
-          
+          cd infra/Kubernetes/ptincatering
           helm upgrade --install ptin-test . \
             -f values.yaml \
             -f values-dev.yaml \
             --namespace testing \
-            --create-namespace \
-            --set front.image.tag=${{ needs.build-and-push.outputs.tag }} \
-            --wait
-
-
-#Produccion
-  deploy-production:
-    name: 🚀 Deploy to Production
-    needs: [deploy-testing]
-    runs-on: self-hosted
-    environment: production
-    steps:
-      - name: Checkout Infra Repo
-        uses: actions/checkout@v4
-        with:
-          repository: PTIN-Projecte/infrastructure-devops
-          token: ${{ secrets.INFRA_REPO_TOKEN }}
-          path: infra-repo
-
-      - name: Descargar digest
-        uses: actions/download-artifact@v4
-        with:
-          name: digest-front
-
-      - name: Leer variables
-        id: vars
-        run: |
-          echo "DIGEST=$(cat digest-front.txt)" >> $GITHUB_OUTPUT
-          echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
-
-      - name: Login en Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Promocionar Imagen
-        run: |
-          # Pull de la imagen probada en testing usando el digest
-          docker pull ptincatering/catering-frontend@${{ steps.vars.outputs.DIGEST }}
-          
-          # Tag con la versión oficial (v1.0.0, etc)
-          docker tag ptincatering/catering-frontend@${{ steps.vars.outputs.DIGEST }} \
-                     ptincatering/catering-frontend:${{ steps.vars.outputs.VERSION }}
-          
-          docker push ptincatering/catering-frontend:${{ steps.vars.outputs.VERSION }}
-
-      - name: Helm deploy → Production
-        run: |
-          export KUBECONFIG=/home/github-runner/actions-runner/.kube/config-prod
-          cd infra-repo/Kubernetes/ptincatering
-          
-          helm upgrade --install ptin-prod . \
-            -f values.yaml \
-            -f values-prod.yaml \
-            --namespace prod \
-            --set front.image.tag=${{ steps.vars.outputs.VERSION }} \
-            --wait            
+            --set front.image.tag=${{ needs.build-and-push.outputs.TAG }}
