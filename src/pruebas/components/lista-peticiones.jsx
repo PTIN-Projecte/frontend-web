@@ -1,6 +1,6 @@
 import React from "react";
 import '../styles/lista-peticiones.css';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ocultarPanel from '../assets/ocultar-menu.png';
 import mostrarPanel from '../assets/display-menu.png';
 import filtro from '../assets/filtro.png';
