@@ -44,7 +44,7 @@ jobs:
         with:
           repository: 'PTIN-projecte/infrastructure-devops'
           path: infra
-          token: ${{ secrets.INFRA_TOKEN }}
+          token: ${{ secrets.INFRA_REPO_TOKEN }}
 
       - name: Generar tag
         id: tag
@@ -91,7 +91,7 @@ jobs:
         with:
           repository: 'PTIN-projecte/infrastructure-devops'
           path: infra
-          token: ${{ secrets.INFRA_TOKEN }}
+          token: ${{ secrets.INFRA_REPO_TOKEN }}
           persist-credentials: false
 
       - name: Install Helm

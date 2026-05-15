@@ -66,7 +66,7 @@ jobs:
         with:
           repository: 'PTIN-projecte/infrastructure-devops'
           path: infra
-          token: ${{ secrets.INFRA_TOKEN }}
+          token: ${{ secrets.INFRA_REPO_TOKEN }}
 
       - name: Install Helm
         uses: azure/setup-helm@v3
