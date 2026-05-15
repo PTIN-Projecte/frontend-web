@@ -1,4 +1,4 @@
-name: Frontend CD Testing
+name: Frontend CD Testing/Production
 
 on:
   workflow_run:
@@ -62,6 +62,7 @@ jobs:
           name: digest-front
           path: digest-front.txt
 
+#Testing
   deploy-testing:
     name: 🚀 Deploy a Testing
     needs: [build-and-push]
@@ -87,5 +88,60 @@ jobs:
             -f values-dev.yaml \
             --namespace testing \
             --create-namespace \
-            --set ptin-front.image.tag=${{ needs.build-and-push.outputs.tag }} \
+            --set front.image.tag=${{ needs.build-and-push.outputs.tag }} \
             --wait
+
+
+#Produccion
+  deploy-production:
+    name: 🚀 Deploy to Production
+    needs: [deploy-testing]
+    runs-on: self-hosted
+    environment: production
+    steps:
+      - name: Checkout Infra Repo
+        uses: actions/checkout@v4
+        with:
+          repository: PTIN-Projecte/infrastructure-devops
+          token: ${{ secrets.INFRA_REPO_TOKEN }}
+          path: infra-repo
+
+      - name: Descargar digest
+        uses: actions/download-artifact@v4
+        with:
+          name: digest-front
+
+      - name: Leer variables
+        id: vars
+        run: |
+          echo "DIGEST=$(cat digest-front.txt)" >> $GITHUB_OUTPUT
+          echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Login en Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Promocionar Imagen
+        run: |
+          # Pull de la imagen probada en testing usando el digest
+          docker pull ptincatering/catering-frontend@${{ steps.vars.outputs.DIGEST }}
+          
+          # Tag con la versión oficial (v1.0.0, etc)
+          docker tag ptincatering/catering-frontend@${{ steps.vars.outputs.DIGEST }} \
+                     ptincatering/catering-frontend:${{ steps.vars.outputs.VERSION }}
+          
+          docker push ptincatering/catering-frontend:${{ steps.vars.outputs.VERSION }}
+
+      - name: Helm deploy → Production
+        run: |
+          export KUBECONFIG=/home/github-runner/actions-runner/.kube/config-prod
+          cd infra-repo/Kubernetes/ptincatering
+          
+          helm upgrade --install ptin-prod . \
+            -f values.yaml \
+            -f values-prod.yaml \
+            --namespace prod \
+            --set front.image.tag=${{ steps.vars.outputs.VERSION }} \
+            --wait            
