@@ -1,0 +1,121 @@
+/* --- Estructura General --- */
+.page-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #fdfcf9;
+}
+
+/* La barra de navegación ocupará el 100% por defecto al estar en el flex column */
+
+.main-layout {
+  display: flex;
+  flex: 1; /* Ocupa el resto del espacio vertical */
+  width: 100%;
+}
+
+/* --- Contenedor de contenido --- */
+.perfil-container {
+  flex: 1;
+  padding: 2rem 5vw; /* Padding dinámico para alinearse con los elementos de la Navbar */
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* --- Cabecera Grid --- */
+.perfil-header-section {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr; /* Tres columnas: iguales a los lados, auto al centro */
+  align-items: center;
+  width: 100%;
+  margin-bottom: 3.5rem;
+}
+
+.square-accent-container {
+  grid-column: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.perfil-title {
+  grid-column: 2;
+  font-size: 2.8rem;
+  font-weight: bold;
+  color: #1a1a1a;
+  margin: 0;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.config-header {
+  grid-column: 3;
+  display: flex;
+  justify-content: flex-end; /* Empuja el texto a la derecha del todo */
+}
+
+.config-text {
+  color: #c9b385;
+  font-size: 1.2rem;
+  font-weight: 500;
+  cursor: default;
+}
+
+/* --- Estilos Formulario (Manteniendo tu estética) --- */
+.perfil-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.lista-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 650px;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  background-color: #eeebe3;
+  padding: 1rem 2rem;
+  border-radius: 15px;
+}
+
+.input-group label {
+  min-width: 180px;
+  font-weight: 700;
+  color: #1a1a1a;
+  text-align: left; /* Títulos alineados a la izquierda */
+}
+
+.input-group input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  font-size: 1rem;
+  outline: none;
+  font-family: sans-serif;
+}
+
+.perfil-actions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 650px;
+  margin-top: 3rem;
+}
+
+.perfil-btn {
+  background-color: #fcfbf9;
+  border: 1px solid #e0dcd5;
+  padding: 12px 40px;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
+}
