@@ -25,7 +25,7 @@ jobs:
         uses: dawidd6/action-download-artifact@v3
         with:
           workflow: cicdTesting.yml
-          name: digest-front-${{ github.sha }} 
+          name: digest-front-${{ github.sha }}  # FIX #1: era "digest-back-", ahora coincide con cicdTesting.yml
           workflow_conclusion: success
 
       - name: Leer metadata
@@ -56,10 +56,11 @@ jobs:
         run: |
           echo "🔄 Promocionando imagen validada en testing..."
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/catering-frontend-dev@${{ steps.metadata.outputs.DIGEST }}
-          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/catering-front-dev@${{ steps.metadata.outputs.DIGEST }} \
+          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/catering-frontend-dev@${{ steps.metadata.outputs.DIGEST }} \
             ${{ secrets.DOCKERHUB_USERNAME }}/catering-frontend:${{ steps.version.outputs.VERSION }}
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/catering-frontend:${{ steps.version.outputs.VERSION }}
           echo "✅ Imagen publicada: catering-frontend:${{ steps.version.outputs.VERSION }}"
+          # FIX #2: era "catering-front-dev" (typo), ahora "catering-frontend-dev"
 
       - name: Checkout Infraestructura
         uses: actions/checkout@v4

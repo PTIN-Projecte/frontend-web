@@ -74,7 +74,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: digest-back-${{ github.sha }}
+          name: digest-front-${{ github.sha }}
           path: |
             digest-front.txt
             tag-front.txt
@@ -107,4 +107,6 @@ jobs:
             -f values.yaml \
             -f values-dev.yaml \
             --namespace testing \
-            --set front.image.tag=${{ needs.build-and-push.outputs.TAG }}
+            --set front.image.tag=${{ needs.build-and-push.outputs.TAG }} \
+            --wait \
+            --timeout 5m0s
