@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Llista_Usuaris from './components/Llista_Usuaris'
+import Afegir_Usuaris from './components/Afegir_Usuari'
 import './App.css'
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/llista-usuaris" element={<Llista_Usuaris />} />
+        <Route path="/afegir-usuari" element={<Afegir_Usuaris />} />
       </Routes>
     </BrowserRouter>
   )

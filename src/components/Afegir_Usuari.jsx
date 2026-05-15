@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar"; 
-import "../styles/Llista_Usuaris.css";
+import Navbar from "./Navbar"; 
+import "../styles/Afegir_Usuari.css";
 
-const Llista_Usuaris = () => {
+const Afegir_Usuari = () => {
   const navigate = useNavigate();
 
   // Estado inicial vacío para un nuevo usuario
@@ -91,4 +91,4 @@ const Llista_Usuaris = () => {
   );
 };
 
-export default Llista_Usuaris;
+export default Afegir_Usuari;
