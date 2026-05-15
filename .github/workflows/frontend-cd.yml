@@ -11,23 +11,23 @@ jobs:
     name: 🔍 Lint + 🏗️ Build
     runs-on: ubuntu-latest
     steps:
-      -name: Checkout del repositorio
-      uses: actions/checkout@v4
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
 
-      -name: Configurar Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 22
-        cache: 'npm'
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
         
-      -name: Instalar dependencias
-      run: npm ci
+      - name: Instalar dependencias
+        run: npm ci
 
-      -name: Ejecutar ESLint
-      run: npm run lint
+      - name: Ejecutar ESLint
+        run: npm run lint
         
-      -name: Compilar la aplicación
-      run: npm run build
+      - name: Compilar la aplicación
+        run: npm run build
 
   build-and-push:
     needs: [ci]
@@ -38,7 +38,7 @@ jobs:
       COMMIT_SHA: ${{ github.sha }}
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Checkout Infraestructura
         uses: actions/checkout@v4
         with:
