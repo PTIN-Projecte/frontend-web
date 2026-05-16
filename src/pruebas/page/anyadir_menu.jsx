@@ -23,13 +23,14 @@ const PaginaAñadirMenu = () => {
     const menuInvalido = entrantes.length === 0 || principales.length === 0 || postres.length === 0;
 
     // Inyecta platos desde el catálogo
+    // Función corregida para evitar la duplicación de arrays acumulados
     const handleAñadirPlatosAlMenu = (tipoCategoria, platosSeleccionados) => {
         if (tipoCategoria === "Selección de entrantes") {
-            setEntrantes([...entrantes, ...platosSeleccionados]);
+            setEntrantes(platosSeleccionados);
         } else if (tipoCategoria === "Selección de platos principales") {
-            setPrincipales([...principales, ...platosSeleccionados]);
+            setPrincipales(platosSeleccionados);
         } else if (tipoCategoria === "Selección de postres") {
-            setPostres([...postres, ...platosSeleccionados]);
+            setPostres(platosSeleccionados);
         }
     };
 

@@ -30,21 +30,17 @@ const SeleccionAñadirPlatos = ({ platos, seleccion, catalogoSistema, menuAbiert
         setMenuAbiertoSeccion(mostrarMenuMas ? null : seleccion);
     };
 
+    // CORREGIDO: Al abrir el catálogo, precargamos los platos que YA están en el menú
     const handleAbrirCatalogo = () => {
-        setPlatosSeleccionadosTemporal([]); 
+        setPlatosSeleccionadosTemporal([...platos]); 
         setBusqueda('');
         setAlergenosExcluidos([]);
         setModalCatalogoAbierta(true);
         setMenuAbiertoSeccion(null);
     };
 
-    // ==========================================================================
-    // LÓGICA DE NAVEGACIÓN (BOTÓN "+" DEL DESPLEGABLE)
-    // ==========================================================================
     const handleNavegarCrearPlato = () => {
-        console.log("Navegando a la pantalla del formulario para crear un nuevo plato...");
-        // Aquí pondrás: navigate('/platos/nuevo') o tu sistema de rutas
-        setMenuAbiertoSeccion(null); // Cierra el desplegable antes de irte
+        setMenuAbiertoSeccion(null);
         alert("Redirigiendo a la página de creación de un nuevo plato...");
     };
 
@@ -57,7 +53,9 @@ const SeleccionAñadirPlatos = ({ platos, seleccion, catalogoSistema, menuAbiert
         }
     };
 
+    // CORREGIDO: Ahora reemplaza la lista con la selección final (evitando duplicados si desmarcas o marcas)
     const handleConfirmarPlatos = () => {
+        // Filtramos para enviar el estado limpio e impedir duplicaciones
         onAñadirPlatos(seleccion, platosSeleccionadosTemporal);
         setModalCatalogoAbierta(false);
     };
@@ -87,7 +85,6 @@ const SeleccionAñadirPlatos = ({ platos, seleccion, catalogoSistema, menuAbiert
                         {mostrarMenuMas && (
                             <div className="menu-mas-desplegable" onClick={(e) => e.stopPropagation()}>
                                 <button onClick={handleAbrirCatalogo}>Añadir plato/s existente/s</button>
-                                {/* TEXTO CORREGIDO Y FUNCIÓN DE RUTA ASOCIADA */}
                                 <button onClick={handleNavegarCrearPlato}>Añadir nuevo plato</button>
                             </div>
                         )}
