@@ -1,0 +1,581 @@
+/* ==========================================================================
+   1. ESTILOS DE LA PÁGINA PRINCIPAL (Alineación y pantalla completa)
+   ========================================================================== */
+
+.pagina-contenedor {
+  background-color: #ffffff;     
+  color: #333333;
+  min-height: 100vh;
+  /* 40px base + 88px de la foto + 18px de separación = 146px para alinear todo a la perfección */
+  padding: 40px 40px 40px 146px; 
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  display: flex;
+  flex-direction: column;       
+  gap: 32px;                    
+  width: 100%;                  
+  max-width: 100%;              
+  box-sizing: border-box;       
+  margin: 0;                    
+}
+
+.pagina-contenedor h1 {
+  color: #111111;
+  font-size: 32px;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+/* ==========================================================================
+   2. CABECERA DE LA SECCIÓN (Título + Botón + Buscador completo)
+   ========================================================================== */
+
+.seleccion-seccion {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 100%;
+}
+
+.seleccion-cabecera {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  width: 100%;
+}
+
+.categoria-titulo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.categoria-badge {
+  background-color: #eae8e4;
+  color: #111111;
+  padding: 10px 24px;
+  border-radius: 14px;
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.contenedor-menu-mas {
+  position: relative;
+  display: inline-block;
+}
+
+.btn-mas-categoria {
+  background-color: #c2dbcd; 
+  color: #275338;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.btn-mas-categoria:hover {
+  background-color: #aed0bc;
+}
+
+.menu-mas-desplegable {
+  position: absolute;
+  top: 42px;                  
+  left: 0;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 10;                
+  display: flex;
+  flex-direction: column;
+  min-width: 220px;
+  overflow: hidden;
+}
+
+.menu-mas-desplegable button {
+  background: none;
+  border: none;
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 14px;
+  color: #333333;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 0.15s;
+}
+
+.menu-mas-desplegable button:hover {
+  background-color: #f4f3ef; 
+}
+
+.menu-mas-desplegable button:not(:last-child) {
+  border-bottom: 1px solid #f1f1f1; 
+}
+
+.buscador-bloque-derecho {
+  display: flex;
+  align-items: center;
+  position: relative;           
+}
+
+.btn-filtro-externo {
+  background-color: #cbd5e1;    
+  color: #475569;               
+  border: 2px solid #94a3b8;
+  width: 48px;                  
+  height: 48px;
+  border-radius: 50%;           
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: -12px;          
+  z-index: 2;                   
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-filtro-externo.activo {
+  background-color: #e2673d;   
+  color: #ffffff;
+  border-color: #c84e27;
+}
+
+.icono-filtro-svg {
+  width: 22px;
+  height: 22px;
+}
+
+.buscador-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 24px;
+  padding: 8px 16px 8px 24px;   
+  width: 260px;                 
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.buscador-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  padding: 2px 8px;
+  font-size: 15px;
+  color: #333333;
+}
+
+.icono-lupa {
+  font-size: 16px;
+  color: #888888;
+  user-select: none;
+}
+
+/* ==========================================================================
+   3. LISTA VERTICAL Y FILAS DE LOS PLATOS (Carril izquierdo para fotos)
+   ========================================================================== */
+
+.platos-lista-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;                  
+}
+
+.plato-contenedor-fila {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  position: relative; /* Clave para posicionar la miniatura respecto a este bloque */
+}
+
+/* Foto redonda gigante: sacada al carril izquierdo por fuera del flujo */
+.plato-miniatura-wrapper {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eae8e4;
+  flex-shrink: 0;
+  border: 1px solid #d1d5db;
+  
+  /* Desplazamiento exacto hacia la izquierda */
+  position: absolute;
+  left: -106px; 
+}
+
+.plato-miniatura-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.plato-miniatura-placeholder {
+  font-size: 32px;               
+  user-select: none;
+}
+
+/* Tiras alargadas tradicionales (Cápsulas) */
+.plato-fila {
+  background-color: #f4f3ef;     
+  border-radius: 44px;           
+  padding: 0 32px;               
+  height: 88px;                  
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-grow: 1;                  
+  box-sizing: border-box;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02); 
+}
+
+.plato-acciones-izq {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-accion-icono {
+  border: none;
+  background-color: #e0deda;
+  padding: 10px 14px;            
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.btn-accion-icono:hover {
+  filter: brightness(0.95);
+}
+
+.btn-accion-icono.borrar {
+  background-color: #fbcbc4;     
+}
+
+.plato-info-centro {
+  flex-grow: 1;                 
+  padding: 0 24px;
+  text-align: left;
+}
+
+.plato-nombre {
+  font-weight: bold;
+  color: #1a1a1a;
+  font-size: 18px;               
+  margin-right: 6px;
+}
+
+.plato-descripcion {
+  color: #666666;
+  font-size: 14px;
+}
+
+.plato-alergenos-der {
+  display: flex;
+  gap: 6px;
+}
+
+.icono-alergeno {
+  color: white;
+  width: 36px;                   
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.no-resultados {
+  color: #888888;
+  font-size: 15px;
+  font-style: italic;
+  padding: 24px;
+  width: 100%;
+  text-align: center;
+}
+
+/* ==========================================================================
+   4. MODALS (CATÁLOGO Y ALÉRGENOS)
+   ========================================================================== */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-catalogo-container {
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 32px 40px;
+  width: 95%;
+  max-width: 1000px; 
+  max-height: 85vh;  
+  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-catalogo-container .plato-miniatura-wrapper {
+  position: static; /* En el catálogo no queremos que flote hacia la izquierda */
+  margin-right: 18px;
+}
+
+.modal-catalogo-cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.modal-catalogo-titulo,
+.modal-alergenos-titulo {
+  font-size: 24px !important;
+  font-weight: bold !important;
+  color: #000000 !important;   
+  margin: 0 !important;
+  text-align: left !important;
+}
+
+.modal-alergenos-titulo {
+  font-size: 26px !important;
+  text-decoration: underline !important;
+  margin-bottom: 4px !important;
+}
+
+.instrucciones-catalogo {
+  font-size: 14px;
+  color: #333333;             
+  text-align: left;
+  margin: 0 0 16px 0;
+}
+
+.catalogo-lista-scrollable {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 10px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 50vh;
+}
+
+.fila-seleccionable {
+  cursor: pointer;
+  transition: transform 0.1s, background-color 0.2s;
+}
+
+.fila-seleccionable:hover {
+  transform: translateX(4px); 
+}
+
+.fila-marcada .plato-fila {
+  background-color: #e6f4ea !important; 
+  border: 1px solid #a3cfbb;
+}
+
+.badge-seleccionado {
+  background-color: #157347;
+  color: white;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 8px;
+  margin-left: 10px;
+  font-weight: 500;
+}
+
+.submodal {
+  z-index: 1100 !important;
+}
+
+.catalogo-lista-scrollable::-webkit-scrollbar {
+  width: 6px;
+}
+.catalogo-lista-scrollable::-webkit-scrollbar-thumb {
+  background: #cccccc;
+  border-radius: 4px;
+}
+
+.modal-contenedor {
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 32px 40px;
+  width: 90%;
+  max-width: 820px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-subtitulo {
+  font-size: 13px;
+  color: #555555;
+  text-align: left;
+  margin-bottom: 24px;
+}
+
+.modal-grid-alergenos {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); 
+  gap: 20px 12px;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 768px) {
+  .modal-grid-alergenos { grid-template-columns: repeat(4, 1fr); }
+}
+
+.modal-alergeno-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.modal-alergeno-item:hover {
+  transform: scale(1.05);
+}
+
+.modal-alergeno-item .circle-icon {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+  transition: opacity 0.2s;
+}
+
+.modal-alergeno-item:not(.seleccionado) .circle-icon {
+  opacity: 0.65;
+}
+
+.circle-icon .check-block {
+  position: absolute;
+  font-size: 24px;
+  background: rgba(255,255,255,0.85);
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle-icon .emoji-render {
+  font-size: 34px;
+}
+
+.alergeno-label {
+  margin-top: 8px;
+  font-size: 10px;
+  font-weight: bold;
+  color: #444444;              
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.modal-acciones-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-btn-cancelar,
+.modal-btn-aceptar {
+  background-color: #c4c2be;
+  color: #000000;              
+  border: none;
+  padding: 16px 36px;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.modal-btn-aceptar {
+  padding: 16px 48px;
+}
+
+.modal-btn-cancelar:hover, .modal-btn-aceptar:hover {
+  filter: brightness(0.9);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ==========================================================================
+   5. BOTONES DE ACCIÓN FINAL DE LA PÁGINA
+   ========================================================================== */
+
+.acciones-finales {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 32px;
+  border-top: 1px solid #eee;
+  padding-top: 24px;
+}
+
+.btn-cancelar, .btn-guardar {
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s;
+}
+
+.btn-cancelar {
+  background-color: #2b2b2b;
+  color: white;
+}
+
+.btn-guardar {
+  background-color: #2b2b2b;
+  color: white;
+}
+
+.btn-cancelar:hover, .btn-guardar:hover {
+  background-color: #111111;
+}
+
+.btn-guardar.deshabilitado {
+  background-color: #9ca3af !important; 
+  color: #6b7280 !important;           
+  cursor: not-allowed;                  
+  opacity: 0.7;
+}
