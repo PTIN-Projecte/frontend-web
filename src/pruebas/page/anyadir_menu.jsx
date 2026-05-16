@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import '../styles/añadir_menu.css';
-import SeleccionAñadirPlatos from '../components/seleccionAñadirPlatos.jsx';
+import '../styles/anyadir_menu.css';
+import SeleccionAñadirPlatos from '../components/seleccionAnyadirPlatos.jsx';
 
 // BASE DE DATOS GENERAL DEL SISTEMA (El catálogo completo disponible para buscar)
 const CATALOGO_SISTEMA = [
