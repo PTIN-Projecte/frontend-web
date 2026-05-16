@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react' 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import PaginaAñadirMenu from './pruebas/page/añadir_menu.jsx' 
 import './App.css'
@@ -22,4 +22,6 @@ function App() {
   )
 }
 
-export default App
+export default App 
+
+// Cambio final para forzar la subida
