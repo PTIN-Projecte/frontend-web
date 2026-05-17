@@ -1,10 +1,11 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import ConsultaUsuari from './pages/ConsultaClient'
+import Login from './pruebas/components/login.jsx'
+import Home from './pruebas/components/home.jsx'
+import ListaPeticiones from './pruebas/components/lista-peticiones.jsx'
+import RegisterPage from './pruebas/page/RegisterPage.jsx'
+
 
 function App() {
 
@@ -14,7 +15,11 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/consulta-usuari" element={<ConsultaUsuari />} />
-      </Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/peticiones" element={<ListaPeticiones />} />
+      </Routes>  
     </BrowserRouter>
 </>
   )
