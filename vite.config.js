@@ -9,6 +9,14 @@ export default defineConfig({
   ],
   server: {
     proxy: {
+      '/api/images/': {
+        target: "http://192.168.10.10:30081",
+        changeOrigin: true
+      },
+      '/api/otlp/': {
+        target: "http://192.168.10.10:30081",
+        changeOrigin: true
+      },
       '/api': {
         target: 'http://192.168.10.10:30080',
         changeOrigin: true,
